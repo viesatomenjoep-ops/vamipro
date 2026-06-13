@@ -22,24 +22,7 @@ export default function SettingsForm({ settings }: { settings: any }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl">
-      <div className="card space-y-4">
-        <h3 className="font-medium">Kleuren</h3>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Accentkleur (Knoppen & Highlights)</label>
-            <div className="flex gap-2 items-center">
-              <input type="color" name="theme_color_accent" defaultValue={settings?.theme_color_accent || '#7b3aed'} className="w-10 h-10 rounded border-none p-0 cursor-pointer" />
-              <span className="text-sm text-fg-muted">HEX code</span>
-            </div>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Achtergrondkleur</label>
-            <div className="flex gap-2 items-center">
-              <input type="color" name="theme_color_bg" defaultValue={settings?.theme_color_bg || '#0d0d12'} className="w-10 h-10 rounded border-none p-0 cursor-pointer" />
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Colors section removed for performance/simplicity */}
 
       <div className="card space-y-4">
         <h3 className="font-medium">Logo</h3>
