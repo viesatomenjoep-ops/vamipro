@@ -56,13 +56,21 @@ export default async function HomePage() {
           {/* product-forward visual panel */}
           <div className="relative">
             <div className="card relative aspect-square overflow-hidden md:aspect-[4/5] bg-black">
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, var(--accent-soft), var(--panel) 70%)' }} />
-              <div aria-hidden className="absolute -left-10 top-10 h-40 w-[140%] -rotate-12" style={{ background: 'linear-gradient(90deg, transparent, rgba(91,42,134,.14), transparent)' }} />
+              {/* The AI Generated Image */}
+              <img 
+                src="/images/audi_q3_detailing.png" 
+                alt="Audi Q3 Detailing by Vami Pro" 
+                className="absolute inset-0 h-full w-full object-cover"
+              />
               
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-20">
+              {/* Subtle top-left gradient for depth */}
+              <div aria-hidden className="absolute inset-0 bg-gradient-to-br from-black/40 via-transparent to-transparent mix-blend-multiply" />
+              
+              {/* Bottom text overlay */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 pt-24">
                 <p className="eyebrow text-accent-bright">Vami Pro</p>
                 <p className="mt-2 font-display text-xl font-medium text-white">Premium Quality</p>
-                <p className="text-sm text-white/70">Ontwikkeld voor perfectie</p>
+                <p className="text-sm text-white/80">Ontwikkeld voor perfectie</p>
               </div>
             </div>
           </div>
