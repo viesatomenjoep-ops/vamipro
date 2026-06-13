@@ -55,7 +55,7 @@ export default function CheckoutPage() {
   );
 
   return (
-    <div className="wrap pt-0 pb-8 md:pt-0 md:pb-12 w-full">
+    <div className="wrap pt-0 pb-8 md:pt-0 md:pb-12">
       <h1 className="h-section flex items-center gap-3">
         Afrekenen
         <span className="text-sm font-body font-normal text-fg-faint flex items-center gap-1.5 mt-1">
@@ -63,57 +63,57 @@ export default function CheckoutPage() {
         </span>
       </h1>
 
-      <div className="mt-6 md:mt-10 grid gap-6 lg:gap-8 lg:grid-cols-[1.5fr_1fr] w-full">
+      <div className="mt-6 md:mt-10 flex flex-col lg:grid gap-8 lg:grid-cols-[1.5fr_1fr]">
         {/* Form */}
-        <div className="space-y-10">
+        <div className="space-y-10 w-full overflow-hidden">
           <section>
             <p className="eyebrow">01 · Contact</p>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <input className="field sm:col-span-2 text-base" placeholder="E-mailadres" type="email" autoComplete="email" onChange={set('email')} />
-              <input className="field sm:col-span-2 text-base" placeholder="Telefoonnummer" type="tel" autoComplete="tel" onChange={set('phone')} />
+              <input className="field sm:col-span-2 text-base w-full" placeholder="E-mailadres" type="email" autoComplete="email" onChange={set('email')} />
+              <input className="field sm:col-span-2 text-base w-full" placeholder="Telefoonnummer" type="tel" autoComplete="tel" onChange={set('phone')} />
             </div>
           </section>
 
           <section>
             <p className="eyebrow">02 · Bezorgadres</p>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <input className="field text-base" placeholder="Voornaam" autoComplete="given-name" onChange={set('firstName')} />
-              <input className="field text-base" placeholder="Achternaam" autoComplete="family-name" onChange={set('lastName')} />
-              <input className="field sm:col-span-2 text-base" placeholder="Straatnaam" autoComplete="address-line1" onChange={set('address')} />
-              <input className="field text-base" placeholder="Huisnummer" autoComplete="address-line2" onChange={set('houseNumber')} />
-              <input className="field text-base" placeholder="Toevoeging (optioneel)" autoComplete="address-line3" onChange={set('addition')} />
-              <input className="field text-base" placeholder="Postcode" autoComplete="postal-code" onChange={set('postalCode')} />
-              <input className="field text-base" placeholder="Plaats" autoComplete="address-level2" onChange={set('city')} />
-              <select className="field sm:col-span-2 text-base" value={f.country} autoComplete="country" onChange={set('country')}>
+              <input className="field text-base w-full" placeholder="Voornaam" autoComplete="given-name" onChange={set('firstName')} />
+              <input className="field text-base w-full" placeholder="Achternaam" autoComplete="family-name" onChange={set('lastName')} />
+              <input className="field sm:col-span-2 text-base w-full" placeholder="Straatnaam" autoComplete="address-line1" onChange={set('address')} />
+              <input className="field text-base w-full" placeholder="Huisnummer" autoComplete="address-line2" onChange={set('houseNumber')} />
+              <input className="field text-base w-full" placeholder="Toevoeging (optioneel)" autoComplete="address-line3" onChange={set('addition')} />
+              <input className="field text-base w-full" placeholder="Postcode" autoComplete="postal-code" onChange={set('postalCode')} />
+              <input className="field text-base w-full" placeholder="Plaats" autoComplete="address-level2" onChange={set('city')} />
+              <select className="field sm:col-span-2 text-base w-full" value={f.country} autoComplete="country" onChange={set('country')}>
                 <option value="NL">Nederland</option>
                 <option value="BE">België</option>
               </select>
             </div>
             <label className="mt-4 flex items-center gap-2 text-sm text-fg-muted">
-              <input type="checkbox" checked={biz} onChange={(e) => setBiz(e.target.checked)} className="accent-[var(--accent)]" />
-              Ik bestel zakelijk (factuur op bedrijfsnaam)
+              <input type="checkbox" checked={biz} onChange={(e) => setBiz(e.target.checked)} className="accent-[var(--accent)] shrink-0" />
+              <span>Ik bestel zakelijk (factuur op bedrijfsnaam)</span>
             </label>
             {biz && (
               <div className="mt-3 grid gap-4 sm:grid-cols-2">
-                <input className="field text-base" placeholder="Bedrijfsnaam" autoComplete="organization" onChange={set('company')} />
-                <input className="field text-base" placeholder="BTW-nummer" onChange={set('vatNumber')} />
+                <input className="field text-base w-full" placeholder="Bedrijfsnaam" autoComplete="organization" onChange={set('company')} />
+                <input className="field text-base w-full" placeholder="BTW-nummer" onChange={set('vatNumber')} />
               </div>
             )}
           </section>
 
           <section>
             <p className="eyebrow">03 · Betaalmethode</p>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <div className="mt-4 flex flex-col gap-3">
               {([['ideal', 'iDEAL', 'Nederlandse banken'], ['bancontact', 'Bancontact', 'Belgische banken']] as const).map(([val, label, sub2]) => (
                 <button key={val} onClick={() => setMethod(val)}
-                  className={`flex items-center justify-between rounded border p-4 text-left transition-colors ${
+                  className={`flex items-center justify-between rounded border p-4 text-left transition-colors w-full ${
                     method === val ? 'border-accent bg-panel-2' : 'hairline bg-panel hover:border-line-strong'
                   }`}>
-                  <span>
-                    <span className="block font-display font-medium">{label}</span>
-                    <span className="text-xs text-fg-muted">{sub2}</span>
+                  <span className="min-w-0 pr-4">
+                    <span className="block font-display font-medium truncate">{label}</span>
+                    <span className="block text-xs text-fg-muted truncate">{sub2}</span>
                   </span>
-                  <span className={`grid h-5 w-5 place-items-center rounded-full border ${method === val ? 'border-accent' : 'border-line-strong'}`}>
+                  <span className={`grid h-5 w-5 shrink-0 place-items-center rounded-full border ${method === val ? 'border-accent' : 'border-line-strong'}`}>
                     {method === val && <span className="h-2.5 w-2.5 rounded-full bg-accent" />}
                   </span>
                 </button>
@@ -121,42 +121,47 @@ export default function CheckoutPage() {
             </div>
           </section>
 
-          {err && <p className="rounded-sm border border-red-500/40 bg-red-500/10 p-3 text-sm text-red-300">{err}</p>}
+          {err && <p className="rounded-sm border border-red-500/40 bg-red-500/10 p-3 text-sm text-red-300 break-words">{err}</p>}
         </div>
 
         {/* Summary */}
-        <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="card p-6">
+        <aside className="lg:sticky lg:top-24 lg:self-start w-full">
+          <div className="card p-5 sm:p-6 w-full overflow-hidden">
             <h2 className="font-display text-lg font-semibold">Je bestelling</h2>
-            <div className="mt-4 space-y-3">
+            <div className="mt-4 space-y-4">
               {items.map((i) => (
-                <div key={i.productId} className="flex items-center gap-3">
-                  <div className="card relative h-14 w-14 shrink-0 overflow-hidden">
-                    {i.image ? <img src={cldUrl(i.image, { w: 120 })} alt="" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-panel-2" />}
-                    <span className="absolute -right-1.5 -top-1.5 grid h-5 w-5 place-items-center rounded-full bg-accent text-[10px] font-semibold text-white">{i.quantity}</span>
+                <div key={i.productId} className="flex items-center gap-3 w-full">
+                  <div className="card relative h-14 w-14 shrink-0 overflow-visible">
+                    {i.image ? <img src={cldUrl(i.image, { w: 120 })} alt="" className="h-full w-full object-cover rounded-md" /> : <div className="h-full w-full bg-panel-2 rounded-md" />}
+                    <span className="absolute -right-2 -top-2 grid h-5 w-5 place-items-center rounded-full bg-accent text-[10px] font-semibold text-white shadow-sm">{i.quantity}</span>
                   </div>
-                  <span className="min-w-0 flex-1 truncate text-sm">{i.name}</span>
-                  <span className="text-sm font-medium">{euro(i.priceCents * i.quantity)}</span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-medium">{i.name}</p>
+                  </div>
+                  <span className="text-sm font-medium shrink-0 ml-2">{euro(i.priceCents * i.quantity)}</span>
                 </div>
               ))}
             </div>
-            <div className="mt-5 space-y-2 border-t hairline pt-4 text-sm">
-              <div className="flex justify-between text-fg-muted"><span>Subtotaal</span><span className="text-fg">{euro(sub)}</span></div>
+            
+            <div className="mt-6 space-y-2 border-t hairline pt-4 text-sm w-full">
+              <div className="flex justify-between items-center text-fg-muted w-full"><span className="truncate pr-2">Subtotaal</span><span className="text-fg shrink-0">{euro(sub)}</span></div>
               {disc > 0 && (
-                <div className="flex justify-between text-accent font-medium"><span>Korting (10%)</span><span>-{euro(disc)}</span></div>
+                <div className="flex justify-between items-center text-accent font-medium w-full"><span className="truncate pr-2">Korting (10%)</span><span className="shrink-0">-{euro(disc)}</span></div>
               )}
-              <div className="flex justify-between text-fg-muted"><span>Verzending</span><span className="text-fg">{shipping === 0 ? 'Gratis' : euro(shipping)}</span></div>
+              <div className="flex justify-between items-center text-fg-muted w-full"><span className="truncate pr-2">Verzending</span><span className="text-fg shrink-0">{shipping === 0 ? 'Gratis' : euro(shipping)}</span></div>
             </div>
-            <div className="mt-4 flex items-baseline justify-between border-t hairline pt-4">
-              <span className="font-display font-semibold">Totaal</span>
-              <span className="font-display text-2xl font-semibold">{euro(total)}</span>
+            
+            <div className="mt-4 flex items-baseline justify-between border-t hairline pt-4 w-full">
+              <span className="font-display font-semibold shrink-0">Totaal</span>
+              <span className="font-display text-2xl font-semibold shrink-0">{euro(total)}</span>
             </div>
             <p className="mt-1 text-right text-xs text-fg-faint">incl. btw</p>
 
-            <button onClick={pay} disabled={loading} className="btn btn-primary mt-5 w-full justify-center disabled:opacity-50">
+            <button onClick={pay} disabled={loading} className="btn btn-primary mt-6 w-full justify-center disabled:opacity-50">
               {loading ? 'Bezig met betalen…' : `Betaal ${euro(total)}`}
             </button>
-            <p className="mt-3 flex items-center justify-center gap-2 text-xs text-fg-faint text-center break-words">
+            
+            <p className="mt-4 flex items-center justify-center gap-2 text-xs text-fg-faint text-center break-words w-full">
               <ShieldCheck size={14} className="text-accent shrink-0" /> 
               <span>Veilig afgerekend via Mollie</span>
             </p>
