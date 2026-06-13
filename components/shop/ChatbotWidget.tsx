@@ -1,12 +1,16 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { useChat } from '@ai-sdk/react';
 import { MessageSquare, X, Send, Bot, User, Loader2 } from 'lucide-react';
+
+type Message = { id: string; role: 'user' | 'assistant'; content: string };
 
 export default function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat();
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when messages change
@@ -15,6 +19,33 @@ export default function ChatbotWidget() {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, isOpen]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+
+    const userMessage: Message = { id: Date.now().toString(), role: 'user', content: input };
+    const newMessages = [...messages, userMessage];
+    
+    setMessages(newMessages);
+    setInput('');
+    setIsLoading(true);
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: newMessages })
+      });
+      const data = await res.json();
+      
+      setMessages([...newMessages, { id: (Date.now() + 1).toString(), role: 'assistant', content: data.content }]);
+    } catch (err) {
+      setMessages([...newMessages, { id: (Date.now() + 1).toString(), role: 'assistant', content: 'Excuses, er ging iets mis met mijn verbinding. Probeer het later nog eens!' }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -79,7 +110,7 @@ export default function ChatbotWidget() {
             </div>
           ))}
           
-          {isLoading && messages[messages.length - 1]?.role === 'user' && (
+          {isLoading && (
             <div className="flex gap-3">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
                 <Bot size={14} />
@@ -97,7 +128,7 @@ export default function ChatbotWidget() {
           <form onSubmit={handleSubmit} className="flex gap-2 relative">
             <input
               value={input}
-              onChange={handleInputChange}
+              onChange={(e) => setInput(e.target.value)}
               placeholder="Typ hier je vraag..."
               className="flex-1 rounded-full border hairline bg-bg px-4 py-2 text-sm text-fg outline-none focus:border-accent transition-colors"
               disabled={isLoading}
