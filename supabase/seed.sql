@@ -1,0 +1,58 @@
+-- Vami Pro - Seed data: 6 categorieen + 30 producten
+-- Voer uit NA schema.sql
+
+-- CATEGORIEËN
+insert into categories (slug, name, description, sort_order) values
+('wassen',        'Wassen & Shampoo',       'Autoshampoo, snow foam en alles voor een veilige wasbeurt.', 1),
+('exterieur',     'Exterieur Reiniging',    'Velgenreiniger, teerverwijderaar, insectenreiniger en meer.', 2),
+('coating',       'Coating & Bescherming',  'Keramische coatings, sealants en wax voor langdurige bescherming.', 3),
+('interieur',     'Interieur',              'Reinigers en verzorging voor leer, kunststof en stoffen.', 4),
+('doeken',        'Doeken & Accessoires',   'Microvezeldoeken, droogdoeken, washandschoenen en emmers.', 5),
+('machines',      'Machines & Gereedschap', 'Polijstmachines, pads en applicators voor profwerk.', 6);
+
+-- PRODUCTEN (vervang cloudinary_images later met echte public_ids)
+-- Helper: category_id wordt via subquery op slug gekoppeld.
+
+insert into products (slug, name, short_description, description, category_id, brand, price_cents, stock, sku, weight_grams, is_featured) values
+
+-- ===== WASSEN & SHAMPOO =====
+('vami-snow-foam-1l','Vami Snow Foam 1L','pH-neutrale dikke schuimreiniger','Dikke, pH-neutrale snow foam die hardnekkig vuil losweekt vóór contactwas. Veilig voor coatings en wax. Gebruik met een foam lance.',(select id from categories where slug='wassen'),'Vami Pro',1495,40,'VP-WAS-001',1200,true),
+('vami-shampoo-ph-neutraal-500ml','Vami pH-Neutrale Shampoo 500ml','Glansversterkende autoshampoo','Hoog geconcentreerde pH-neutrale shampoo met glansversterkers. Tast was- en coatinglagen niet aan.',(select id from categories where slug='wassen'),'Vami Pro',1295,60,'VP-WAS-002',650,false),
+('vami-wheel-cleaner-500ml','Vami Wheel Cleaner 500ml','Kleurindicerende velgenreiniger','Velgenreiniger die van kleur verandert bij contact met ijzerdeeltjes. Veilig voor alle velgtypes.',(select id from categories where slug='wassen'),'Vami Pro',1695,35,'VP-WAS-003',650,true),
+('vami-wash-mitt-deluxe','Vami Deluxe Wash Mitt','Zachte microvezel washandschoen','Pluche microvezel washandschoen die vuil veilig vasthoudt en krassen minimaliseert.',(select id from categories where slug='wassen'),'Vami Pro',995,80,'VP-WAS-004',150,false),
+('vami-bucket-grit-guard','Vami Wasemmer 20L + Grit Guard','Emmer met vuilrooster','20L wasemmer met grit guard die vuil naar de bodem laat zakken zodat het niet terug op je washandschoen komt.',(select id from categories where slug='wassen'),'Vami Pro',2495,25,'VP-WAS-005',1500,false),
+
+-- ===== EXTERIEUR REINIGING =====
+('vami-tar-remover-500ml','Vami Tar & Glue Remover 500ml','Teer- en lijmverwijderaar','Verwijdert teer, boomhars, lijmresten en bitumen zonder de lak aan te tasten.',(select id from categories where slug='exterieur'),'Vami Pro',1395,45,'VP-EXT-001',650,false),
+('vami-iron-remover-500ml','Vami Iron Remover 500ml','Vliegroest-verwijderaar','Lost ingebrande remstof en vliegroest op. Kleurindicerend (paars). Voor lak en velgen.',(select id from categories where slug='exterieur'),'Vami Pro',1595,40,'VP-EXT-002',650,true),
+('vami-bug-remover-500ml','Vami Bug Remover 500ml','Insectenreiniger','Weekt insectenresten snel los van bumper, grille en voorruit.',(select id from categories where slug='exterieur'),'Vami Pro',1095,50,'VP-EXT-003',650,false),
+('vami-clay-bar-kit','Vami Clay Bar Kit','Kleiset met glijmiddel','Reinigingsklei + lubricant voor het verwijderen van vastzittende vervuiling. Maakt de lak spiegelglad.',(select id from categories where slug='exterieur'),'Vami Pro',1995,30,'VP-EXT-004',400,false),
+('vami-apc-1l','Vami All Purpose Cleaner 1L','Universele reiniger (concentraat)','Verdunbare allesreiniger voor motorruimte, velgen, kunststof en interieur. Tot 1:10 te verdunnen.',(select id from categories where slug='exterieur'),'Vami Pro',1195,55,'VP-EXT-005',1100,false),
+
+-- ===== COATING & BESCHERMING =====
+('vami-ceramic-coating-50ml','Vami Ceramic Coating 9H 50ml','Keramische coating 3 jaar','9H keramische coating met tot 3 jaar bescherming, extreme glans en waterafstotend effect. Incl. applicator + suede doekjes.',(select id from categories where slug='coating'),'Vami Pro',6995,20,'VP-COA-001',300,true),
+('vami-spray-sealant-500ml','Vami Spray Sealant 500ml','Snelle sprayverzegeling','SiO2 spray sealant voor maandenlange bescherming en glans. Aan te brengen op natte of droge lak.',(select id from categories where slug='coating'),'Vami Pro',2495,35,'VP-COA-002',650,false),
+('vami-carnauba-wax-200ml','Vami Carnauba Wax 200ml','Premium pasta wax','Hoogwaardige carnauba pasta wax voor een warme, diepe glans. Eenvoudig aan te brengen en uit te werken.',(select id from categories where slug='coating'),'Vami Pro',2995,28,'VP-COA-003',350,true),
+('vami-glass-coating-30ml','Vami Glass Coating 30ml','Ruitcoating regenafstotend','Hydrofobe coating voor de voorruit. Regen parelt af, betere zichtbaarheid bij nat weer.',(select id from categories where slug='coating'),'Vami Pro',1995,30,'VP-COA-004',150,false),
+('vami-tire-dressing-500ml','Vami Tire Dressing 500ml','Bandenglans satijn','Geeft banden een diepe, satijnen finish zonder vet uit te slaan. Langdurig effect.',(select id from categories where slug='coating'),'Vami Pro',1295,45,'VP-COA-005',650,false),
+
+-- ===== INTERIEUR =====
+('vami-interior-cleaner-500ml','Vami Interior Cleaner 500ml','Interieurreiniger universeel','Reinigt dashboard, kunststof, stof en leer. Mat, niet-vettend resultaat met frisse geur.',(select id from categories where slug='interieur'),'Vami Pro',1195,50,'VP-INT-001',650,false),
+('vami-leather-care-250ml','Vami Leather Care 250ml','Lederreiniger & voeding','2-in-1 reiniger en voeding voor leer. Houdt leer soepel en voorkomt uitdroging en barsten.',(select id from categories where slug='interieur'),'Vami Pro',1695,35,'VP-INT-002',350,true),
+('vami-fabric-cleaner-500ml','Vami Fabric & Carpet Cleaner 500ml','Stof- en tapijtreiniger','Verwijdert vlekken uit bekleding, hemel en vloermatten. Diep reinigend schuim.',(select id from categories where slug='interieur'),'Vami Pro',1295,40,'VP-INT-003',650,false),
+('vami-air-freshener','Vami Air Freshener','Geurverfrisser (New Car)','Langdurige geurverfrisser met "new car"-geur. Discreet te plaatsen.',(select id from categories where slug='interieur'),'Vami Pro',595,100,'VP-INT-004',80,false),
+('vami-glass-cleaner-500ml','Vami Glass Cleaner 500ml','Streeploze ruitenreiniger','Streeploze, ammoniakvrije ruitenreiniger voor binnen- en buitenruiten. Veilig voor getint glas.',(select id from categories where slug='interieur'),'Vami Pro',895,60,'VP-INT-005',650,false),
+
+-- ===== DOEKEN & ACCESSOIRES =====
+('vami-microfiber-5pack','Vami Microvezeldoeken 5-pack','Allround microvezeldoeken 400gsm','Set van 5 zachte 400gsm microvezeldoeken voor uitwerken, reinigen en finishen. Krasvrij.',(select id from categories where slug='doeken'),'Vami Pro',1295,90,'VP-DOE-001',300,true),
+('vami-drying-towel-xl','Vami Droogdoek XL','Plush droogdoek 1200gsm','Extra dikke 1200gsm twisted-loop droogdoek (60x90cm). Droogt een auto in één keer zonder strepen.',(select id from categories where slug='doeken'),'Vami Pro',1995,45,'VP-DOE-002',450,true),
+('vami-applicator-pads-6pack','Vami Applicator Pads 6-pack','Foam applicators','Set van 6 zachte foam applicator pads voor het gelijkmatig aanbrengen van wax, sealant en dressings.',(select id from categories where slug='doeken'),'Vami Pro',795,70,'VP-DOE-003',120,false),
+('vami-detailing-brush-set','Vami Detailing Brush Set','Detailborstels 3-delig','3 borstels in verschillende maten voor ventilatieroosters, naden, emblemen en velgen.',(select id from categories where slug='doeken'),'Vami Pro',1495,40,'VP-DOE-004',250,false),
+('vami-wheel-brush','Vami Wheel Woolie','Zachte velgenborstel','Lange, zachte velgenborstel die ook de binnenkant van de velg bereikt zonder te krassen.',(select id from categories where slug='doeken'),'Vami Pro',1195,50,'VP-DOE-005',200,false),
+
+-- ===== MACHINES & GEREEDSCHAP =====
+('vami-da-polisher-15mm','Vami DA Polisher 15mm','Excentrische polijstmachine','Dual-action polijstmachine met 15mm slag. Krachtige 900W motor, variabele snelheid. Ideaal voor beginners en pro''s.',(select id from categories where slug='machines'),'Vami Pro',16995,12,'VP-MAC-001',2800,true),
+('vami-polishing-pads-set','Vami Polijstpads Set','Pads (cutting/polish/finish)','Set polijstpads: snijden, polijsten en finishen. Past op 15mm DA machines.',(select id from categories where slug='machines'),'Vami Pro',2495,25,'VP-MAC-002',400,false),
+('vami-compound-500ml','Vami Cutting Compound 500ml','Snijpolish krasverwijdering','Krachtige compound die krassen en swirls verwijdert. Stofarm, snel afwerkend.',(select id from categories where slug='machines'),'Vami Pro',1895,30,'VP-MAC-003',600,false),
+('vami-polish-500ml','Vami Finishing Polish 500ml','Finish polish hoogglans','Fijne afwerkpolish voor een holografievrije, diepe hoogglans na het compounderen.',(select id from categories where slug='machines'),'Vami Pro',1795,30,'VP-MAC-004',600,false),
+('vami-led-detailing-lamp','Vami LED Detailing Lamp','Oplaadbare inspectielamp','Oplaadbare LED-lamp die swirls en hologrammen zichtbaar maakt tijdens het polijsten.',(select id from categories where slug='machines'),'Vami Pro',3495,18,'VP-MAC-005',500,false);

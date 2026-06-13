@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vami Pro — Palet-opties</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+body{background:#e9e9ee;font-family:'Inter',sans-serif;padding:32px}
+.grid{display:flex;flex-direction:column;gap:32px;max-width:1180px;margin:0 auto}
+.opt{border-radius:18px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.25)}
+.tag{font-family:'Space Grotesk';font-size:13px;letter-spacing:.05em;padding:10px 18px;color:#fff;display:flex;justify-content:space-between;align-items:center}
+
+/* ---------- OPTION A — Porcelain & Ocean ---------- */
+.A{--bg:#fbfbf9;--panel:#fff;--ink:#14171c;--muted:#6a7079;--line:#e7e7e2;--accent:#0e5e6f;--accent-2:#d9e6e6}
+/* ---------- OPTION B — Alabaster & Aubergine ---------- */
+.B{--bg:#f6f4f7;--panel:#fff;--ink:#1c1620;--muted:#766c7a;--line:#ebe6ed;--accent:#5b2a86;--accent-2:#ece3f3}
+/* ---------- OPTION C — Bone & Racing Green ---------- */
+.C{--bg:#f4f3ee;--panel:#fffefb;--ink:#191b16;--muted:#6c6f64;--line:#e6e4da;--accent:#1f4d36;--accent-2:#e1e8df}
+
+.shop{background:var(--bg);color:var(--ink);padding:0}
+.hdr{display:flex;justify-content:space-between;align-items:center;padding:18px 28px;border-bottom:1px solid var(--line)}
+.logo{font-family:'Space Grotesk';font-weight:700;letter-spacing:-.02em}
+.dot{color:var(--accent)}
+.nav a{color:var(--muted);text-decoration:none;margin-left:22px;font-size:13px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;padding:48px 28px}
+.eyebrow{font-family:'Space Grotesk';text-transform:uppercase;letter-spacing:.26em;font-size:11px;color:var(--accent);font-weight:600}
+.disp{font-weight:600;letter-spacing:-.02em;line-height:.98;font-size:46px;margin-top:14px}
+.serif .disp{font-family:'Fraunces',serif;font-weight:600}
+.geo .disp{font-family:'Space Grotesk',sans-serif}
+.gro .disp{font-family:'Manrope',sans-serif;font-weight:700}
+.lead{color:var(--muted);max-width:30rem;margin-top:14px;font-size:15px;line-height:1.5}
+.btns{margin-top:22px;display:flex;gap:10px}
+.btn{font-family:'Space Grotesk';font-weight:500;padding:12px 20px;border-radius:999px;font-size:14px;border:1px solid transparent;cursor:pointer}
+.btn-p{background:var(--accent);color:#fff}
+.btn-g{background:transparent;color:var(--ink);border-color:var(--line)}
+.panel{background:var(--accent-2);border-radius:14px;position:relative;overflow:hidden;min-height:230px;border:1px solid var(--line)}
+.panel .badge{position:absolute;left:18px;bottom:18px}
+.panel .badge p{font-family:'Space Grotesk'}
+.arc{position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:var(--accent);opacity:.12}
+.prods{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:8px 28px 36px}
+.pc{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.ph{aspect-ratio:4/4;background:linear-gradient(135deg,var(--accent-2),var(--panel));display:grid;place-items:center}
+.ph span{font-family:'Space Grotesk';font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.pb{padding:12px}
+.pb h4{font-size:14px;font-weight:600}
+.serif .pb h4{font-family:'Fraunces',serif}
+.pb .pr{font-family:'Space Grotesk';font-weight:600;margin-top:6px;color:var(--ink)}
+.chip{display:inline-block;background:var(--accent-2);color:var(--accent);font-size:10px;padding:3px 9px;border-radius:999px;margin:0 0 6px}
+.usp{display:flex;gap:26px;padding:14px 28px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
+.usp b{color:var(--ink);font-weight:600}
+.swatches{display:flex;gap:6px;align-items:center}
+.sw{width:16px;height:16px;border-radius:4px;border:1px solid rgba(0,0,0,.08)}
+@media(max-width:820px){.hero{grid-template-columns:1fr}.prods{grid-template-columns:repeat(2,1fr)}}
+</style></head>
+<body><div class="grid">
+
+<!-- OPTION A -->
+<div class="opt A">
+  <div class="tag" style="background:#0e5e6f">
+    <span>OPTIE A · "Porselein &amp; Oceaan" — warm wit, diep petrol-blauwgroen · Fraunces serif</span>
+    <span class="swatches"><span class="sw" style="background:#fbfbf9"></span><span class="sw" style="background:#0e5e6f"></span><span class="sw" style="background:#d9e6e6"></span><span class="sw" style="background:#14171c"></span></span>
+  </div>
+  <div class="shop serif">
+    <div class="hdr"><span class="logo">VAMI<span class="dot">.</span>PRO</span><span class="nav"><a>Shop</a><a>Coatings</a><a>Machines</a><a>Contact</a></span></div>
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Car detailing · NL &amp; BE</p>
+        <h1 class="disp">Een finish die het<br>licht vangt.</h1>
+        <p class="lead">Professionele detailingproducten voor een showroomresultaat. Van veilig wassen tot keramische coatings met jarenlange bescherming.</p>
+        <div class="btns"><button class="btn btn-p">Shop alle producten</button><button class="btn btn-g">Ontdek coatings</button></div>
+      </div>
+      <div class="panel"><div class="arc"></div><div class="badge"><p class="eyebrow">Signature</p><p style="font-size:18px;margin-top:4px">Ceramic Coating 9H</p></div></div>
+    </div>
+    <div class="usp"><span><b>Voor 16:00</b> vandaag verzonden</span><span><b>iDEAL</b> &amp; Bancontact</span><span><b>Gratis</b> vanaf €75</span><span><b>14 dagen</b> retour</span></div>
+    <div class="prods">
+      <div class="pc"><div class="ph"><span>Vami Pro</span></div><div class="pb"><span class="chip">Aanrader</span><h4>Ceramic Coating 9H</h4><p class="pr">€ 69,95</p></div></div>
+      <div class="pc"><div class="ph"><span>Vami Pro</span></div><div class="pb"><span class="chip">Aanrader</span><h4>Snow Foam 1L</h4><p class="pr">€ 14,95</p></div></div>
+      <div class="pc"><div class="ph"><span>Vami Pro</span></div><div class="pb"><h4>Carnauba Wax 200ml</h4><p class="pr">€ 29,95</p></div></div>
+      <div class="pc"><div class="ph"><span>Vami Pro</span></div><div class="pb"><h4>DA Polisher 15mm</h4><p class="pr">€ 169,95</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- OPTION B -->
+<div class="opt B">
+  <div class="tag" style="background:#5b2a86">
+    <span>OPTIE B · "Albast &amp; Aubergine" — koel wit, diep paars · Space Grotesk geometrisch</span>
+    <span class="swatches"><span class="sw" style="background:#f6f4f7"></span><span class="sw" style="background:#5b2a86"></span><span class="sw" style="background:#ece3f3"></span><span class="sw" style="background:#1c1620"></span></span>
+  </div>
+  <div class="shop geo">
+    <div class="hdr"><span class="logo">VAMI<span class="dot">.</span>PRO</span><span class="nav"><a>Shop</a><a>Coatings</a><a>Machines</a><a>Contact</a></span></div>
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Car detailing · NL &amp; BE</p>
+        <h1 class="disp">Een finish die het<br>licht vangt.</h1>
+        <p class="lead">Professionele detailingproducten voor een showroomresultaat. Van veilig wassen tot keramische coatings met jarenlange bescherming.</p>
+        <div class="btns"><button class="btn btn-p">Shop alle producten</button><button class="btn btn-g">Ontdek coatings</button></div>
+      </div>
+      <div class="panel"><div class="arc"></div><div class="badge"><p class="eyebrow">Signature</p><p style="font-size:18px;margin-top:4px;font-family:'Space Grotesk'">Ceramic Coating 9H</p></div></div>
+    </div>
+    <div class="usp"><span><b>Voor 16:00</b> vandaag verzonden</span><span><b>iDEAL</b> &amp; Bancontact</span><span><b>Gratis</b> vanaf €75</span><span><b>14 dagen</b> retour</span></div>
+    <div class="prods">
+      <div class="pc"><div class="ph"><span>Vami Pro</span></div><div class="pb"><span class="chip">Aanrader</span><h4>Ceramic Coating 9H</h4><p class="pr">€ 69,95</p></div></div>
+      <div class="pc"><div class="ph"><span>Vami Pro</span></div><div class="pb"><span class="chip">Aanrader</span><h4>Snow Foam 1L</h4><p class="pr">€ 14,95</p></div></div>
+      <div class="pc"><div class="ph"><span>Vami Pro</span></div><div class="pb"><h4>Carnauba Wax 200ml</h4><p class="pr">€ 29,95</p></div></div>
+      <div class="pc"><div class="ph"><span>Vami Pro</span></div><div class="pb"><h4>DA Polisher 15mm</h4><p class="pr">€ 169,95</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- OPTION C -->
+<div class="opt C">
+  <div class="tag" style="background:#1f4d36">
+    <span>OPTIE C · "Bot &amp; Racing Green" — natuurlijk wit, diep Brits racegroen · Manrope</span>
+    <span class="swatches"><span class="sw" style="background:#f4f3ee"></span><span class="sw" style="background:#1f4d36"></span><span class="sw" style="background:#e1e8df"></span><span class="sw" style="background:#191b16"></span></span>
+  </div>
+  <div class="shop gro">
+    <div class="hdr"><span class="logo">VAMI<span class="dot">.</span>PRO</span><span class="nav"><a>Shop</a><a>Coatings</a><a>Machines</a><a>Contact</a></span></div>
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Car detailing · NL &amp; BE</p>
+        <h1 class="disp">Een finish die het<br>licht vangt.</h1>
+        <p class="lead">Professionele detailingproducten voor een showroomresultaat. Van veilig wassen tot keramische coatings met jarenlange bescherming.</p>
+        <div class="btns"><button class="btn btn-p">Shop alle producten</button><button class="btn btn-g">Ontdek coatings</button></div>
+      </div>
+      <div class="panel"><div class="arc"></div><div class="badge"><p class="eyebrow">Signature</p><p style="font-size:18px;margin-top:4px;font-family:'Manrope';font-weight:700">Ceramic Coating 9H</p></div></div>
+    </div>
+    <div class="usp"><span><b>Voor 16:00</b> vandaag verzonden</span><span><b>iDEAL</b> &amp; Bancontact</span><span><b>Gratis</b> vanaf €75</span><span><b>14 dagen</b> retour</span></div>
+    <div class="prods">
+      <div class="pc"><div class="ph"><span>Vami Pro</span></div><div class="pb"><span class="chip">Aanrader</span><h4>Ceramic Coating 9H</h4><p class="pr">€ 69,95</p></div></div>
+      <div class="pc"><div class="ph"><span>Vami Pro</span></div><div class="pb"><span class="chip">Aanrader</span><h4>Snow Foam 1L</h4><p class="pr">€ 14,95</p></div></div>
+      <div class="pc"><div class="ph"><span>Vami Pro</span></div><div class="pb"><h4>Carnauba Wax 200ml</h4><p class="pr">€ 29,95</p></div></div>
+      <div class="pc"><div class="ph"><span>Vami Pro</span></div><div class="pb"><h4>DA Polisher 15mm</h4><p class="pr">€ 169,95</p></div></div>
+    </div>
+  </div>
+</div>
+
+</div></body></html>

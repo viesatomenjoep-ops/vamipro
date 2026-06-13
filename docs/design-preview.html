@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vami Pro — Design Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4f7;--panel:#fff;--panel-2:#f1edf3;--line:#e9e3ec;--line-strong:#ddd4e2;
+  --fg:#1c1620;--fg-muted:#6f6577;--fg-faint:#9b91a2;
+  --accent:#5b2a86;--accent-deep:#3f1c61;--accent-bright:#7c3fb0;--accent-soft:#ece3f3;--accent-glow:rgba(91,42,134,.18);
+  --radius:14px;--font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 1.25rem}
+.eyebrow{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.28em;font-size:.7rem;color:var(--accent);font-weight:500}
+.h-hero{font-family:var(--font-display);font-weight:600;letter-spacing:-.03em;line-height:.96;font-size:clamp(2.6rem,7vw,5.5rem)}
+.h-section{font-family:var(--font-display);font-weight:600;letter-spacing:-.02em;font-size:clamp(1.6rem,3vw,2.4rem)}
+.gloss-text{background:linear-gradient(100deg,var(--fg) 30%,var(--accent) 50%,var(--fg) 70%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 6s ease-in-out infinite}
+@keyframes sheen{0%,100%{background-position:120% 0}50%{background-position:-20% 0}}
+.btn{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--font-display);font-weight:500;padding:.85rem 1.5rem;border-radius:999px;font-size:.95rem;cursor:pointer;border:1px solid transparent;text-decoration:none}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 0 0 1px var(--accent),0 12px 30px -10px var(--accent-glow)}
+.btn-ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.hdr{position:sticky;top:0;z-index:9;border-bottom:1px solid var(--line);background:rgba(246,244,247,.8);backdrop-filter:blur(10px)}
+.hdr .wrap{display:flex;height:64px;align-items:center;justify-content:space-between}
+nav a{color:var(--fg-muted);text-decoration:none;margin-left:2rem;font-size:.9rem}
+.hero{position:relative;overflow:hidden}
+.glow{position:absolute;right:-160px;top:-160px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,var(--accent-glow),transparent 65%);filter:blur(20px);pointer-events:none}
+.hero .grid{display:grid;gap:2.5rem;grid-template-columns:1.1fr .9fr;padding:7rem 0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;max-width:28rem}
+.stats dt{font-family:var(--font-display);font-size:1.5rem;font-weight:600}
+.stats dd{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-faint)}
+.panel{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:var(--radius);background:linear-gradient(160deg,var(--accent-soft),var(--panel) 70%);border:1px solid var(--line)}
+.panel .sheen{position:absolute;left:-40px;top:40px;width:140%;height:160px;transform:rotate(-12deg);background:linear-gradient(90deg,transparent,rgba(91,42,134,.14),transparent)}
+.panel .cap{position:absolute;left:24px;right:24px;bottom:24px}
+.usp{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel)}
+.usp .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.usp .item{padding:1.5rem 0;display:flex;gap:.75rem;align-items:center}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent-glow)}
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-top:2.5rem}
+.cat{background:var(--panel);padding:1.75rem;min-height:170px;display:flex;flex-direction:column;justify-content:space-between}
+.cat .step{font-family:var(--font-display);color:var(--accent);font-size:.9rem}
+.cat h3{font-family:var(--font-display);font-weight:500;font-size:1.25rem;margin-top:2.5rem}
+.cat p{color:var(--fg-muted);font-size:.85rem;margin-top:.4rem}
+.prods{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-top:2.5rem}
+.pc{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel)}
+.pc .ph{aspect-ratio:4/5;background:var(--panel-2);display:grid;place-items:center;position:relative}
+.pc .ph span{font-family:var(--font-display);font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--fg-faint)}
+.tag{position:absolute;left:12px;top:12px;background:rgba(42,212,255,.15);color:var(--accent);border:1px solid rgba(42,212,255,.3);border-radius:999px;padding:4px 10px;font-size:11px}
+.pc .body{padding:1rem}
+.pc .brand{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-faint)}
+.pc h4{font-family:var(--font-display);font-weight:500;margin-top:.25rem}
+.pc .price{font-family:var(--font-display);font-weight:600;font-size:1.1rem;margin-top:.75rem}
+section{padding:5rem 0}
+.co{display:grid;grid-template-columns:1.5fr 1fr;gap:2.5rem}
+.field{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--fg);border-radius:9px;padding:.8rem 1rem;font-family:var(--font-body);margin-bottom:.75rem}
+.pay{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.payopt{border:1px solid var(--accent);background:var(--panel-2);border-radius:9px;padding:1rem;display:flex;justify-content:space-between;align-items:center}
+.payopt.off{border-color:var(--line);background:var(--panel)}
+.radio{width:20px;height:20px;border-radius:50%;border:1px solid var(--accent);display:grid;place-items:center}
+.radio i{width:10px;height:10px;border-radius:50%;background:var(--accent);display:block}
+.sum{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);padding:1.5rem}
+.row{display:flex;justify-content:space-between;font-size:.9rem;color:var(--fg-muted);margin:.4rem 0}
+.row b{color:var(--fg)}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:1rem;margin-top:1rem}
+.total .amt{font-family:var(--font-display);font-size:1.5rem;font-weight:600}
+.label{display:block;color:var(--fg-faint);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;margin:.5rem 0 1rem;font-family:var(--font-display)}
+@media(max-width:860px){.hero .grid,.co{grid-template-columns:1fr}.usp .wrap,.cats,.prods{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<header class="hdr"><div class="wrap">
+  <span style="font-family:var(--font-display);font-weight:600">VAMI<span style="color:var(--accent)">.</span>PRO</span>
+  <nav><a>Shop</a><a>Coatings</a><a>Machines</a><a>FAQ</a><a>Contact</a></nav>
+</div></header>
+
+<!-- HERO -->
+<section class="hero"><div class="glow"></div><div class="wrap"><div class="grid">
+  <div>
+    <p class="eyebrow">Car detailing · NL &amp; BE</p>
+    <h1 class="h-hero" style="margin-top:1.25rem">Een finish die<br><span class="gloss-text">het licht vangt.</span></h1>
+    <p style="color:var(--fg-muted);max-width:28rem;margin-top:1.5rem;font-size:1.1rem">Professionele detailingproducten, ontwikkeld voor liefhebbers en pro's. Van veilig wassen tot keramische coatings met jarenlange bescherming.</p>
+    <div style="margin-top:2rem;display:flex;gap:.75rem"><a class="btn btn-primary">Shop alle producten</a><a class="btn btn-ghost">Ontdek coatings</a></div>
+    <dl class="stats">
+      <div><dt>3 jaar</dt><dd>bescherming</dd></div>
+      <div><dt>1–2 dagen</dt><dd>levering NL</dd></div>
+      <div><dt>9H</dt><dd>coating hardheid</dd></div>
+    </dl>
+  </div>
+  <div class="panel"><div class="sheen"></div><div class="cap">
+    <p class="eyebrow">Signature</p>
+    <p style="font-family:var(--font-display);font-size:1.25rem;margin-top:.5rem">Vami Ceramic Coating 9H</p>
+    <p style="color:var(--fg-muted);font-size:.9rem">Extreme glans · hydrofoob · tot 3 jaar</p>
+  </div></div>
+</div></div></section>
+
+<!-- USP -->
+<div class="usp"><div class="wrap">
+  <div class="item"><span class="dot"></span><div><div style="font-size:.9rem">Voor 16:00 besteld</div><div style="color:var(--fg-muted);font-size:.8rem">vandaag verzonden</div></div></div>
+  <div class="item"><span class="dot"></span><div><div style="font-size:.9rem">Veilig betalen</div><div style="color:var(--fg-muted);font-size:.8rem">iDEAL &amp; Bancontact</div></div></div>
+  <div class="item"><span class="dot"></span><div><div style="font-size:.9rem">Gratis verzending</div><div style="color:var(--fg-muted);font-size:.8rem">vanaf € 75</div></div></div>
+  <div class="item"><span class="dot"></span><div><div style="font-size:.9rem">14 dagen</div><div style="color:var(--fg-muted);font-size:.8rem">bedenktijd</div></div></div>
+</div></div>
+
+<!-- CATEGORIES -->
+<section><div class="wrap">
+  <p class="eyebrow">Het proces</p><h2 class="h-section" style="margin-top:.75rem">Zes stappen naar perfectie</h2>
+  <div class="cats">
+    <div class="cat"><span class="step">01</span><div><h3>Wassen &amp; Shampoo</h3><p>Veilig contactvrij voorbehandelen en wassen.</p></div></div>
+    <div class="cat"><span class="step">02</span><div><h3>Exterieur Reiniging</h3><p>Diepe reiniging: teer, vliegroest, insecten.</p></div></div>
+    <div class="cat"><span class="step">03</span><div><h3>Interieur</h3><p>Leer, kunststof en stof fris en verzorgd.</p></div></div>
+    <div class="cat"><span class="step">04</span><div><h3>Coating &amp; Bescherming</h3><p>Keramische coatings, sealants en wax.</p></div></div>
+    <div class="cat"><span class="step">05</span><div><h3>Machines &amp; Gereedschap</h3><p>Polijsten naar een holografievrije finish.</p></div></div>
+    <div class="cat"><span class="step">06</span><div><h3>Doeken &amp; Accessoires</h3><p>Microvezel, droogdoeken en applicators.</p></div></div>
+  </div>
+</div></section>
+
+<!-- PRODUCTS -->
+<section style="padding-top:0"><div class="wrap">
+  <p class="eyebrow">Aanraders</p><h2 class="h-section" style="margin-top:.75rem">Onze bestsellers</h2>
+  <div class="prods">
+    <div class="pc"><div class="ph"><span class="tag">Aanrader</span><span>Vami Pro</span></div><div class="body"><p class="brand">Vami Pro</p><h4>Ceramic Coating 9H</h4><p class="price">€ 69,95</p></div></div>
+    <div class="pc"><div class="ph"><span class="tag">Aanrader</span><span>Vami Pro</span></div><div class="body"><p class="brand">Vami Pro</p><h4>Snow Foam 1L</h4><p class="price">€ 14,95</p></div></div>
+    <div class="pc"><div class="ph"><span>Vami Pro</span></div><div class="body"><p class="brand">Vami Pro</p><h4>Carnauba Wax 200ml</h4><p class="price">€ 29,95</p></div></div>
+    <div class="pc"><div class="ph"><span class="tag">Aanrader</span><span>Vami Pro</span></div><div class="body"><p class="brand">Vami Pro</p><h4>DA Polisher 15mm</h4><p class="price">€ 169,95</p></div></div>
+  </div>
+</div></section>
+
+<!-- CHECKOUT -->
+<section style="padding-top:0"><div class="wrap">
+  <p class="eyebrow">Beveiligde kassa</p><h2 class="h-section" style="margin-top:.75rem">Afrekenen</h2>
+  <div class="co" style="margin-top:2.5rem">
+    <div>
+      <span class="label">02 · Bezorgadres</span>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem"><input class="field" placeholder="Voornaam"><input class="field" placeholder="Achternaam"></div>
+      <input class="field" placeholder="Straatnaam">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem"><input class="field" placeholder="Postcode"><input class="field" placeholder="Plaats"></div>
+      <span class="label">03 · Betaalmethode</span>
+      <div class="pay">
+        <div class="payopt"><div><b style="font-family:var(--font-display)">iDEAL</b><div style="color:var(--fg-muted);font-size:.75rem">Nederlandse banken</div></div><span class="radio"><i></i></span></div>
+        <div class="payopt off"><div><b style="font-family:var(--font-display)">Bancontact</b><div style="color:var(--fg-muted);font-size:.75rem">Belgische banken</div></div><span class="radio" style="border-color:var(--fg-faint)"></span></div>
+      </div>
+    </div>
+    <aside><div class="sum">
+      <h3 style="font-family:var(--font-display);font-weight:600">Je bestelling</h3>
+      <div style="margin-top:1rem">
+        <div class="row"><span>1× Ceramic Coating 9H</span><b>€ 69,95</b></div>
+        <div class="row"><span>2× Snow Foam 1L</span><b>€ 29,90</b></div>
+      </div>
+      <div class="row" style="border-top:1px solid var(--line);padding-top:1rem;margin-top:1rem"><span>Subtotaal</span><b>€ 99,85</b></div>
+      <div class="row"><span>Verzending</span><b>Gratis</b></div>
+      <div class="total"><span style="font-family:var(--font-display);font-weight:600">Totaal</span><span class="amt">€ 99,85</span></div>
+      <a class="btn btn-primary" style="width:100%;justify-content:center;margin-top:1.25rem">Betaal € 99,85</a>
+      <p style="text-align:center;color:var(--fg-faint);font-size:.75rem;margin-top:.75rem">Veilig afgerekend via Mollie</p>
+    </div></aside>
+  </div>
+</div></section>
+
+<footer style="border-top:1px solid var(--line);padding:2rem 0;text-align:center;color:var(--fg-faint);font-size:.8rem">
+  © Vami Pro — design preview. De echte pagina's zitten in /app en gebruiken dezelfde tokens.
+</footer>
+
+</body>
+</html>
