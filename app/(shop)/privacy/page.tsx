@@ -1,12 +1,66 @@
 export const metadata = { title: "Privacybeleid" };
-const TEXT = "# Privacybeleid\n\n### Privacyverklaring {{BEDRIJFSNAAM}}\n\n**Verwerkingsverantwoordelijke**: {{JURIDISCHE_NAAM}} (Vami Pro), {{ADRES}}, {{EMAIL}}.\n\n**Welke gegevens verwerken wij?** Naam, adres, e-mail, telefoonnummer, bestelgegevens en betaalstatus. Wij verwerken g\u00e9\u00e9n volledige betaalgegevens; betalingen lopen via Mollie.\n\n**Doeleinden**: het uitvoeren van je bestelling (levering, facturatie, klantenservice), het voldoen aan wettelijke (fiscale) bewaarplichten en, met je toestemming, het versturen van een nieuwsbrief.\n\n**Grondslagen (AVG/GDPR)**: uitvoering van de overeenkomst, wettelijke verplichting (o.a. fiscale bewaartermijn van 7 jaar voor facturen), en toestemming (nieuwsbrief).\n\n**Ontvangers/verwerkers**: Supabase (database/opslag), Cloudinary (media), Mollie (betalingen), Sendcloud en vervoerders (verzending), Vercel (hosting), en de e-mailprovider. Met deze partijen worden verwerkersovereenkomsten gesloten.\n\n**Bewaartermijnen**: bestelgegevens en facturen worden bewaard zolang wettelijk verplicht (fiscaal 7 jaar). Overige gegevens niet langer dan noodzakelijk.\n\n**Jouw rechten**: inzage, correctie, verwijdering, beperking, bezwaar en dataportabiliteit. Verzoeken via {{EMAIL}}. Je kunt een klacht indienen bij de Autoriteit Persoonsgegevens (NL) of de Gegevensbeschermingsautoriteit (BE).\n\n**Cookies**: wij gebruiken functionele cookies (winkelmandje, sessie) en \u2014 alleen met toestemming \u2014 analytische/marketingcookies. Beheer je voorkeuren via de cookiebanner.\n\n---\n";
-export default function Page() {
+
+export default function PrivacyPage() {
   return (
-    <div className="wrap py-16">
+    <div className="wrap py-12 md:py-24 max-w-4xl">
       <p className="eyebrow">Juridisch</p>
       <h1 className="h-section mt-3">Privacybeleid</h1>
-      <article className="mt-8 max-w-3xl whitespace-pre-wrap text-sm leading-relaxed text-fg-muted">
-        {TEXT}
+      
+      <article className="mt-10 space-y-10 text-base md:text-lg leading-relaxed text-fg-muted">
+        
+        <section>
+          <h2 className="font-display text-2xl font-semibold text-fg mb-4">Privacyverklaring Vami Pro</h2>
+          
+          <div className="space-y-8">
+            <div>
+              <p>
+                <strong className="text-fg font-medium">Verwerkingsverantwoordelijke:</strong><br />
+                Vami Pro<br />
+                [JOUW ADRES]<br />
+                info@vamipro.nl
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Welke gegevens verwerken wij?</h3>
+              <p>Naam, adres, e-mail, telefoonnummer, bestelgegevens en betaalstatus. Wij verwerken géén volledige betaalgegevens; alle betalingen lopen veilig via onze betaalpartner Mollie.</p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Doeleinden</h3>
+              <p>Wij verwerken je gegevens voor het uitvoeren van je bestelling (levering, facturatie, klantenservice), het voldoen aan wettelijke (fiscale) bewaarplichten en, met jouw uitdrukkelijke toestemming, het versturen van een nieuwsbrief.</p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Grondslagen (AVG/GDPR)</h3>
+              <p>Wij verwerken de gegevens op basis van de volgende grondslagen: uitvoering van de overeenkomst, wettelijke verplichting (o.a. fiscale bewaartermijn van 7 jaar voor facturen), en toestemming (voor bijvoorbeeld de nieuwsbrief).</p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Ontvangers / Verwerkers</h3>
+              <p>We delen je gegevens uitsluitend met partijen die nodig zijn voor het uitvoeren van onze dienstverlening. Dit zijn: Supabase (database en opslag), Cloudinary (media), Mollie (betalingen), Sendcloud en vervoerders (verzending), Vercel (hosting), en onze e-mailprovider. Met al deze partijen worden verwerkersovereenkomsten gesloten om je gegevens te beschermen.</p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Bewaartermijnen</h3>
+              <p>Bestelgegevens en facturen worden bewaard zolang wettelijk verplicht (fiscaal 7 jaar). Overige gegevens bewaren we niet langer dan noodzakelijk voor de doeleinden waarvoor ze zijn verzameld.</p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Jouw rechten</h3>
+              <p>Je hebt altijd het recht op inzage, correctie, verwijdering, beperking, bezwaar en dataportabiliteit van je persoonsgegevens. Verzoeken hiervoor kun je indienen via <strong>info@vamipro.nl</strong>. Daarnaast heb je het recht om een klacht in te dienen bij de Autoriteit Persoonsgegevens (NL) of de Gegevensbeschermingsautoriteit (BE).</p>
+            </div>
+
+            <div className="h-px w-full bg-line my-12" />
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Cookies</h3>
+              <p>Wij gebruiken functionele cookies (zoals voor je winkelmandje en sessie) om de website goed te laten werken. Alleen met jouw toestemming plaatsen we analytische of marketingcookies. Je kunt je voorkeuren te allen tijde beheren via onze cookiebanner.</p>
+            </div>
+
+          </div>
+        </section>
+
       </article>
     </div>
   );

@@ -1,12 +1,169 @@
-export const metadata = { title: "Algemene voorwaarden" };
-const TEXT = "# Algemene voorwaarden\n\n> **Belangrijk**: dit is een degelijke, bruikbare basis op maat van een NL-webshop die ook aan Belgische consumenten levert. Laat dit v\u00f3\u00f3r livegang eenmalig nakijken door een jurist. Vul alle `{{...}}` in.\n\n### Algemene Voorwaarden {{BEDRIJFSNAAM}}\n\n**Artikel 1 \u2013 Definities**\nIn deze voorwaarden betekent: \"Ondernemer\" {{JURIDISCHE_NAAM}}, handelend onder de naam Vami Pro; \"Consument\" de natuurlijke persoon die niet handelt in de uitoefening van beroep of bedrijf; \"Klant\" iedere afnemer; \"Overeenkomst\" de overeenkomst op afstand tussen Ondernemer en Klant; \"Bedenktijd\" de termijn waarbinnen de Consument gebruik kan maken van zijn herroepingsrecht.\n\n**Artikel 2 \u2013 Identiteit van de ondernemer**\n{{JURIDISCHE_NAAM}} (Vami Pro), gevestigd te {{ADRES}}. KVK: {{KVK}}. BTW: {{BTW_NL}}. E-mail: {{EMAIL}}. Telefoon: {{TELEFOON}}.\n\n**Artikel 3 \u2013 Toepasselijkheid**\n1. Deze voorwaarden zijn van toepassing op elk aanbod van de Ondernemer en op elke tot stand gekomen Overeenkomst op afstand.\n2. Voordat de Overeenkomst wordt gesloten, wordt de tekst van deze voorwaarden langs elektronische weg beschikbaar gesteld, zodat de Klant deze eenvoudig kan opslaan.\n\n**Artikel 4 \u2013 Het aanbod**\n1. Alle aanbiedingen zijn vrijblijvend en gelden zolang de voorraad strekt.\n2. Producten worden zo nauwkeurig mogelijk omschreven en afgebeeld. Kennelijke vergissingen of fouten binden de Ondernemer niet.\n\n**Artikel 5 \u2013 De overeenkomst**\n1. De Overeenkomst komt tot stand op het moment dat de Klant het aanbod aanvaardt en aan de gestelde voorwaarden voldoet (betaling).\n2. De Ondernemer bevestigt de ontvangst van de bestelling langs elektronische weg.\n\n**Artikel 6 \u2013 Prijzen**\n1. Alle prijzen zijn in euro's en inclusief btw, tenzij anders vermeld. Verzendkosten worden apart vermeld in de checkout.\n2. De Ondernemer behoudt zich het recht voor prijzen te wijzigen; de prijs ten tijde van de bestelling geldt.\n\n**Artikel 7 \u2013 Betaling**\n1. Betaling geschiedt via de in de webshop aangeboden methoden (iDEAL, Bancontact) via Mollie.\n2. De bestelling wordt na ontvangst van de betaling verwerkt.\n\n**Artikel 8 \u2013 Levering en uitvoering**\n1. Als plaats van levering geldt het adres dat de Klant heeft opgegeven.\n2. Bestellingen worden met bekwame spoed, uiterlijk binnen 30 dagen, geleverd, tenzij anders overeengekomen. Doorgaans wordt v\u00f3\u00f3r 16:00 op werkdagen betaalde bestellingen dezelfde dag verzonden.\n3. Het risico van beschadiging en/of vermissing van producten gaat over op de Klant op het moment van bezorging.\n\n**Artikel 9 \u2013 Herroepingsrecht (Consument)**\n1. De Consument kan een Overeenkomst gedurende een bedenktijd van **14 dagen** zonder opgave van redenen ontbinden. Deze termijn gaat in op de dag nadat de Consument (of een aangewezen derde) het product heeft ontvangen.\n2. Tijdens de bedenktijd gaat de Consument zorgvuldig om met het product en de verpakking. Hij pakt het product slechts uit voor zover nodig om de aard en kenmerken vast te stellen.\n3. Wil de Consument herroepen, dan meldt hij dit binnen de bedenktijd via {{EMAIL}} of het modelformulier voor herroeping.\n4. De Consument zendt het product binnen 14 dagen na de melding terug. De rechtstreekse kosten van terugzending komen voor rekening van de Consument, tenzij anders vermeld.\n\n**Artikel 10 \u2013 Uitsluiting herroepingsrecht**\nHet herroepingsrecht is uitgesloten voor verzegelde producten die om redenen van gezondheidsbescherming of hygi\u00ebne niet geschikt zijn om te worden teruggezonden en waarvan de verzegeling na levering is verbroken, en voor producten die na levering door hun aard onherroepelijk vermengd zijn (bijv. aangebroken vloeistoffen/chemicali\u00ebn).\n\n**Artikel 11 \u2013 Terugbetaling**\nBij herroeping betaalt de Ondernemer het reeds betaalde bedrag (inclusief eventuele leveringskosten voor heenzending op basis van de goedkoopste standaardlevering) uiterlijk binnen 14 dagen terug, mits het product retour is ontvangen of de Consument aantoont dat het is teruggezonden.\n\n**Artikel 12 \u2013 Conformiteit en garantie**\n1. De Ondernemer staat ervoor in dat de producten voldoen aan de Overeenkomst en de wettelijke (non-conformiteits)bepalingen. Voor Consumenten gelden de wettelijke rechten (in NL Boek 7 BW; in BE de regeling inzake consumentenkoop met de wettelijke garantietermijn van 2 jaar).\n2. Een door de Ondernemer verstrekte garantie doet niets af aan de wettelijke rechten van de Consument.\n\n**Artikel 13 \u2013 Klachten**\n1. Klachten over de uitvoering van de Overeenkomst worden binnen bekwame tijd nadat de Klant de gebreken heeft geconstateerd, volledig en duidelijk omschreven ingediend bij {{EMAIL}}.\n2. De Ondernemer beantwoordt klachten binnen 14 dagen.\n\n**Artikel 14 \u2013 Geschillen en toepasselijk recht**\n1. Op Overeenkomsten is Nederlands recht van toepassing.\n2. Voor Consumenten met woonplaats in **Belgi\u00eb** geldt dat dwingende bepalingen van Belgisch consumentenrecht onverkort van toepassing blijven en dat de Consument tevens een beroep kan doen op de wettelijke bescherming die het recht van zijn woonplaats biedt.\n3. Een Consument kan een geschil ook voorleggen via het Europese ODR-platform: https://ec.europa.eu/consumers/odr.\n\n---\n\n### Aanvulling specifiek voor Belgische consumenten\n\nVoor Klanten die als Consument in Belgi\u00eb wonen, gelden aanvullend:\n- **Wettelijke garantie**: minimaal 2 jaar conform het Belgisch consumentenrecht (Wetboek van economisch recht, Boek VI/IX).\n- **Herroepingstermijn**: 14 dagen, conform de Belgische omzetting van de EU-richtlijn consumentenrechten.\n- **Bevoegde instantie**: de Belgische Consument kan zich wenden tot de Consumentenombudsdienst (https://consumentenombudsdienst.be) en het ODR-platform.\n- **Taal**: communicatie en voorwaarden zijn in het Nederlands beschikbaar.\n\n---\n\n### Modelformulier voor herroeping\n> Aan {{JURIDISCHE_NAAM}}, {{ADRES}}, {{EMAIL}}:\n> Ik/Wij deel/delen u mede dat ik/wij onze overeenkomst betreffende de verkoop van de volgende producten herroep/herroepen: [producten] \u2014 Besteld op/Ontvangen op: [datum] \u2014 Naam consument(en) \u2014 Adres \u2014 Datum.\n\n---\n";
-export default function Page() {
+export const metadata = { title: "Algemene Voorwaarden" };
+
+export default function VoorwaardenPage() {
   return (
-    <div className="wrap py-16">
+    <div className="wrap py-12 md:py-24 max-w-4xl">
       <p className="eyebrow">Juridisch</p>
-      <h1 className="h-section mt-3">Algemene voorwaarden</h1>
-      <article className="mt-8 max-w-3xl whitespace-pre-wrap text-sm leading-relaxed text-fg-muted">
-        {TEXT}
+      <h1 className="h-section mt-3">Algemene Voorwaarden</h1>
+      
+      <article className="mt-10 space-y-10 text-base md:text-lg leading-relaxed text-fg-muted">
+        
+        <div className="rounded-sm border border-orange-500/30 bg-orange-500/10 p-4 text-sm text-orange-200/90 mb-8">
+          <strong className="font-semibold text-orange-100">Belangrijk:</strong> Dit is een degelijke, bruikbare basis op maat van een NL-webshop die ook aan Belgische consumenten levert. Let op: vergeet niet om je officiële KVK, BTW en adresgegevens in te vullen in de code.
+        </div>
+
+        <section>
+          <h2 className="font-display text-2xl font-semibold text-fg mb-4">Algemene Voorwaarden Vami Pro</h2>
+          
+          <div className="space-y-8">
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Artikel 1 – Definities</h3>
+              <p>In deze voorwaarden betekent: "Ondernemer" Vami Pro; "Consument" de natuurlijke persoon die niet handelt in de uitoefening van beroep of bedrijf; "Klant" iedere afnemer; "Overeenkomst" de overeenkomst op afstand tussen Ondernemer en Klant; "Bedenktijd" de termijn waarbinnen de Consument gebruik kan maken van zijn herroepingsrecht.</p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Artikel 2 – Identiteit van de ondernemer</h3>
+              <p>
+                Vami Pro, gevestigd te [JOUW ADRES]. <br />
+                KVK: [JOUW KVK NUMMER] <br />
+                BTW: [JOUW BTW NUMMER] <br />
+                E-mail: info@vamipro.nl <br />
+                Telefoon: [JOUW TELEFOONNUMMER]
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Artikel 3 – Toepasselijkheid</h3>
+              <ol className="list-decimal list-inside space-y-2">
+                <li>Deze voorwaarden zijn van toepassing op elk aanbod van de Ondernemer en op elke tot stand gekomen Overeenkomst op afstand.</li>
+                <li>Voordat de Overeenkomst wordt gesloten, wordt de tekst van deze voorwaarden langs elektronische weg beschikbaar gesteld, zodat de Klant deze eenvoudig kan opslaan.</li>
+              </ol>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Artikel 4 – Het aanbod</h3>
+              <ol className="list-decimal list-inside space-y-2">
+                <li>Alle aanbiedingen zijn vrijblijvend en gelden zolang de voorraad strekt.</li>
+                <li>Producten worden zo nauwkeurig mogelijk omschreven en afgebeeld. Kennelijke vergissingen of fouten binden de Ondernemer niet.</li>
+              </ol>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Artikel 5 – De overeenkomst</h3>
+              <ol className="list-decimal list-inside space-y-2">
+                <li>De Overeenkomst komt tot stand op het moment dat de Klant het aanbod aanvaardt en aan de gestelde voorwaarden voldoet (betaling).</li>
+                <li>De Ondernemer bevestigt de ontvangst van de bestelling langs elektronische weg.</li>
+              </ol>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Artikel 6 – Prijzen</h3>
+              <ol className="list-decimal list-inside space-y-2">
+                <li>Alle prijzen zijn in euro&apos;s en inclusief btw, tenzij anders vermeld. Verzendkosten worden apart vermeld in de checkout.</li>
+                <li>De Ondernemer behoudt zich het recht voor prijzen te wijzigen; de prijs ten tijde van de bestelling geldt.</li>
+              </ol>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Artikel 7 – Betaling</h3>
+              <ol className="list-decimal list-inside space-y-2">
+                <li>Betaling geschiedt via de in de webshop aangeboden methoden (iDEAL, Bancontact) via Mollie.</li>
+                <li>De bestelling wordt na ontvangst van de betaling verwerkt.</li>
+              </ol>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Artikel 8 – Levering en uitvoering</h3>
+              <ol className="list-decimal list-inside space-y-2">
+                <li>Als plaats van levering geldt het adres dat de Klant heeft opgegeven.</li>
+                <li>Bestellingen worden met bekwame spoed, uiterlijk binnen 30 dagen, geleverd, tenzij anders overeengekomen. Doorgaans wordt vóór 16:00 op werkdagen betaalde bestellingen dezelfde dag verzonden.</li>
+                <li>Het risico van beschadiging en/of vermissing van producten gaat over op de Klant op het moment van bezorging.</li>
+              </ol>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Artikel 9 – Herroepingsrecht (Consument)</h3>
+              <ol className="list-decimal list-inside space-y-2">
+                <li>De Consument kan een Overeenkomst gedurende een bedenktijd van <strong className="text-fg font-medium">14 dagen</strong> zonder opgave van redenen ontbinden. Deze termijn gaat in op de dag nadat de Consument (of een aangewezen derde) het product heeft ontvangen.</li>
+                <li>Tijdens de bedenktijd gaat de Consument zorgvuldig om met het product en de verpakking. Hij pakt het product slechts uit voor zover nodig om de aard en kenmerken vast te stellen.</li>
+                <li>Wil de Consument herroepen, dan meldt hij dit binnen de bedenktijd via info@vamipro.nl of het modelformulier voor herroeping.</li>
+                <li>De Consument zendt het product binnen 14 dagen na de melding terug. De rechtstreekse kosten van terugzending komen voor rekening van de Consument, tenzij anders vermeld.</li>
+              </ol>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Artikel 10 – Uitsluiting herroepingsrecht</h3>
+              <p>Het herroepingsrecht is uitgesloten voor verzegelde producten die om redenen van gezondheidsbescherming of hygiëne niet geschikt zijn om te worden teruggezonden en waarvan de verzegeling na levering is verbroken, en voor producten die na levering door hun aard onherroepelijk vermengd zijn (bijv. aangebroken vloeistoffen of chemicaliën).</p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Artikel 11 – Terugbetaling</h3>
+              <p>Bij herroeping betaalt de Ondernemer het reeds betaalde bedrag (inclusief eventuele leveringskosten voor heenzending op basis van de goedkoopste standaardlevering) uiterlijk binnen 14 dagen terug, mits het product retour is ontvangen of de Consument aantoont dat het is teruggezonden.</p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Artikel 12 – Conformiteit en garantie</h3>
+              <ol className="list-decimal list-inside space-y-2">
+                <li>De Ondernemer staat ervoor in dat de producten voldoen aan de Overeenkomst en de wettelijke (non-conformiteits)bepalingen. Voor Consumenten gelden de wettelijke rechten (in NL Boek 7 BW; in BE de regeling inzake consumentenkoop met de wettelijke garantietermijn van 2 jaar).</li>
+                <li>Een door de Ondernemer verstrekte garantie doet niets af aan de wettelijke rechten van de Consument.</li>
+              </ol>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Artikel 13 – Klachten</h3>
+              <ol className="list-decimal list-inside space-y-2">
+                <li>Klachten over de uitvoering van de Overeenkomst worden binnen bekwame tijd nadat de Klant de gebreken heeft geconstateerd, volledig en duidelijk omschreven ingediend bij info@vamipro.nl.</li>
+                <li>De Ondernemer beantwoordt klachten binnen 14 dagen.</li>
+              </ol>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-fg mb-1">Artikel 14 – Geschillen en toepasselijk recht</h3>
+              <ol className="list-decimal list-inside space-y-2">
+                <li>Op Overeenkomsten is Nederlands recht van toepassing.</li>
+                <li>Voor Consumenten met woonplaats in <strong className="text-fg font-medium">België</strong> geldt dat dwingende bepalingen van Belgisch consumentenrecht onverkort van toepassing blijven en dat de Consument tevens een beroep kan doen op de wettelijke bescherming die het recht van zijn woonplaats biedt.</li>
+                <li>Een Consument kan een geschil ook voorleggen via het Europese ODR-platform: <a href="https://ec.europa.eu/consumers/odr" className="text-accent hover:underline" target="_blank" rel="noreferrer">https://ec.europa.eu/consumers/odr</a>.</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <div className="h-px w-full bg-line my-12" />
+
+        <section>
+          <h2 className="font-display text-2xl font-semibold text-fg mb-4">Aanvulling specifiek voor Belgische consumenten</h2>
+          <p className="mb-4">Voor Klanten die als Consument in België wonen, gelden aanvullend:</p>
+          <ul className="space-y-4 list-disc list-inside marker:text-accent">
+            <li>
+              <strong className="text-fg font-medium">Wettelijke garantie:</strong> Minimaal 2 jaar conform het Belgisch consumentenrecht (Wetboek van economisch recht, Boek VI/IX).
+            </li>
+            <li>
+              <strong className="text-fg font-medium">Herroepingstermijn:</strong> 14 dagen, conform de Belgische omzetting van de EU-richtlijn consumentenrechten.
+            </li>
+            <li>
+              <strong className="text-fg font-medium">Bevoegde instantie:</strong> De Belgische Consument kan zich wenden tot de Consumentenombudsdienst en het ODR-platform.
+            </li>
+            <li>
+              <strong className="text-fg font-medium">Taal:</strong> Communicatie en voorwaarden zijn in het Nederlands beschikbaar.
+            </li>
+          </ul>
+        </section>
+
+        <div className="h-px w-full bg-line my-12" />
+
+        <section>
+          <h2 className="font-display text-2xl font-semibold text-fg mb-4">Modelformulier voor herroeping</h2>
+          <div className="rounded-md border hairline bg-panel-2 p-6 font-mono text-sm leading-relaxed text-fg-muted">
+            Aan Vami Pro, [JOUW ADRES], info@vamipro.nl:<br /><br />
+            Ik/Wij deel/delen u mede dat ik/wij onze overeenkomst betreffende de verkoop van de volgende producten herroep/herroepen:<br /><br />
+            - [Producten invullen]<br /><br />
+            Besteld op / Ontvangen op: [Datum invullen]<br />
+            Naam consument(en): [Naam invullen]<br />
+            Adres consument(en): [Adres invullen]<br /><br />
+            Datum: [Datum invullen]
+          </div>
+        </section>
+
       </article>
     </div>
   );
