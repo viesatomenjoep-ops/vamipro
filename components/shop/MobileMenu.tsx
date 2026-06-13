@@ -73,7 +73,8 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
 
           <div className="h-px w-full bg-white/10 my-2" />
 
-          <div className="flex flex-col gap-6">
+          {/* Service & Info section pushed further down */}
+          <div className="flex flex-col gap-6 mt-16 sm:mt-24">
             <p className="text-sm uppercase tracking-[0.2em] text-white/50 mb-2">Service & Info</p>
             <Link prefetch={true} href="/verzending" className="text-white hover:text-accent transition-colors">Verzending</Link>
             <Link prefetch={true} href="/retourneren" className="text-white hover:text-accent transition-colors">Retourneren</Link>

@@ -140,6 +140,23 @@ export default async function HomePage() {
         </section>
       )}
 
+      {/* ===== WASHING TOOLS AI BANNER ===== */}
+      <section className="relative h-[60vh] min-h-[400px] w-full mt-4 mb-16 overflow-hidden">
+        <img 
+          src="/images/washing_tools_detailing.png" 
+          alt="Premium Car Detailing Washing Tools" 
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/20 to-transparent" />
+        
+        <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 text-center">
+          <p className="eyebrow text-accent-bright drop-shadow-md">Professional Grade</p>
+          <h2 className="mt-3 font-display text-3xl md:text-5xl font-semibold text-white drop-shadow-lg">
+            Alles voor de <br className="md:hidden" />perfecte wasbeurt.
+          </h2>
+        </div>
+      </section>
+
       {/* ===== CLOSING CTA ===== */}
       <section className="wrap pb-12 md:pb-24">
         <div className="card relative overflow-hidden p-8 text-center md:p-12">
