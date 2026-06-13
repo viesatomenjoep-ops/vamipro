@@ -47,7 +47,7 @@ export async function POST(req: Request) {
 
           // 2. Extract keywords from user and see if product matches
           const keywords = userText.split(/[ \?,.!]+/);
-          const importantKeywords = keywords.filter(k => k.length > 3 && !['welke', 'hebben', 'jullie', 'voor', 'naar', 'zoeken', 'kost', 'prijs', 'duur', 'auto'].includes(k));
+          const importantKeywords = keywords.filter((k: string) => k.length > 3 && !['welke', 'hebben', 'jullie', 'voor', 'naar', 'zoeken', 'kost', 'prijs', 'duur', 'auto'].includes(k));
           
           for (const word of importantKeywords) {
             if (nameLower.includes(word) || descLower.includes(word)) {

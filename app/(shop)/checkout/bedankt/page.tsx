@@ -6,7 +6,7 @@ export const metadata = { title: 'Bedankt voor je bestelling' };
 export default async function ThanksPage({ searchParams }: { searchParams: Promise<{ order?: string }> }) {
   const { order } = await searchParams;
   return (
-    <div className="wrap grid min-h-[60vh] place-items-center py-20 text-center">
+    <div className="wrap grid min-h-[60vh] place-items-center pt-0 pb-20 text-center">
       <div>
         <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-accent-soft ring-1 ring-accent/30">
           <Check size={28} className="text-accent" />
