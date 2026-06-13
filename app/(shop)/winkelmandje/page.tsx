@@ -25,31 +25,36 @@ export default function CartPage() {
       <div className="mt-10 grid gap-6 lg:gap-8 lg:grid-cols-[1.6fr_1fr]">
         <div className="divide-y divide-[var(--line)] overflow-hidden rounded border hairline">
           {items.map((i) => (
-            <div key={i.productId} className="flex flex-col sm:flex-row sm:items-center gap-4 bg-panel p-4">
-              <div className="flex items-start gap-4 flex-1">
-                <div className="card h-20 w-20 shrink-0 overflow-hidden">
-                  {i.image
-                    ? <img src={cldUrl(i.image, { w: 160 })} alt={i.name} className="h-full w-full object-contain p-2" />
-                    : <div className="h-full w-full bg-panel-2" />}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <Link href={`/producten/${i.slug}`} className="font-display font-medium hover:text-accent line-clamp-2">{i.name}</Link>
-                  <p className="text-sm text-fg-muted mt-1">{euro(i.priceCents)}</p>
-                  
-                  {/* Mobile only: quantity & total under price */}
-                  <div className="mt-3 flex sm:hidden items-center justify-between">
-                    <div className="inline-flex items-center rounded-full border hairline bg-bg">
-                      <button onClick={() => setQty(i.productId, i.quantity - 1)} className="grid h-8 w-8 place-items-center text-fg-muted hover:text-accent"><Minus size={14} /></button>
-                      <span className="w-6 text-center text-sm font-display">{i.quantity}</span>
-                      <button onClick={() => setQty(i.productId, i.quantity + 1)} className="grid h-8 w-8 place-items-center text-fg-muted hover:text-accent"><Plus size={14} /></button>
-                    </div>
-                    <span className="font-display font-medium">{euro(i.priceCents * i.quantity)}</span>
+            <div key={i.productId} className="flex items-center gap-3 sm:gap-4 bg-panel p-3 sm:p-4">
+              {/* Product Image */}
+              <div className="card h-16 w-16 sm:h-20 sm:w-20 shrink-0 overflow-hidden">
+                {i.image
+                  ? <img src={cldUrl(i.image, { w: 160 })} alt={i.name} className="h-full w-full object-contain p-1 sm:p-2" />
+                  : <div className="h-full w-full bg-panel-2" />}
+              </div>
+              
+              {/* Product Info & Mobile Controls */}
+              <div className="min-w-0 flex-1">
+                <Link href={`/producten/${i.slug}`} className="font-display text-sm sm:text-base font-medium hover:text-accent line-clamp-1">{i.name}</Link>
+                
+                {/* Mobile specific layout */}
+                <div className="mt-2 flex sm:hidden items-center justify-between">
+                  <div className="inline-flex items-center rounded-md border hairline bg-bg">
+                    <button onClick={() => setQty(i.productId, i.quantity - 1)} className="grid h-7 w-7 place-items-center text-fg-muted hover:text-accent"><Minus size={12} /></button>
+                    <span className="w-5 text-center text-xs font-display">{i.quantity}</span>
+                    <button onClick={() => setQty(i.productId, i.quantity + 1)} className="grid h-7 w-7 place-items-center text-fg-muted hover:text-accent"><Plus size={12} /></button>
                   </div>
+                  <span className="font-display text-sm font-semibold">{euro(i.priceCents * i.quantity)}</span>
                 </div>
-                <button onClick={() => remove(i.productId)} className="sm:hidden text-fg-faint hover:text-red-400 p-1" aria-label="Verwijder"><X size={18} /></button>
+                
+                {/* Desktop unit price */}
+                <p className="hidden sm:block text-sm text-fg-muted mt-1">{euro(i.priceCents)}</p>
               </div>
 
-              {/* Desktop only: quantity, total, remove */}
+              {/* Mobile Remove */}
+              <button onClick={() => remove(i.productId)} className="sm:hidden text-fg-faint hover:text-red-400 p-1 shrink-0" aria-label="Verwijder"><X size={18} /></button>
+
+              {/* Desktop specific layout (Controls & Total) */}
               <div className="hidden sm:flex items-center gap-6 shrink-0">
                 <div className="inline-flex items-center rounded-full border hairline bg-bg">
                   <button onClick={() => setQty(i.productId, i.quantity - 1)} className="grid h-9 w-9 place-items-center text-fg-muted hover:text-accent"><Minus size={14} /></button>
