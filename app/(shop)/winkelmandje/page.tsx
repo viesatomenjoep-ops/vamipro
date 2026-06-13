@@ -25,23 +25,40 @@ export default function CartPage() {
       <div className="mt-10 grid gap-10 lg:grid-cols-[1.6fr_1fr]">
         <div className="divide-y divide-[var(--line)] overflow-hidden rounded border hairline">
           {items.map((i) => (
-            <div key={i.productId} className="flex items-center gap-4 bg-panel p-4">
-              <div className="card h-20 w-20 shrink-0 overflow-hidden">
-                {i.image
-                  ? <img src={cldUrl(i.image, { w: 160 })} alt={i.name} className="h-full w-full object-cover" />
-                  : <div className="h-full w-full bg-panel-2" />}
+            <div key={i.productId} className="flex flex-col sm:flex-row sm:items-center gap-4 bg-panel p-4">
+              <div className="flex items-start gap-4 flex-1">
+                <div className="card h-20 w-20 shrink-0 overflow-hidden">
+                  {i.image
+                    ? <img src={cldUrl(i.image, { w: 160 })} alt={i.name} className="h-full w-full object-cover" />
+                    : <div className="h-full w-full bg-panel-2" />}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <Link href={`/producten/${i.slug}`} className="font-display font-medium hover:text-accent line-clamp-2">{i.name}</Link>
+                  <p className="text-sm text-fg-muted mt-1">{euro(i.priceCents)}</p>
+                  
+                  {/* Mobile only: quantity & total under price */}
+                  <div className="mt-3 flex sm:hidden items-center justify-between">
+                    <div className="inline-flex items-center rounded-full border hairline bg-bg">
+                      <button onClick={() => setQty(i.productId, i.quantity - 1)} className="grid h-8 w-8 place-items-center text-fg-muted hover:text-accent"><Minus size={14} /></button>
+                      <span className="w-6 text-center text-sm font-display">{i.quantity}</span>
+                      <button onClick={() => setQty(i.productId, i.quantity + 1)} className="grid h-8 w-8 place-items-center text-fg-muted hover:text-accent"><Plus size={14} /></button>
+                    </div>
+                    <span className="font-display font-medium">{euro(i.priceCents * i.quantity)}</span>
+                  </div>
+                </div>
+                <button onClick={() => remove(i.productId)} className="sm:hidden text-fg-faint hover:text-red-400 p-1" aria-label="Verwijder"><X size={18} /></button>
               </div>
-              <div className="min-w-0 flex-1">
-                <Link href={`/producten/${i.slug}`} className="font-display font-medium hover:text-accent">{i.name}</Link>
-                <p className="text-sm text-fg-muted">{euro(i.priceCents)}</p>
+
+              {/* Desktop only: quantity, total, remove */}
+              <div className="hidden sm:flex items-center gap-6 shrink-0">
+                <div className="inline-flex items-center rounded-full border hairline bg-bg">
+                  <button onClick={() => setQty(i.productId, i.quantity - 1)} className="grid h-9 w-9 place-items-center text-fg-muted hover:text-accent"><Minus size={14} /></button>
+                  <span className="w-7 text-center text-sm font-display">{i.quantity}</span>
+                  <button onClick={() => setQty(i.productId, i.quantity + 1)} className="grid h-9 w-9 place-items-center text-fg-muted hover:text-accent"><Plus size={14} /></button>
+                </div>
+                <span className="w-24 text-right font-display font-medium">{euro(i.priceCents * i.quantity)}</span>
+                <button onClick={() => remove(i.productId)} className="text-fg-faint hover:text-red-400 ml-2" aria-label="Verwijder"><X size={18} /></button>
               </div>
-              <div className="inline-flex items-center rounded-full border hairline">
-                <button onClick={() => setQty(i.productId, i.quantity - 1)} className="grid h-9 w-9 place-items-center text-fg-muted hover:text-accent"><Minus size={14} /></button>
-                <span className="w-7 text-center text-sm font-display">{i.quantity}</span>
-                <button onClick={() => setQty(i.productId, i.quantity + 1)} className="grid h-9 w-9 place-items-center text-fg-muted hover:text-accent"><Plus size={14} /></button>
-              </div>
-              <span className="w-24 text-right font-display font-medium">{euro(i.priceCents * i.quantity)}</span>
-              <button onClick={() => remove(i.productId)} className="text-fg-faint hover:text-red-400" aria-label="Verwijder"><X size={18} /></button>
             </div>
           ))}
         </div>
@@ -74,7 +91,7 @@ export default function CartPage() {
                 alert('Ongeldige of verlopen kortingscode');
               }
             }} className="flex gap-2 mb-4">
-              <input name="code" type="text" placeholder="Kortingscode" className="input flex-1 text-sm uppercase" />
+              <input name="code" type="text" placeholder="Kortingscode" className="input flex-1 text-sm uppercase text-center placeholder:normal-case placeholder:text-center" />
               <button type="submit" className="btn bg-panel-2 hover:bg-raise text-sm">Toepassen</button>
             </form>
             <div className="flex justify-between">
