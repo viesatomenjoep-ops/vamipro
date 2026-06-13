@@ -29,7 +29,7 @@ export default function CartPage() {
               <div className="flex items-start gap-4 flex-1">
                 <div className="card h-20 w-20 shrink-0 overflow-hidden">
                   {i.image
-                    ? <img src={cldUrl(i.image, { w: 160 })} alt={i.name} className="h-full w-full object-cover" />
+                    ? <img src={cldUrl(i.image, { w: 160 })} alt={i.name} className="h-full w-full object-contain p-2" />
                     : <div className="h-full w-full bg-panel-2" />}
                 </div>
                 <div className="min-w-0 flex-1">

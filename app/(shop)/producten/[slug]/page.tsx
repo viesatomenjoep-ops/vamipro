@@ -52,7 +52,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div className="space-y-3">
           <div className="card aspect-square overflow-hidden">
             {imgs[0]
-              ? <img src={cldUrl(imgs[0], { w: 1100 })} alt={p.name} className="h-full w-full object-cover" />
+              ? <img src={cldUrl(imgs[0], { w: 1100 })} alt={p.name} className="h-full w-full object-contain p-4" />
               : <div className="grid h-full w-full place-items-center bg-panel-2">
                   <span className="font-display text-sm uppercase tracking-[0.25em] text-fg-faint">Vami Pro</span>
                 </div>}
