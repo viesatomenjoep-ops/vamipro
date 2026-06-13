@@ -3,30 +3,30 @@
 @tailwind utilities;
 
 /* =========================================================
-   VAMI PRO — DESIGN SYSTEM  ·  "Slate Azure" (Optie 3)
-   Luxe, matte, moderne uitstraling. Leigrijs met azure blauw.
+   VAMI PRO — DESIGN SYSTEM  ·  "Carbon & Sapphire" (Optie 2)
+   Luxe, donkere, carbon-look met krachtige saffierblauwe accenten.
    ========================================================= */
 :root {
   /* Surfaces (donker) */
-  --bg: #141A21;           /* mat leigrijs */
-  --panel: #1E2630;        /* iets opgelicht leigrijs */
-  --panel-2: #27313F;      /* hover state op panelen */
-  --raise: #2A3644;        /* hover op cards */
-  --line: #334155;         /* hairline borders */
-  --line-strong: #475569;
+  --bg: #09090B;           /* Zwart antraciet */
+  --panel: #18181B;        /* Donkergrijs */
+  --panel-2: #27272A;      /* Hover state op panelen */
+  --raise: #3F3F46;        /* Hover op cards */
+  --line: #27272A;         /* Hairline borders */
+  --line-strong: #3F3F46;
 
   /* Text */
-  --fg: #F1F5F9;           /* off-white/ijs voor goede leesbaarheid */
-  --fg-muted: #94A3B8;     /* blauw-grijs secundair */
-  --fg-faint: #64748B;     /* donkerder blauw-grijs voor bijschriften */
+  --fg: #FAFAFA;           /* Zuiver wit */
+  --fg-muted: #A1A1AA;     /* Staalgrijs */
+  --fg-faint: #71717A;     /* Donkerder grijs voor bijschriften */
 
-  /* Accent — azure blauw */
-  --accent: #3B82F6;       /* azure/neon blauw */
-  --accent-deep: #2563EB;  /* dieper blauw voor hover state */
-  --accent-bright: #60A5FA;/* levendig blauw voor gradients */
-  --accent-soft: rgba(59, 130, 246, 0.1);  /* lichte wash voor achtergronden */
-  --accent-glow: rgba(59, 130, 246, 0.2);
-  --on-accent: #FFFFFF;    /* tekst op accent */
+  /* Accent — Saffierblauw */
+  --accent: #2563EB;       /* Diep Saffierblauw */
+  --accent-deep: #1D4ED8;  /* Dieper blauw voor hover state */
+  --accent-bright: #3B82F6;/* Levendig blauw voor gradients */
+  --accent-soft: rgba(37, 99, 235, 0.1);  /* Lichte wash */
+  --accent-glow: rgba(37, 99, 235, 0.2);
+  --on-accent: #FFFFFF;    /* Tekst op accent */
 
   /* Status */
   --good: #10b981;

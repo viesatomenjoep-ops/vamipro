@@ -56,26 +56,8 @@ export default async function HomePage() {
           {/* product-forward visual panel */}
           <div className="relative">
             <div className="card relative aspect-square overflow-hidden md:aspect-[4/5] bg-black">
-              {settings?.hero_media_url ? (
-                settings.hero_media_type === 'video' ? (
-                  <video 
-                    src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/${settings.hero_media_url}`} 
-                    autoPlay muted loop playsInline 
-                    className="absolute inset-0 h-full w-full object-cover opacity-80"
-                  />
-                ) : (
-                  <img 
-                    src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_fill,w_800,h_1000/${settings.hero_media_url}`} 
-                    alt="Hero" 
-                    className="absolute inset-0 h-full w-full object-cover opacity-80"
-                  />
-                )
-              ) : (
-                <>
-                  <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, var(--accent-soft), var(--panel) 70%)' }} />
-                  <div aria-hidden className="absolute -left-10 top-10 h-40 w-[140%] -rotate-12" style={{ background: 'linear-gradient(90deg, transparent, rgba(91,42,134,.14), transparent)' }} />
-                </>
-              )}
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, var(--accent-soft), var(--panel) 70%)' }} />
+              <div aria-hidden className="absolute -left-10 top-10 h-40 w-[140%] -rotate-12" style={{ background: 'linear-gradient(90deg, transparent, rgba(91,42,134,.14), transparent)' }} />
               
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-20">
                 <p className="eyebrow text-accent-bright">Vami Pro</p>
@@ -114,12 +96,12 @@ export default async function HomePage() {
             <p className="eyebrow">Aanbod</p>
             <h2 className="h-section mt-3">Ons assortiment</h2>
           </div>
-          <Link href="/producten" className="hidden text-sm text-accent hover:underline sm:inline">Alles bekijken →</Link>
+          <Link prefetch={true} href="/producten" className="hidden text-sm text-accent hover:underline sm:inline">Alles bekijken →</Link>
         </div>
         <div className="mt-8 grid gap-px overflow-hidden rounded border hairline grid-cols-2 lg:grid-cols-3">
           {categories?.map((c, i) => (
             <Reveal key={c.slug} delay={i * 60}>
-              <Link href={`/categorie/${c.slug}`}
+              <Link prefetch={true} href={`/categorie/${c.slug}`}
                 className="group flex h-full flex-col justify-between bg-panel p-4 transition-colors hover:bg-panel-2 sm:p-7">
                 <span className="font-display text-xs text-accent sm:text-sm">0{i + 1}</span>
                 <div className="mt-6 sm:mt-10">

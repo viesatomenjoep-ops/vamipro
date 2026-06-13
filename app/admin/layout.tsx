@@ -9,7 +9,6 @@ const nav = [
   ['/admin/producten', 'Producten', Package],
   ['/admin/categorieen', 'Categorieën', Package],
   ['/admin/facturen', 'Facturen', FileText],
-  ['/admin/instellingen', 'Instellingen', Settings],
 ] as const;
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
