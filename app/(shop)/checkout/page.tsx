@@ -55,34 +55,34 @@ export default function CheckoutPage() {
   );
 
   return (
-    <div className="wrap py-12">
+    <div className="wrap py-8 md:py-12 overflow-x-hidden w-full">
       <div className="flex items-center gap-2 text-sm text-fg-faint">
         <Lock size={14} className="text-accent" /> Beveiligde kassa
       </div>
       <h1 className="h-section mt-3">Afrekenen</h1>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr]">
+      <div className="mt-8 md:mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr] w-full">
         {/* Form */}
         <div className="space-y-10">
           <section>
             <p className="eyebrow">01 · Contact</p>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <input className="field sm:col-span-2" placeholder="E-mailadres" type="email" onChange={set('email')} />
-              <input className="field sm:col-span-2" placeholder="Telefoonnummer" onChange={set('phone')} />
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <input className="field sm:col-span-2 text-base py-3" placeholder="E-mailadres" type="email" autoComplete="email" onChange={set('email')} />
+              <input className="field sm:col-span-2 text-base py-3" placeholder="Telefoonnummer" type="tel" autoComplete="tel" onChange={set('phone')} />
             </div>
           </section>
 
           <section>
             <p className="eyebrow">02 · Bezorgadres</p>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <input className="field" placeholder="Voornaam" onChange={set('firstName')} />
-              <input className="field" placeholder="Achternaam" onChange={set('lastName')} />
-              <input className="field sm:col-span-2" placeholder="Straatnaam" onChange={set('address')} />
-              <input className="field" placeholder="Huisnummer" onChange={set('houseNumber')} />
-              <input className="field" placeholder="Toevoeging (optioneel)" onChange={set('addition')} />
-              <input className="field" placeholder="Postcode" onChange={set('postalCode')} />
-              <input className="field" placeholder="Plaats" onChange={set('city')} />
-              <select className="field sm:col-span-2" value={f.country} onChange={set('country')}>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <input className="field text-base py-3" placeholder="Voornaam" autoComplete="given-name" onChange={set('firstName')} />
+              <input className="field text-base py-3" placeholder="Achternaam" autoComplete="family-name" onChange={set('lastName')} />
+              <input className="field sm:col-span-2 text-base py-3" placeholder="Straatnaam" autoComplete="address-line1" onChange={set('address')} />
+              <input className="field text-base py-3" placeholder="Huisnummer" autoComplete="address-line2" onChange={set('houseNumber')} />
+              <input className="field text-base py-3" placeholder="Toevoeging (optioneel)" autoComplete="address-line3" onChange={set('addition')} />
+              <input className="field text-base py-3" placeholder="Postcode" autoComplete="postal-code" onChange={set('postalCode')} />
+              <input className="field text-base py-3" placeholder="Plaats" autoComplete="address-level2" onChange={set('city')} />
+              <select className="field sm:col-span-2 text-base py-3" value={f.country} autoComplete="country" onChange={set('country')}>
                 <option value="NL">Nederland</option>
                 <option value="BE">België</option>
               </select>
@@ -92,9 +92,9 @@ export default function CheckoutPage() {
               Ik bestel zakelijk (factuur op bedrijfsnaam)
             </label>
             {biz && (
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                <input className="field" placeholder="Bedrijfsnaam" onChange={set('company')} />
-                <input className="field" placeholder="BTW-nummer" onChange={set('vatNumber')} />
+              <div className="mt-3 grid gap-4 sm:grid-cols-2">
+                <input className="field text-base py-3" placeholder="Bedrijfsnaam" autoComplete="organization" onChange={set('company')} />
+                <input className="field text-base py-3" placeholder="BTW-nummer" onChange={set('vatNumber')} />
               </div>
             )}
           </section>
@@ -154,8 +154,9 @@ export default function CheckoutPage() {
             <button onClick={pay} disabled={loading} className="btn btn-primary mt-5 w-full justify-center disabled:opacity-50">
               {loading ? 'Bezig met betalen…' : `Betaal ${euro(total)}`}
             </button>
-            <p className="mt-3 flex items-center justify-center gap-2 text-xs text-fg-faint">
-              <ShieldCheck size={13} className="text-accent" /> Veilig afgerekend via Mollie
+            <p className="mt-3 flex items-center justify-center gap-2 text-xs text-fg-faint text-center break-words">
+              <ShieldCheck size={14} className="text-accent shrink-0" /> 
+              <span>Veilig afgerekend via Mollie</span>
             </p>
           </div>
         </aside>

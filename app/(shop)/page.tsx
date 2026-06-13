@@ -19,68 +19,67 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ===== HERO & USPS ===== */}
-      <section className="relative w-full overflow-hidden">
-        {/* Background Image */}
-        <img 
-          src="/images/audi_q3_detailing.png" 
-          alt="Audi Q3 Detailing by Vami Pro" 
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/80 to-black/20" />
-        
+      {/* ===== HERO TEXT (Left aligned under navbar) ===== */}
+      <section className="relative overflow-hidden pt-12 pb-12 md:pt-24 md:pb-20">
         {/* ambient gloss reflection */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 mix-blend-screen">
+        <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full"
                style={{ background: 'radial-gradient(circle, var(--accent-glow), transparent 65%)', filter: 'blur(30px)' }} />
           <div className="absolute left-1/2 top-0 h-px w-full -translate-x-1/2"
                style={{ background: 'linear-gradient(90deg, transparent, var(--accent-glow), transparent)' }} />
         </div>
 
-        <div className="wrap relative z-10 w-full pt-32 pb-12 md:pb-20 min-h-[85vh] flex flex-col justify-end">
-          <div className="max-w-2xl">
-            <p className="eyebrow text-base md:text-xs text-accent-bright drop-shadow-md">Car detailing · NL &amp; BE</p>
-            <h1 className="h-hero mt-4 text-[3.5rem] leading-[1.05] md:text-[4rem] lg:text-[4.5rem] text-white drop-shadow-lg">
-              Een finish die<br />
-              het licht vangt.
-            </h1>
-            <p className="mt-6 text-xl text-white/90 md:text-lg drop-shadow">
-              Professionele detailingproducten, ontwikkeld voor liefhebbers en pro&apos;s.
-              Van veilig wassen tot keramische coatings met jarenlange bescherming.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/producten" className="btn btn-primary text-lg px-8 py-4 md:text-sm md:px-5 md:py-2.5 shadow-lg border border-accent">Shop alle producten</Link>
-            </div>
-            
-            <dl className="mt-12 grid grid-cols-3 gap-4 md:mt-16 md:gap-6 border-t border-white/20 pt-8">
-              {[['3 jaar', 'bescherming'], ['1–2 dagen', 'levering NL'], ['9H', 'coating hardheid']].map(([n, l]) => (
-                <div key={l}>
-                  <dt className="font-display text-3xl font-semibold text-white md:text-2xl drop-shadow">{n}</dt>
-                  <dd className="text-sm uppercase tracking-wider text-white/70 md:text-xs mt-1">{l}</dd>
-                </div>
-              ))}
-            </dl>
+        <div className="wrap relative z-10 w-full max-w-3xl">
+          <p className="eyebrow text-base md:text-xs">Car detailing · NL &amp; BE</p>
+          <h1 className="h-hero mt-6 text-[3.5rem] leading-[1.05] md:text-[4rem] lg:text-[4.5rem] md:mt-5">
+            Een finish die<br />
+            <span className="gloss-text">het licht vangt.</span>
+          </h1>
+          <p className="mt-8 max-w-xl text-xl text-fg-muted md:mt-6 md:text-lg">
+            Professionele detailingproducten, ontwikkeld voor liefhebbers en pro&apos;s.
+            Van veilig wassen tot keramische coatings met jarenlange bescherming.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-3 md:mt-8">
+            <Link href="/producten" className="btn btn-primary text-lg px-8 py-4 md:text-sm md:px-5 md:py-2.5">Shop alle producten</Link>
           </div>
-        </div>
-
-        {/* ===== USP STRIP (Overlay on the image) ===== */}
-        <div className="relative z-10 border-t border-white/10 bg-black/40 backdrop-blur-md">
-          <div className="wrap grid grid-cols-2 gap-px md:grid-cols-4">
-            {[
-              [Truck, 'Voor 16:00 besteld', 'vandaag verzonden'],
-              [ShieldCheck, 'Veilig betalen', 'iDEAL & Bancontact'],
-              [Sparkles, 'Gratis verzending', 'vanaf € 75'],
-              [RotateCcw, '14 dagen', 'bedenktijd'],
-            ].map(([Icon, t, s]: any, i) => (
-              <div key={i} className="flex items-center gap-3 py-6">
-                <Icon size={20} className="text-accent-bright drop-shadow" strokeWidth={1.6} />
-                <div>
-                  <p className="text-sm font-medium text-white">{t}</p>
-                  <p className="text-xs text-white/70">{s}</p>
-                </div>
+          <dl className="mt-16 grid grid-cols-3 gap-4 md:mt-12 md:gap-6">
+            {[['3 jaar', 'bescherming'], ['1–2 dagen', 'levering NL'], ['9H', 'coating hardheid']].map(([n, l]) => (
+              <div key={l}>
+                <dt className="font-display text-3xl font-semibold text-fg md:text-2xl">{n}</dt>
+                <dd className="text-sm uppercase tracking-wider text-fg-faint md:text-xs mt-1">{l}</dd>
               </div>
             ))}
-          </div>
+          </dl>
+        </div>
+      </section>
+
+      {/* ===== FULL WIDTH AUDI Q3 BANNER ===== */}
+      <section className="relative h-[60vh] min-h-[400px] w-full overflow-hidden">
+        <img 
+          src="/images/audi_q3_detailing.png" 
+          alt="Audi Q3 Detailing by Vami Pro" 
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent" />
+      </section>
+
+      {/* ===== USP STRIP ===== */}
+      <section className="border-y hairline bg-panel">
+        <div className="wrap grid grid-cols-2 gap-px md:grid-cols-4">
+          {[
+            [Truck, 'Voor 16:00 besteld', 'vandaag verzonden'],
+            [ShieldCheck, 'Veilig betalen', 'iDEAL & Bancontact'],
+            [Sparkles, 'Gratis verzending', 'vanaf € 75'],
+            [RotateCcw, '14 dagen', 'bedenktijd'],
+          ].map(([Icon, t, s]: any, i) => (
+            <div key={i} className="flex items-center gap-3 py-6">
+              <Icon size={20} className="text-accent" strokeWidth={1.6} />
+              <div>
+                <p className="text-sm font-medium text-fg">{t}</p>
+                <p className="text-xs text-fg-muted">{s}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -97,12 +96,12 @@ export default async function HomePage() {
           {categories?.map((c, i) => (
             <Reveal key={c.slug} delay={i * 60}>
               <Link prefetch={true} href={`/categorie/${c.slug}`}
-                className="group flex h-full flex-col justify-between bg-panel p-4 transition-colors hover:bg-panel-2 sm:p-7">
-                <span className="font-display text-xs text-accent sm:text-sm">0{i + 1}</span>
+                className="group flex h-full flex-col justify-between bg-panel p-4 transition-all duration-300 hover:bg-panel-2 hover:-translate-y-1 hover:shadow-lg sm:p-7">
+                <span className="font-display text-xs text-accent transition-transform duration-300 group-hover:scale-110 group-hover:translate-x-1 sm:text-sm">0{i + 1}</span>
                 <div className="mt-6 sm:mt-10">
-                  <h3 className="font-display text-base font-medium sm:text-xl">{c.name}</h3>
+                  <h3 className="font-display text-base font-medium transition-colors duration-300 group-hover:text-accent-bright sm:text-xl">{c.name}</h3>
                   {c.description && <p className="mt-1 text-xs text-fg-muted sm:mt-2 sm:text-sm">{c.description}</p>}
-                  <span className="mt-3 inline-block text-xs text-fg-faint transition-colors group-hover:text-accent sm:mt-4 sm:text-sm">
+                  <span className="mt-3 inline-block text-xs text-fg-faint transition-all duration-300 group-hover:text-accent group-hover:translate-x-1 sm:mt-4 sm:text-sm">
                     Bekijk categorie →
                   </span>
                 </div>
