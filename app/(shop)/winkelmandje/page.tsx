@@ -20,7 +20,7 @@ export default function CartPage() {
   );
 
   return (
-    <div className="wrap py-16">
+    <div className="wrap pt-4 pb-16 lg:pt-8">
       <h1 className="h-section">Winkelmandje</h1>
       <div className="mt-10 grid gap-10 lg:grid-cols-[1.6fr_1fr]">
         <div className="divide-y divide-[var(--line)] overflow-hidden rounded border hairline">
