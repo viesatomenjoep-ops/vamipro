@@ -8,7 +8,7 @@ export default function ShopLayout({ children }: { children: React.ReactNode }) 
     <>
       <PromoPopup />
       <Header />
-      <main className="min-h-screen pt-0">
+      <main className="min-h-screen pt-8 md:pt-10">
         {children}
       </main>
       <Footer />
