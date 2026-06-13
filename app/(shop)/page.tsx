@@ -13,6 +13,8 @@ export default async function HomePage() {
   const { data: featured } = isMock 
     ? getMockProducts({ featured: true, limit: 4 }) as any
     : await supabase.from('products').select('*').eq('is_active', true).eq('is_featured', true).limit(4);
+    
+  const { data: settings } = await supabase.from('store_settings').select('*').eq('id', 1).single();
 
   return (
     <>
@@ -39,7 +41,6 @@ export default async function HomePage() {
             </p>
             <div className="mt-6 flex flex-wrap gap-3 md:mt-8">
               <Link href="/producten" className="btn btn-primary">Shop alle producten</Link>
-              <Link href="/categorie/coating" className="btn btn-ghost">Ontdek coatings</Link>
             </div>
             <dl className="mt-8 grid max-w-md grid-cols-3 gap-4 md:mt-12 md:gap-6">
               {[['3 jaar', 'bescherming'], ['1–2 dagen', 'levering NL'], ['9H', 'coating hardheid']].map(([n, l]) => (
@@ -53,15 +54,32 @@ export default async function HomePage() {
 
           {/* product-forward visual panel */}
           <div className="relative">
-            <div className="card relative aspect-square overflow-hidden md:aspect-[4/5]">
-              <div className="absolute inset-0"
-                   style={{ background: 'linear-gradient(160deg, var(--accent-soft), var(--panel) 70%)' }} />
-              <div aria-hidden className="absolute -left-10 top-10 h-40 w-[140%] -rotate-12"
-                   style={{ background: 'linear-gradient(90deg, transparent, rgba(91,42,134,.14), transparent)' }} />
-              <div className="absolute bottom-6 left-6 right-6">
-                <p className="eyebrow">Signature</p>
-                <p className="mt-2 font-display text-xl font-medium">Vami Ceramic Coating 9H</p>
-                <p className="text-sm text-fg-muted">Extreme glans · hydrofoob · tot 3 jaar</p>
+            <div className="card relative aspect-square overflow-hidden md:aspect-[4/5] bg-black">
+              {settings?.hero_media_url ? (
+                settings.hero_media_type === 'video' ? (
+                  <video 
+                    src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/${settings.hero_media_url}`} 
+                    autoPlay muted loop playsInline 
+                    className="absolute inset-0 h-full w-full object-cover opacity-80"
+                  />
+                ) : (
+                  <img 
+                    src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_fill,w_800,h_1000/${settings.hero_media_url}`} 
+                    alt="Hero" 
+                    className="absolute inset-0 h-full w-full object-cover opacity-80"
+                  />
+                )
+              ) : (
+                <>
+                  <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, var(--accent-soft), var(--panel) 70%)' }} />
+                  <div aria-hidden className="absolute -left-10 top-10 h-40 w-[140%] -rotate-12" style={{ background: 'linear-gradient(90deg, transparent, rgba(91,42,134,.14), transparent)' }} />
+                </>
+              )}
+              
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-20">
+                <p className="eyebrow text-accent-bright">Vami Pro</p>
+                <p className="mt-2 font-display text-xl font-medium text-white">Premium Quality</p>
+                <p className="text-sm text-white/70">Ontwikkeld voor perfectie</p>
               </div>
             </div>
           </div>

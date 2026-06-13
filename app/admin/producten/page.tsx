@@ -11,7 +11,10 @@ export default async function AdminProducts() {
     : await supabase.from('products').select('*').order('name');
   return (
     <div className="space-y-6">
-      <div><p className="eyebrow">Beheer</p><h1 className="h-section mt-2">Producten</h1></div>
+      <div className="flex items-center justify-between">
+        <div><p className="eyebrow">Beheer</p><h1 className="h-section mt-2">Producten</h1></div>
+        <Link href="/admin/producten/nieuw" className="btn btn-primary text-sm">Nieuw product</Link>
+      </div>
       <div className="card overflow-hidden">
         <table className="w-full text-sm">
           <thead><tr className="text-left text-fg-faint"><th className="p-4 font-normal">Naam</th><th className="font-normal">SKU</th><th className="font-normal">Prijs</th><th className="font-normal">Voorraad</th><th></th></tr></thead>
