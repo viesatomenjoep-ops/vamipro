@@ -16,7 +16,7 @@ export default async function ProductsPage() {
   const { data: categories } = await supabase.from('categories').select('*').is('parent_id', null).order('sort_order');
 
   return (
-    <div className="wrap pt-6 pb-16 lg:pt-10">
+    <div className="wrap pt-0 pb-16 lg:pt-0">
       <p className="eyebrow">Catalogus</p>
       <h1 className="h-section mt-3">Alle producten</h1>
       <p className="mt-2 max-w-lg text-fg-muted">{products?.length ?? 0} producten over ons volledige assortiment — van veilig wassen tot keramische bescherming.</p>

@@ -41,7 +41,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const imgs: string[] = p.cloudinary_images?.length ? p.cloudinary_images : [];
 
   return (
-    <div className="wrap pt-6 pb-12 lg:pt-10">
+    <div className="wrap pt-0 pb-12 lg:pt-0">
       <div className="flex items-center gap-2 text-sm text-fg-faint">
         <Link href="/producten" className="hover:text-accent">Producten</Link>
         {meta && (<><span>/</span><Link href={`/categorie/${meta.slug}`} className="hover:text-accent">{meta.name}</Link></>)}

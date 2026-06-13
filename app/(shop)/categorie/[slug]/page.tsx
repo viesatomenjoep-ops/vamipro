@@ -42,7 +42,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
     .select('*').in('category_id', categoryIds).eq('is_active', true).order('name');
 
   return (
-    <div className="wrap pt-2 pb-16 lg:pt-4">
+    <div className="wrap pt-0 pb-16 lg:pt-0">
       <div className="flex items-center gap-3 text-sm text-fg-faint">
         <Link href="/producten" className="hover:text-accent">Producten</Link>
         <span>/</span><span className="text-fg-muted">{cat.name}</span>

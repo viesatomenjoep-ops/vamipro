@@ -55,34 +55,36 @@ export default function CheckoutPage() {
   );
 
   return (
-    <div className="wrap py-8 md:py-12 overflow-x-hidden w-full">
-      <div className="flex items-center gap-2 text-sm text-fg-faint">
-        <Lock size={14} className="text-accent" /> Beveiligde kassa
-      </div>
-      <h1 className="h-section mt-3">Afrekenen</h1>
+    <div className="wrap pt-0 pb-8 md:pt-0 md:pb-12 w-full">
+      <h1 className="h-section flex items-center gap-3">
+        Afrekenen
+        <span className="text-sm font-body font-normal text-fg-faint flex items-center gap-1.5 mt-1">
+          <Lock size={12} className="text-accent" /> Beveiligde kassa
+        </span>
+      </h1>
 
-      <div className="mt-8 md:mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr] w-full">
+      <div className="mt-6 md:mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr] w-full">
         {/* Form */}
         <div className="space-y-10">
           <section>
             <p className="eyebrow">01 · Contact</p>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <input className="field sm:col-span-2 text-base py-3" placeholder="E-mailadres" type="email" autoComplete="email" onChange={set('email')} />
-              <input className="field sm:col-span-2 text-base py-3" placeholder="Telefoonnummer" type="tel" autoComplete="tel" onChange={set('phone')} />
+              <input className="field sm:col-span-2 text-base" placeholder="E-mailadres" type="email" autoComplete="email" onChange={set('email')} />
+              <input className="field sm:col-span-2 text-base" placeholder="Telefoonnummer" type="tel" autoComplete="tel" onChange={set('phone')} />
             </div>
           </section>
 
           <section>
             <p className="eyebrow">02 · Bezorgadres</p>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <input className="field text-base py-3" placeholder="Voornaam" autoComplete="given-name" onChange={set('firstName')} />
-              <input className="field text-base py-3" placeholder="Achternaam" autoComplete="family-name" onChange={set('lastName')} />
-              <input className="field sm:col-span-2 text-base py-3" placeholder="Straatnaam" autoComplete="address-line1" onChange={set('address')} />
-              <input className="field text-base py-3" placeholder="Huisnummer" autoComplete="address-line2" onChange={set('houseNumber')} />
-              <input className="field text-base py-3" placeholder="Toevoeging (optioneel)" autoComplete="address-line3" onChange={set('addition')} />
-              <input className="field text-base py-3" placeholder="Postcode" autoComplete="postal-code" onChange={set('postalCode')} />
-              <input className="field text-base py-3" placeholder="Plaats" autoComplete="address-level2" onChange={set('city')} />
-              <select className="field sm:col-span-2 text-base py-3" value={f.country} autoComplete="country" onChange={set('country')}>
+              <input className="field text-base" placeholder="Voornaam" autoComplete="given-name" onChange={set('firstName')} />
+              <input className="field text-base" placeholder="Achternaam" autoComplete="family-name" onChange={set('lastName')} />
+              <input className="field sm:col-span-2 text-base" placeholder="Straatnaam" autoComplete="address-line1" onChange={set('address')} />
+              <input className="field text-base" placeholder="Huisnummer" autoComplete="address-line2" onChange={set('houseNumber')} />
+              <input className="field text-base" placeholder="Toevoeging (optioneel)" autoComplete="address-line3" onChange={set('addition')} />
+              <input className="field text-base" placeholder="Postcode" autoComplete="postal-code" onChange={set('postalCode')} />
+              <input className="field text-base" placeholder="Plaats" autoComplete="address-level2" onChange={set('city')} />
+              <select className="field sm:col-span-2 text-base" value={f.country} autoComplete="country" onChange={set('country')}>
                 <option value="NL">Nederland</option>
                 <option value="BE">België</option>
               </select>
@@ -93,8 +95,8 @@ export default function CheckoutPage() {
             </label>
             {biz && (
               <div className="mt-3 grid gap-4 sm:grid-cols-2">
-                <input className="field text-base py-3" placeholder="Bedrijfsnaam" autoComplete="organization" onChange={set('company')} />
-                <input className="field text-base py-3" placeholder="BTW-nummer" onChange={set('vatNumber')} />
+                <input className="field text-base" placeholder="Bedrijfsnaam" autoComplete="organization" onChange={set('company')} />
+                <input className="field text-base" placeholder="BTW-nummer" onChange={set('vatNumber')} />
               </div>
             )}
           </section>
