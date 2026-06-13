@@ -63,7 +63,7 @@ export default function CheckoutPage() {
         </span>
       </h1>
 
-      <div className="mt-6 md:mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr] w-full">
+      <div className="mt-6 md:mt-10 grid gap-6 lg:gap-8 lg:grid-cols-[1.5fr_1fr] w-full">
         {/* Form */}
         <div className="space-y-10">
           <section>

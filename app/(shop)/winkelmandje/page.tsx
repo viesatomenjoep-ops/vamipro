@@ -22,7 +22,7 @@ export default function CartPage() {
   return (
     <div className="wrap pt-0 pb-16 lg:pt-0">
       <h1 className="h-section">Winkelmandje</h1>
-      <div className="mt-10 grid gap-10 lg:grid-cols-[1.6fr_1fr]">
+      <div className="mt-10 grid gap-6 lg:gap-8 lg:grid-cols-[1.6fr_1fr]">
         <div className="divide-y divide-[var(--line)] overflow-hidden rounded border hairline">
           {items.map((i) => (
             <div key={i.productId} className="flex flex-col sm:flex-row sm:items-center gap-4 bg-panel p-4">
