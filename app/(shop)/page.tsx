@@ -20,7 +20,7 @@ export default async function HomePage() {
   return (
     <>
       {/* ===== HERO TEXT (Left aligned under navbar) ===== */}
-      <section className="relative overflow-hidden pt-12 pb-12 md:pt-24 md:pb-20">
+      <section className="relative overflow-hidden pt-2 pb-10 md:pt-4 md:pb-16">
         {/* ambient gloss reflection */}
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full"
