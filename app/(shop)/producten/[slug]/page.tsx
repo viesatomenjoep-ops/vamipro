@@ -11,6 +11,12 @@ import { isMock, getMockProduct, getMockRelated } from '@/lib/mock-data';
 export const revalidate = 60;
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
+export async function generateStaticParams() {
+  const supabase = createServiceClient();
+  const { data } = await supabase.from('products').select('slug').eq('is_active', true);
+  return data?.map((p) => ({ slug: p.slug })) || [];
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const supabase = createServiceClient();

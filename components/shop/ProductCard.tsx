@@ -6,7 +6,7 @@ const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 export default function ProductCard({ p }: { p: any }) {
   const img = p.cloudinary_images?.[0];
   return (
-    <Link href={`/producten/${p.slug}`} className="card card-hover group block overflow-hidden">
+    <Link prefetch={true} href={`/producten/${p.slug}`} className="card card-hover group block overflow-hidden">
       <div className="relative aspect-square overflow-hidden bg-panel-2">
         {img
           ? <img src={cldUrl(img, { w: 600 })} alt={p.name}

@@ -5,6 +5,12 @@ import { notFound } from 'next/navigation';
 
 export const revalidate = 60;
 
+export async function generateStaticParams() {
+  const supabase = createServiceClient();
+  const { data } = await supabase.from('categories').select('slug');
+  return data?.map((cat) => ({ slug: cat.slug })) || [];
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const supabase = createServiceClient();
