@@ -20,8 +20,9 @@ export default function CheckoutPage() {
   const set = (k: string) => (e: any) => setF({ ...f, [k]: e.target.value });
 
   const sub = subtotalCents();
-  const shipping = sub >= 7500 ? 0 : f.country === 'NL' ? 495 : 695;
-  const total = sub + shipping;
+  const disc = useCart().discountCode === 'VAMIPRO10' ? Math.round(sub * 0.1) : 0;
+  const shipping = (sub - disc) >= 7500 ? 0 : f.country === 'NL' ? 495 : 695;
+  const total = sub - disc + shipping;
 
   async function pay() {
     setErr(''); setLoading(true);
@@ -37,6 +38,7 @@ export default function CheckoutPage() {
           },
           billing: biz ? { company: f.company, vatNumber: f.vatNumber } : undefined,
           paymentMethod: method, shippingMethodId: 'standaard',
+          discountCode: useCart.getState().discountCode,
         }),
       });
       const data = await res.json();
@@ -138,6 +140,9 @@ export default function CheckoutPage() {
             </div>
             <div className="mt-5 space-y-2 border-t hairline pt-4 text-sm">
               <div className="flex justify-between text-fg-muted"><span>Subtotaal</span><span className="text-fg">{euro(sub)}</span></div>
+              {disc > 0 && (
+                <div className="flex justify-between text-accent font-medium"><span>Korting (10%)</span><span>-{euro(disc)}</span></div>
+              )}
               <div className="flex justify-between text-fg-muted"><span>Verzending</span><span className="text-fg">{shipping === 0 ? 'Gratis' : euro(shipping)}</span></div>
             </div>
             <div className="mt-4 flex items-baseline justify-between border-t hairline pt-4">

@@ -50,6 +50,9 @@ export default function CartPage() {
           <h2 className="font-display text-lg font-semibold">Overzicht</h2>
           <div className="mt-4 space-y-2 text-sm">
             <div className="flex justify-between text-fg-muted"><span>Subtotaal</span><span className="text-fg">{euro(sub)}</span></div>
+            {useCart().discountCode === 'VAMIPRO10' && (
+              <div className="flex justify-between text-accent font-medium"><span>Korting (10%)</span><span>-{euro(Math.round(sub * 0.1))}</span></div>
+            )}
             <div className="flex justify-between text-fg-muted"><span>Verzending</span><span className="text-fg">{freeShip ? 'Gratis' : 'Berekend bij kassa'}</span></div>
           </div>
           {!freeShip && (
@@ -60,9 +63,24 @@ export default function CartPage() {
               </div>
             </div>
           )}
-          <div className="mt-5 flex justify-between border-t hairline pt-4">
-            <span className="font-display font-semibold">Totaal</span>
-            <span className="font-display text-lg font-semibold">{euro(sub)}</span>
+
+          <div className="mt-5 border-t hairline pt-4">
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              const code = (e.currentTarget.elements.namedItem('code') as HTMLInputElement).value;
+              if (code.toUpperCase() === 'START10' || code.toUpperCase() === 'VAMIPRO10') {
+                useCart.getState().setDiscountCode('VAMIPRO10');
+              } else {
+                alert('Ongeldige of verlopen kortingscode');
+              }
+            }} className="flex gap-2 mb-4">
+              <input name="code" type="text" placeholder="Kortingscode" className="input flex-1 text-sm uppercase" />
+              <button type="submit" className="btn bg-panel-2 hover:bg-raise text-sm">Toepassen</button>
+            </form>
+            <div className="flex justify-between">
+              <span className="font-display font-semibold">Totaal</span>
+              <span className="font-display text-lg font-semibold">{euro(sub - (useCart().discountCode === 'VAMIPRO10' ? Math.round(sub * 0.1) : 0))}</span>
+            </div>
           </div>
           <Link href="/checkout" className="btn btn-primary mt-5 w-full justify-center">Naar de kassa</Link>
           <Link href="/producten" className="mt-4 flex items-center justify-center gap-2 text-sm text-fg-muted hover:text-accent">

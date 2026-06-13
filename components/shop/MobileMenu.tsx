@@ -28,10 +28,10 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
     <div className="md:hidden">
       <button 
         onClick={() => setIsOpen(true)}
-        className="flex h-10 w-10 items-center justify-center rounded-full text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg"
+        className="flex h-14 w-14 items-center justify-center rounded-full text-fg transition-colors hover:bg-panel-2"
         aria-label="Menu openen"
       >
-        <Menu size={20} strokeWidth={1.5} />
+        <Menu size={36} strokeWidth={1.5} />
       </button>
 
       {/* Backdrop (niet meer echt nodig als het full-screen is, maar we houden de animatie) */}
@@ -48,21 +48,19 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
           isOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 translate-y-4 invisible'
         }`}
       >
-        <div className="flex items-center justify-between mb-8">
-          <p className="font-display text-lg font-semibold tracking-tight text-white">VAMI<span className="text-accent">.</span>PRO</p>
+        <div className="flex items-center justify-between mb-8 mt-2">
+          <p className="font-display text-2xl font-semibold tracking-tight text-white">VAMI<span className="text-accent">.</span>PRO</p>
           <button 
             onClick={() => setIsOpen(false)}
-            className="flex h-10 w-10 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white -mr-2"
+            className="flex h-14 w-14 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white -mr-2"
             aria-label="Menu sluiten"
           >
-            <X size={24} strokeWidth={1.5} />
+            <X size={36} strokeWidth={1.5} />
           </button>
         </div>
 
         <nav className="flex flex-col gap-8 text-2xl font-medium overflow-y-auto pb-8 pt-4 px-2">
           <Link prefetch={true} href="/producten" className="text-white hover:text-accent transition-colors">Shop Alle Producten</Link>
-          
-          <div className="h-px w-full bg-white/10" />
           
           <div className="flex flex-col gap-6">
             <p className="text-sm uppercase tracking-[0.2em] text-white/50 mb-2">Categorieën</p>
@@ -72,10 +70,17 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
               </Link>
             ))}
           </div>
-          
-          <div className="h-px w-full bg-white/10 mt-2" />
-          
-          <Link prefetch={true} href="/contact" className="text-white hover:text-accent transition-colors">Contact</Link>
+
+          <div className="h-px w-full bg-white/10 my-2" />
+
+          <div className="flex flex-col gap-6">
+            <p className="text-sm uppercase tracking-[0.2em] text-white/50 mb-2">Service & Info</p>
+            <Link prefetch={true} href="/verzending" className="text-white hover:text-accent transition-colors">Verzending</Link>
+            <Link prefetch={true} href="/retourneren" className="text-white hover:text-accent transition-colors">Retourneren</Link>
+            <Link prefetch={true} href="/voorwaarden" className="text-white hover:text-accent transition-colors">Algemene voorwaarden</Link>
+            <Link prefetch={true} href="/over-ons" className="text-white hover:text-accent transition-colors">Over ons</Link>
+            <Link prefetch={true} href="/contact" className="text-white hover:text-accent transition-colors">Contact</Link>
+          </div>
         </nav>
       </div>
     </div>

@@ -1,6 +1,10 @@
 import Link from 'next/link';
+import { createServiceClient } from '@/lib/supabase/server';
 
-export default function Footer() {
+export default async function Footer() {
+  const supabase = createServiceClient();
+  const { data: categories } = await supabase.from('categories').select('*').is('parent_id', null).order('sort_order');
+
   return (
     <footer className="mt-24 border-t hairline">
       <div className="gloss-line" />
@@ -15,9 +19,9 @@ export default function Footer() {
           <p className="eyebrow mb-4">Shop</p>
           <ul className="space-y-2 text-sm text-fg-muted">
             <li><Link href="/producten" className="hover:text-accent">Alle producten</Link></li>
-            <li><Link href="/categorie/coating" className="hover:text-accent">Coating &amp; bescherming</Link></li>
-            <li><Link href="/categorie/wassen" className="hover:text-accent">Wassen &amp; shampoo</Link></li>
-            <li><Link href="/categorie/machines" className="hover:text-accent">Machines</Link></li>
+            {categories?.map(c => (
+              <li key={c.id}><Link href={`/categorie/${c.slug}`} className="hover:text-accent">{c.name}</Link></li>
+            ))}
           </ul>
         </div>
         <div>

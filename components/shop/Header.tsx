@@ -9,12 +9,12 @@ export default async function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b hairline bg-bg/80 backdrop-blur-md">
-      <div className="wrap flex h-16 items-center justify-between">
+      <div className="wrap flex h-20 items-center justify-between">
         <Link href="/" className="flex items-center">
           <img 
-            src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,h_80/vamipro/dqulcjn15ujhdbeiyvxv`} 
+            src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,h_160/vamipro/dqulcjn15ujhdbeiyvxv`} 
             alt="Vami Pro Logo" 
-            className="h-9 w-auto object-contain" 
+            className="h-14 md:h-16 w-auto object-contain" 
           />
         </Link>
         <nav className="hidden items-center gap-8 text-sm text-fg-muted md:flex">

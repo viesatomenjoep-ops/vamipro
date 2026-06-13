@@ -14,6 +14,7 @@ const schema = z.object({
   billing: z.object({ company: z.string().optional(), vatNumber: z.string().optional() }).optional(),
   shippingMethodId: z.string(),
   paymentMethod: z.enum(['ideal', 'bancontact']),
+  discountCode: z.string().optional(),
 });
 
 // Simpele verzendkosten-logica (pas aan / koppel aan Sendcloud-tarieven)
@@ -43,7 +44,13 @@ export async function POST(req: NextRequest) {
     });
 
     const shippingCents = shippingCost(subtotal, body.shipping.country);
-    const total = subtotal + shippingCents;
+    
+    let discountCents = 0;
+    if (body.discountCode === 'VAMIPRO10' || body.discountCode === 'START10') {
+      discountCents = Math.round(subtotal * 0.10);
+    }
+    
+    const total = subtotal - discountCents + shippingCents;
 
     const { data: orderNum } = await supabase.rpc('next_counter', { counter_key: 'order' });
     const orderNumber = `VP-2026-${String(orderNum).padStart(5, '0')}`;
