@@ -34,46 +34,48 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
         <Menu size={20} strokeWidth={1.5} />
       </button>
 
-      {/* Backdrop */}
+      {/* Backdrop (niet meer echt nodig als het full-screen is, maar we houden de animatie) */}
       <div 
-        className={`fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[100] bg-black transition-opacity duration-300 ${
           isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}
         onClick={() => setIsOpen(false)}
       />
 
-      {/* Slide-in panel */}
+      {/* Slide-in / Fade-in full screen panel */}
       <div 
-        className={`fixed inset-y-0 right-0 z-[101] w-4/5 max-w-sm bg-panel border-l hairline p-6 shadow-2xl transition-transform duration-300 ease-out flex flex-col ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed inset-0 z-[101] w-full h-full bg-black p-6 transition-all duration-300 flex flex-col ${
+          isOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 translate-y-4 invisible'
         }`}
       >
         <div className="flex items-center justify-between mb-8">
-          <p className="font-display text-lg font-semibold tracking-tight">VAMI<span className="text-accent">.</span>PRO</p>
+          <p className="font-display text-lg font-semibold tracking-tight text-white">VAMI<span className="text-accent">.</span>PRO</p>
           <button 
             onClick={() => setIsOpen(false)}
-            className="flex h-10 w-10 items-center justify-center rounded-full text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg -mr-2"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white -mr-2"
             aria-label="Menu sluiten"
           >
-            <X size={20} strokeWidth={1.5} />
+            <X size={24} strokeWidth={1.5} />
           </button>
         </div>
 
-        <nav className="flex flex-col gap-6 text-lg font-medium overflow-y-auto pb-8">
-          <Link prefetch={true} href="/producten" className="hover:text-accent transition-colors">Shop Alle Producten</Link>
+        <nav className="flex flex-col gap-8 text-2xl font-medium overflow-y-auto pb-8 pt-4 px-2">
+          <Link prefetch={true} href="/producten" className="text-white hover:text-accent transition-colors">Shop Alle Producten</Link>
           
-          <div className="h-px w-full bg-line" />
+          <div className="h-px w-full bg-white/10" />
           
-          <p className="text-xs uppercase tracking-[0.2em] text-fg-faint -mb-2">Categorieën</p>
-          {categories?.map(c => (
-            <Link prefetch={true} key={c.id} href={`/categorie/${c.slug}`} className="text-fg-muted hover:text-accent transition-colors">
-              {c.name}
-            </Link>
-          ))}
+          <div className="flex flex-col gap-6">
+            <p className="text-sm uppercase tracking-[0.2em] text-white/50 mb-2">Categorieën</p>
+            {categories?.map(c => (
+              <Link prefetch={true} key={c.id} href={`/categorie/${c.slug}`} className="text-white hover:text-accent transition-colors">
+                {c.name}
+              </Link>
+            ))}
+          </div>
           
-          <div className="h-px w-full bg-line mt-2" />
+          <div className="h-px w-full bg-white/10 mt-2" />
           
-          <Link prefetch={true} href="/contact" className="hover:text-accent transition-colors">Contact</Link>
+          <Link prefetch={true} href="/contact" className="text-white hover:text-accent transition-colors">Contact</Link>
         </nav>
       </div>
     </div>
