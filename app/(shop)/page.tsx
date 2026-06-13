@@ -30,24 +30,24 @@ export default async function HomePage() {
         </div>
 
         <div className="wrap relative grid gap-6 pt-6 pb-12 md:gap-10 md:grid-cols-[1.1fr_.9fr] md:py-20">
-          <div>
-            <p className="eyebrow">Car detailing · NL &amp; BE</p>
-            <h1 className="h-hero mt-5">
+          <div className="flex min-h-[85vh] flex-col justify-center pb-12 md:min-h-0 md:block md:pb-0">
+            <p className="eyebrow text-base md:text-xs">Car detailing · NL &amp; BE</p>
+            <h1 className="h-hero mt-6 text-[3.5rem] leading-[1.05] md:text-[4rem] lg:text-[4.5rem] md:mt-5">
               Een finish die<br />
               <span className="gloss-text">het licht vangt.</span>
             </h1>
-            <p className="mt-6 max-w-md text-lg text-fg-muted">
+            <p className="mt-8 max-w-md text-xl text-fg-muted md:mt-6 md:text-lg">
               Professionele detailingproducten, ontwikkeld voor liefhebbers en pro&apos;s.
               Van veilig wassen tot keramische coatings met jarenlange bescherming.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3 md:mt-8">
-              <Link href="/producten" className="btn btn-primary">Shop alle producten</Link>
+            <div className="mt-10 flex flex-wrap gap-3 md:mt-8">
+              <Link href="/producten" className="btn btn-primary text-lg px-8 py-4 md:text-sm md:px-5 md:py-2.5">Shop alle producten</Link>
             </div>
-            <dl className="mt-8 grid max-w-md grid-cols-3 gap-4 md:mt-12 md:gap-6">
+            <dl className="mt-16 grid max-w-md grid-cols-3 gap-4 md:mt-12 md:gap-6">
               {[['3 jaar', 'bescherming'], ['1–2 dagen', 'levering NL'], ['9H', 'coating hardheid']].map(([n, l]) => (
                 <div key={l}>
-                  <dt className="font-display text-2xl font-semibold text-fg">{n}</dt>
-                  <dd className="text-xs uppercase tracking-wider text-fg-faint">{l}</dd>
+                  <dt className="font-display text-3xl font-semibold text-fg md:text-2xl">{n}</dt>
+                  <dd className="text-sm uppercase tracking-wider text-fg-faint md:text-xs">{l}</dd>
                 </div>
               ))}
             </dl>
