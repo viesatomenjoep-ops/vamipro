@@ -3,31 +3,30 @@
 @tailwind utilities;
 
 /* =========================================================
-   VAMI PRO — DESIGN SYSTEM  ·  "Electric Blue & Silver"
-   Koel zilver canvas + helder electric blue accent uit het logo.
-   Luxe, sportief, clean. Niet te zwart.
+   VAMI PRO — DESIGN SYSTEM  ·  "Slate Azure" (Optie 3)
+   Luxe, matte, moderne uitstraling. Leigrijs met azure blauw.
    ========================================================= */
 :root {
-  /* Surfaces (licht) */
-  --bg: #f6f7f9;           /* zacht zilvergrijs / off-white */
-  --panel: #ffffff;        /* cards / verhoogde vlakken */
-  --panel-2: #edf0f4;      /* subtiel zilver/blauw paneel */
-  --raise: #fafcfd;        /* hover op witte cards */
-  --line: #e2e6ec;         /* hairline borders (zilver) */
-  --line-strong: #cdd3dd;
+  /* Surfaces (donker) */
+  --bg: #141A21;           /* mat leigrijs */
+  --panel: #1E2630;        /* iets opgelicht leigrijs */
+  --panel-2: #27313F;      /* hover state op panelen */
+  --raise: #2A3644;        /* hover op cards */
+  --line: #334155;         /* hairline borders */
+  --line-strong: #475569;
 
   /* Text */
-  --fg: #111827;           /* diep charcoal / bijna zwart, maar niet hard */
-  --fg-muted: #4b5563;     /* staalgrijs secundair */
-  --fg-faint: #9ca3af;     /* licht zilver/grijs voor bijschriften */
+  --fg: #F1F5F9;           /* off-white/ijs voor goede leesbaarheid */
+  --fg-muted: #94A3B8;     /* blauw-grijs secundair */
+  --fg-faint: #64748B;     /* donkerder blauw-grijs voor bijschriften */
 
-  /* Accent — electric blue (uit "Pro" in het logo) */
-  --accent: #0066ff;       /* krachtig electric blue */
-  --accent-deep: #004ecc;  /* dieper blauw voor hover state */
-  --accent-bright: #3388ff;/* levendig blauw voor gradients */
-  --accent-soft: #e5f0ff;  /* lichte wash voor subtiele achtergronden */
-  --accent-glow: rgba(0, 102, 255, 0.2);
-  --on-accent: #ffffff;    /* tekst op accent */
+  /* Accent — azure blauw */
+  --accent: #3B82F6;       /* azure/neon blauw */
+  --accent-deep: #2563EB;  /* dieper blauw voor hover state */
+  --accent-bright: #60A5FA;/* levendig blauw voor gradients */
+  --accent-soft: rgba(59, 130, 246, 0.1);  /* lichte wash voor achtergronden */
+  --accent-glow: rgba(59, 130, 246, 0.2);
+  --on-accent: #FFFFFF;    /* tekst op accent */
 
   /* Status */
   --good: #10b981;
