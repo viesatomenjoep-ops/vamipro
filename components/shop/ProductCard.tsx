@@ -10,7 +10,7 @@ export default function ProductCard({ p }: { p: any }) {
       <div className="relative aspect-square overflow-hidden bg-panel-2">
         {img
           ? <img src={cldUrl(img, { w: 500 })} alt={p.name}
-              className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105" />
+              className="h-full w-full object-contain px-4 pt-2 pb-8 transition-transform duration-500 group-hover:scale-105" />
           : <div className="grid h-full w-full place-items-center">
               <span className="font-display text-xs uppercase tracking-[0.25em] text-fg-faint">Vami Pro</span>
             </div>}
