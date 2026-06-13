@@ -11,7 +11,7 @@ export async function createServerClient() {
     {
       cookies: {
         getAll: () => cookieStore.getAll(),
-        setAll: (list) => {
+        setAll: (list: any[]) => {
           try { list.forEach(({ name, value, options }) => cookieStore.set(name, value, options)); }
           catch { /* server component: negeer */ }
         },

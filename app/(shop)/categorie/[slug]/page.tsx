@@ -47,7 +47,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
 
       <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
         {products?.length
-          ? products.map((p) => <ProductCard key={p.id} p={p} />)
+          ? products.map((p: any) => <ProductCard key={p.id} p={p} />)
           : <p className="col-span-full text-fg-muted">Nog geen producten in deze categorie.</p>}
       </div>
     </div>

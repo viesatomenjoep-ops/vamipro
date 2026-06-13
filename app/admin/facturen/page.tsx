@@ -15,7 +15,7 @@ export default async function InvoicesPage() {
         <table className="w-full text-sm">
           <thead><tr className="text-left text-fg-faint"><th className="p-4 font-normal">Factuur</th><th className="font-normal">Order</th><th className="font-normal">Bedrag</th><th className="font-normal">Datum</th><th></th></tr></thead>
           <tbody>
-            {orders?.map((o) => (
+            {orders?.map((o: any) => (
               <tr key={o.id} className="border-t hairline">
                 <td className="p-4 font-display">{o.invoice_number}</td>
                 <td className="text-fg-muted">{o.order_number}</td>

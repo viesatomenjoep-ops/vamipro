@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
     const payment = await mollie.payments.get(paymentId);
     const supabase = createServiceClient();
-    const orderId = payment.metadata?.orderId as string;
+    const orderId = (payment.metadata as any)?.orderId as string;
     const { data: order } = await supabase.from('orders').select('*').eq('id', orderId).single();
     if (!order) return NextResponse.json({ ok: true });
 

@@ -16,7 +16,7 @@ export default async function AdminProducts() {
         <table className="w-full text-sm">
           <thead><tr className="text-left text-fg-faint"><th className="p-4 font-normal">Naam</th><th className="font-normal">SKU</th><th className="font-normal">Prijs</th><th className="font-normal">Voorraad</th><th></th></tr></thead>
           <tbody>
-            {products?.map((p) => (
+            {products?.map((p: any) => (
               <tr key={p.id} className="border-t hairline">
                 <td className="p-4">{p.name}</td>
                 <td className="text-fg-muted">{p.sku}</td>

@@ -31,7 +31,7 @@ export default async function ProductsPage() {
       </nav>
 
       <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
-        {products?.map((p) => <ProductCard key={p.id} p={p} />)}
+        {products?.map((p: any) => <ProductCard key={p.id} p={p} />)}
       </div>
     </div>
   );

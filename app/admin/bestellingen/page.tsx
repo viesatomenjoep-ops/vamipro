@@ -18,7 +18,7 @@ export default async function OrdersPage() {
             <th className="p-4 font-normal">Order</th><th className="font-normal">Klant</th><th className="font-normal">Status</th><th className="font-normal">Totaal</th><th className="font-normal">Factuur</th><th className="font-normal">Label</th>
           </tr></thead>
           <tbody>
-            {orders?.map((o) => (
+            {orders?.map((o: any) => (
               <tr key={o.id} className="border-t hairline">
                 <td className="p-4"><Link href={`/admin/bestellingen/${o.id}`} className="font-display text-accent hover:underline">{o.order_number}</Link></td>
                 <td>{o.ship_first_name} {o.ship_last_name}</td>
