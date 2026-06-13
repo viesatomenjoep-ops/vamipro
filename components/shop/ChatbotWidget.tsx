@@ -62,9 +62,9 @@ export default function ChatbotWidget() {
 
       {/* Chat Window */}
       <div
-        className={`fixed bottom-6 right-6 z-50 flex h-[500px] max-h-[80vh] w-[350px] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-xl border hairline bg-panel shadow-2xl transition-all duration-300 origin-bottom-right ${
-          isOpen ? 'scale-100 opacity-100' : 'scale-50 opacity-0 pointer-events-none'
-        }`}
+        className={`fixed z-50 flex flex-col overflow-hidden bg-panel shadow-2xl transition-all duration-300
+          bottom-24 right-4 h-[500px] max-h-[calc(100vh-8rem)] w-[calc(100vw-2rem)] sm:w-[350px] sm:bottom-6 sm:right-6 rounded-xl border hairline
+          ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'}`}
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b hairline bg-panel-2 px-4 py-3">
