@@ -19,81 +19,68 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ===== HERO ===== */}
-      <section className="relative overflow-hidden">
+      {/* ===== HERO & USPS ===== */}
+      <section className="relative w-full overflow-hidden">
+        {/* Background Image */}
+        <img 
+          src="/images/audi_q3_detailing.png" 
+          alt="Audi Q3 Detailing by Vami Pro" 
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/80 to-black/20" />
+        
         {/* ambient gloss reflection */}
-        <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div aria-hidden className="pointer-events-none absolute inset-0 mix-blend-screen">
           <div className="absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full"
                style={{ background: 'radial-gradient(circle, var(--accent-glow), transparent 65%)', filter: 'blur(30px)' }} />
           <div className="absolute left-1/2 top-0 h-px w-full -translate-x-1/2"
                style={{ background: 'linear-gradient(90deg, transparent, var(--accent-glow), transparent)' }} />
         </div>
 
-        <div className="wrap relative grid gap-6 pt-6 pb-12 md:gap-10 md:grid-cols-[1.1fr_.9fr] md:py-20">
-          <div className="flex min-h-[85vh] flex-col justify-start pt-4 pb-12 md:min-h-0 md:block md:pt-0 md:pb-0">
-            <p className="eyebrow text-base md:text-xs">Car detailing · NL &amp; BE</p>
-            <h1 className="h-hero mt-6 text-[3.5rem] leading-[1.05] md:text-[4rem] lg:text-[4.5rem] md:mt-5">
+        <div className="wrap relative z-10 w-full pt-32 pb-12 md:pb-20 min-h-[85vh] flex flex-col justify-end">
+          <div className="max-w-2xl">
+            <p className="eyebrow text-base md:text-xs text-accent-bright drop-shadow-md">Car detailing · NL &amp; BE</p>
+            <h1 className="h-hero mt-4 text-[3.5rem] leading-[1.05] md:text-[4rem] lg:text-[4.5rem] text-white drop-shadow-lg">
               Een finish die<br />
-              <span className="gloss-text">het licht vangt.</span>
+              het licht vangt.
             </h1>
-            <p className="mt-8 max-w-md text-xl text-fg-muted md:mt-6 md:text-lg">
+            <p className="mt-6 text-xl text-white/90 md:text-lg drop-shadow">
               Professionele detailingproducten, ontwikkeld voor liefhebbers en pro&apos;s.
               Van veilig wassen tot keramische coatings met jarenlange bescherming.
             </p>
-            <div className="mt-10 flex flex-wrap gap-3 md:mt-8">
-              <Link href="/producten" className="btn btn-primary text-lg px-8 py-4 md:text-sm md:px-5 md:py-2.5">Shop alle producten</Link>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/producten" className="btn btn-primary text-lg px-8 py-4 md:text-sm md:px-5 md:py-2.5 shadow-lg border border-accent">Shop alle producten</Link>
             </div>
-            <dl className="mt-16 grid max-w-md grid-cols-3 gap-4 md:mt-12 md:gap-6">
+            
+            <dl className="mt-12 grid grid-cols-3 gap-4 md:mt-16 md:gap-6 border-t border-white/20 pt-8">
               {[['3 jaar', 'bescherming'], ['1–2 dagen', 'levering NL'], ['9H', 'coating hardheid']].map(([n, l]) => (
                 <div key={l}>
-                  <dt className="font-display text-3xl font-semibold text-fg md:text-2xl">{n}</dt>
-                  <dd className="text-sm uppercase tracking-wider text-fg-faint md:text-xs">{l}</dd>
+                  <dt className="font-display text-3xl font-semibold text-white md:text-2xl drop-shadow">{n}</dt>
+                  <dd className="text-sm uppercase tracking-wider text-white/70 md:text-xs mt-1">{l}</dd>
                 </div>
               ))}
             </dl>
           </div>
-
-          {/* product-forward visual panel */}
-          <div className="relative">
-            <div className="card relative aspect-square overflow-hidden md:aspect-[4/5] bg-black">
-              {/* The AI Generated Image */}
-              <img 
-                src="/images/audi_q3_detailing.png" 
-                alt="Audi Q3 Detailing by Vami Pro" 
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-              
-              {/* Subtle top-left gradient for depth */}
-              <div aria-hidden className="absolute inset-0 bg-gradient-to-br from-black/40 via-transparent to-transparent mix-blend-multiply" />
-              
-              {/* Bottom text overlay */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 pt-24">
-                <p className="eyebrow text-accent-bright">Vami Pro</p>
-                <p className="mt-2 font-display text-xl font-medium text-white">Premium Quality</p>
-                <p className="text-sm text-white/80">Ontwikkeld voor perfectie</p>
-              </div>
-            </div>
-          </div>
         </div>
-      </section>
 
-      {/* ===== USP STRIP ===== */}
-      <section className="border-y hairline bg-panel">
-        <div className="wrap grid grid-cols-2 gap-px md:grid-cols-4">
-          {[
-            [Truck, 'Voor 16:00 besteld', 'vandaag verzonden'],
-            [ShieldCheck, 'Veilig betalen', 'iDEAL & Bancontact'],
-            [Sparkles, 'Gratis verzending', 'vanaf € 75'],
-            [RotateCcw, '14 dagen', 'bedenktijd'],
-          ].map(([Icon, t, s]: any, i) => (
-            <div key={i} className="flex items-center gap-3 py-6">
-              <Icon size={20} className="text-accent" strokeWidth={1.6} />
-              <div>
-                <p className="text-sm font-medium text-fg">{t}</p>
-                <p className="text-xs text-fg-muted">{s}</p>
+        {/* ===== USP STRIP (Overlay on the image) ===== */}
+        <div className="relative z-10 border-t border-white/10 bg-black/40 backdrop-blur-md">
+          <div className="wrap grid grid-cols-2 gap-px md:grid-cols-4">
+            {[
+              [Truck, 'Voor 16:00 besteld', 'vandaag verzonden'],
+              [ShieldCheck, 'Veilig betalen', 'iDEAL & Bancontact'],
+              [Sparkles, 'Gratis verzending', 'vanaf € 75'],
+              [RotateCcw, '14 dagen', 'bedenktijd'],
+            ].map(([Icon, t, s]: any, i) => (
+              <div key={i} className="flex items-center gap-3 py-6">
+                <Icon size={20} className="text-accent-bright drop-shadow" strokeWidth={1.6} />
+                <div>
+                  <p className="text-sm font-medium text-white">{t}</p>
+                  <p className="text-xs text-white/70">{s}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
