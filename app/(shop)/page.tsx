@@ -42,14 +42,6 @@ export default async function HomePage() {
           <div className="mt-10 flex flex-wrap gap-3 md:mt-8">
             <Link href="/producten" className="btn btn-primary text-lg px-8 py-4 md:text-sm md:px-5 md:py-2.5">Shop alle producten</Link>
           </div>
-          <dl className="mt-16 grid grid-cols-3 gap-4 md:mt-12 md:gap-6">
-            {[['3 jaar', 'bescherming'], ['1–2 dagen', 'levering NL'], ['9H', 'coating hardheid']].map(([n, l]) => (
-              <div key={l}>
-                <dt className="font-display text-3xl font-semibold text-fg md:text-2xl">{n}</dt>
-                <dd className="text-sm uppercase tracking-wider text-fg-faint md:text-xs mt-1">{l}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
       </section>
 
