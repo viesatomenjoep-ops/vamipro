@@ -44,7 +44,7 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
 
       {/* Slide-in / Fade-in full screen panel */}
       <div 
-        className={`fixed inset-0 z-[101] w-full h-full bg-black p-6 transition-all duration-300 flex flex-col ${
+        className={`fixed inset-0 z-[101] w-screen h-[100dvh] bg-black p-6 sm:p-8 transition-all duration-300 flex flex-col ${
           isOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 translate-y-4 invisible'
         }`}
       >
