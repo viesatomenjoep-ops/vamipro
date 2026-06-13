@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import CartButton from './CartButton';
+import MobileMenu from './MobileMenu';
 import { createServiceClient } from '@/lib/supabase/server';
 
 export default async function Header() {
@@ -25,7 +26,10 @@ export default async function Header() {
           ))}
           <Link prefetch={true} href="/contact" className="hover:text-fg transition-colors">Contact</Link>
         </nav>
-        <CartButton />
+        <div className="flex items-center gap-4">
+          <CartButton />
+          <MobileMenu categories={categories || []} />
+        </div>
       </div>
     </header>
   );
