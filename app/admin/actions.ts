@@ -41,8 +41,6 @@ export async function saveSettings(formData: FormData) {
   const supabase = createServiceClient();
   
   const payload = {
-    theme_color_accent: formData.get('theme_color_accent') as string,
-    theme_color_bg: formData.get('theme_color_bg') as string,
     logo_url: formData.get('logo_url') as string,
     hero_media_url: formData.get('hero_media_url') as string,
     hero_media_type: formData.get('hero_media_type') as string || 'image',
@@ -50,8 +48,7 @@ export async function saveSettings(formData: FormData) {
 
   await supabase.from('store_settings').update(payload).eq('id', 1);
 
-  revalidatePath('/');
-  revalidatePath('/admin/instellingen');
+  revalidatePath('/', 'layout');
 }
 
 export async function saveCategory(formData: FormData, categoryId?: string) {
