@@ -30,7 +30,7 @@ export default async function HomePage() {
         </div>
 
         <div className="wrap relative grid gap-6 pt-6 pb-12 md:gap-10 md:grid-cols-[1.1fr_.9fr] md:py-20">
-          <div className="flex min-h-[85vh] flex-col justify-center pb-12 md:min-h-0 md:block md:pb-0">
+          <div className="flex min-h-[85vh] flex-col justify-start pt-4 pb-12 md:min-h-0 md:block md:pt-0 md:pb-0">
             <p className="eyebrow text-base md:text-xs">Car detailing · NL &amp; BE</p>
             <h1 className="h-hero mt-6 text-[3.5rem] leading-[1.05] md:text-[4rem] lg:text-[4.5rem] md:mt-5">
               Een finish die<br />
