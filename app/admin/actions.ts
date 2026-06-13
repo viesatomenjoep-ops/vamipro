@@ -53,3 +53,26 @@ export async function saveSettings(formData: FormData) {
   revalidatePath('/');
   revalidatePath('/admin/instellingen');
 }
+
+export async function saveCategory(formData: FormData, categoryId?: string) {
+  const supabase = createServiceClient();
+  
+  const payload = {
+    name: formData.get('name') as string,
+    slug: formData.get('slug') as string,
+    description: formData.get('description') as string,
+    sort_order: parseInt(formData.get('sort_order') as string, 10),
+    parent_id: formData.get('parent_id') as string || null,
+  };
+
+  if (categoryId) {
+    await supabase.from('categories').update(payload).eq('id', categoryId);
+  } else {
+    await supabase.from('categories').insert(payload);
+  }
+
+  revalidatePath('/admin/categorieen');
+  revalidatePath('/producten');
+  revalidatePath('/');
+  redirect('/admin/categorieen');
+}

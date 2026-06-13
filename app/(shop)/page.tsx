@@ -15,6 +15,7 @@ export default async function HomePage() {
     : await supabase.from('products').select('*').eq('is_active', true).eq('is_featured', true).limit(4);
     
   const { data: settings } = await supabase.from('store_settings').select('*').eq('id', 1).single();
+  const { data: categories } = await supabase.from('categories').select('*').is('parent_id', null).order('sort_order');
 
   return (
     <>
@@ -106,26 +107,26 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ===== CATEGORIES = THE PROCESS ===== */}
+      {/* ===== CATEGORIES ===== */}
       <section className="wrap py-12 md:py-20">
         <div className="flex items-end justify-between">
           <div>
-            <p className="eyebrow">Het proces</p>
-            <h2 className="h-section mt-3">Zes stappen naar perfectie</h2>
+            <p className="eyebrow">Aanbod</p>
+            <h2 className="h-section mt-3">Ons assortiment</h2>
           </div>
           <Link href="/producten" className="hidden text-sm text-accent hover:underline sm:inline">Alles bekijken →</Link>
         </div>
         <div className="mt-8 grid gap-px overflow-hidden rounded border hairline grid-cols-2 lg:grid-cols-3">
-          {CATEGORIES.map((c, i) => (
+          {categories?.map((c, i) => (
             <Reveal key={c.slug} delay={i * 60}>
               <Link href={`/categorie/${c.slug}`}
                 className="group flex h-full flex-col justify-between bg-panel p-4 transition-colors hover:bg-panel-2 sm:p-7">
-                <span className="font-display text-xs text-accent sm:text-sm">{c.step}</span>
+                <span className="font-display text-xs text-accent sm:text-sm">0{i + 1}</span>
                 <div className="mt-6 sm:mt-10">
                   <h3 className="font-display text-base font-medium sm:text-xl">{c.name}</h3>
-                  <p className="mt-1 text-xs text-fg-muted sm:mt-2 sm:text-sm">{c.tagline}</p>
+                  {c.description && <p className="mt-1 text-xs text-fg-muted sm:mt-2 sm:text-sm">{c.description}</p>}
                   <span className="mt-3 inline-block text-xs text-fg-faint transition-colors group-hover:text-accent sm:mt-4 sm:text-sm">
-                    Bekijk producten →
+                    Bekijk categorie →
                   </span>
                 </div>
               </Link>

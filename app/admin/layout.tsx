@@ -7,6 +7,7 @@ const nav = [
   ['/admin', 'Dashboard', LayoutDashboard],
   ['/admin/bestellingen', 'Bestellingen', ShoppingCart],
   ['/admin/producten', 'Producten', Package],
+  ['/admin/categorieen', 'Categorieën', Package],
   ['/admin/facturen', 'Facturen', FileText],
   ['/admin/instellingen', 'Instellingen', Settings],
 ] as const;
