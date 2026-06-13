@@ -5,6 +5,7 @@ import { catBySlug } from '@/lib/categories';
 import { notFound } from 'next/navigation';
 import AddToCart from '@/components/shop/AddToCart';
 import ProductCard from '@/components/shop/ProductCard';
+import ProductDescription from '@/components/shop/ProductDescription';
 import { ShieldCheck, Truck, RotateCcw } from 'lucide-react';
 import { isMock, getMockProduct, getMockRelated } from '@/lib/mock-data';
 
@@ -81,7 +82,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               : <span className="text-fg-faint">Tijdelijk uitverkocht</span>}
           </p>
 
-          <p className="mt-6 leading-relaxed text-fg-muted">{p.description}</p>
+          <ProductDescription text={p.description || ''} />
 
           <div className="mt-7">
             <AddToCart product={{ productId: p.id, name: p.name, slug: p.slug, priceCents: p.price_cents, image: imgs[0] }} />
