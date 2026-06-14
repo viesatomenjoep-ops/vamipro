@@ -85,7 +85,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <ProductDescription text={p.description || ''} />
 
           <div className="mt-7">
-            <AddToCart product={{ productId: p.id, name: p.name, slug: p.slug, priceCents: p.price_cents, image: imgs[0] }} />
+            <AddToCart product={{ productId: p.id, name: p.name, slug: p.slug, priceCents: p.price_cents, image: imgs[0] }} outOfStock={p.stock <= 0} />
           </div>
 
           <ul className="mt-8 space-y-3 border-t hairline pt-6 text-sm text-fg-muted">
