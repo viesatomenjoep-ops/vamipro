@@ -12,7 +12,7 @@ export default async function Header() {
       <div className="wrap flex h-24 items-center justify-between">
         <Link href="/" className="flex items-center">
           <img 
-            src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,h_160/vamipro/dqulcjn15ujhdbeiyvxv`} 
+            src="/images/logo.svg" 
             alt="Vami Pro Logo" 
             className="h-[72px] md:h-[84px] w-auto object-contain" 
           />
