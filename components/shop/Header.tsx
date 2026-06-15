@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import CartButton from './CartButton';
 import MobileMenu from './MobileMenu';
-import RotatingLogo from './RotatingLogo';
 import { createServiceClient } from '@/lib/supabase/server';
 
 export default async function Header() {
@@ -12,7 +11,11 @@ export default async function Header() {
     <header className="sticky top-0 z-50 border-b hairline bg-bg/60 backdrop-blur-md">
       <div className="wrap flex h-24 items-center justify-between">
         <Link href="/" className="flex items-center">
-          <RotatingLogo />
+          <img 
+            src="/images/logo.svg" 
+            alt="Fami Pro Logo" 
+            className="h-[72px] md:h-[84px] w-auto object-contain drop-shadow-sm" 
+          />
         </Link>
         <nav className="hidden items-center gap-8 text-sm text-fg-muted md:flex">
           <Link prefetch={true} href="/producten" className="hover:text-fg transition-colors">Shop</Link>
