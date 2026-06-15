@@ -10,7 +10,7 @@ export default function ShopLayout({ children }: { children: React.ReactNode }) 
       <ScrollToTop />
       <PromoPopup />
       <Header />
-      <main className="min-h-screen pt-8 md:pt-10">
+      <main className="min-h-screen pt-2 md:pt-3">
         {children}
       </main>
       <Footer />

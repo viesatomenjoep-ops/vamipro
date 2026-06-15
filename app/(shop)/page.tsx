@@ -20,7 +20,7 @@ export default async function HomePage() {
   return (
     <>
       {/* ===== HERO WITH AUDI Q3 BACKGROUND ===== */}
-      <section className="relative flex min-h-[100vh] w-full flex-col overflow-hidden pt-32 pb-8 md:pt-36 md:pb-12 -mt-24">
+      <section className="relative flex min-h-[100vh] w-full flex-col overflow-hidden pt-32 pb-8 md:pt-36 md:pb-12 -mt-[104px] md:-mt-[108px]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 

@@ -47,13 +47,13 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         <Link href="/producten" className="hover:text-accent">Producten</Link>
         <span>/</span><span className="text-fg-muted">{cat.name}</span>
       </div>
-      <div className="mt-6 flex items-baseline gap-4">
+      <div className="mt-2 flex items-baseline gap-4">
         <h1 className="h-section">{cat.name}</h1>
       </div>
       {cat.description && <p className="mt-2 max-w-lg text-fg-muted">{cat.description}</p>}
 
       {subcats && subcats.length > 0 && (
-        <nav className="mt-8 flex gap-2 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <nav className="mt-4 flex gap-2 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <Link prefetch={true} href={`/categorie/${slug}`} 
                 className={`shrink-0 whitespace-nowrap rounded-full px-4 py-1.5 text-sm transition-colors ${
                   !cat.parent_id ? 'bg-accent font-medium text-white' : 'border hairline text-fg-muted hover:border-accent hover:text-accent'
@@ -70,7 +70,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         </nav>
       )}
 
-      <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+      <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
         {products?.length
           ? products.map((p: any) => <ProductCard key={p.id} p={p} />)
           : <p className="col-span-full text-fg-muted">Nog geen producten in deze categorie.</p>}
