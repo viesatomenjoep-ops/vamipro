@@ -53,15 +53,15 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       {cat.description && <p className="mt-2 max-w-lg text-fg-muted">{cat.description}</p>}
 
       {subcats && subcats.length > 0 && (
-        <nav className="mt-8 flex flex-wrap gap-2">
+        <nav className="mt-8 flex gap-2 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <Link prefetch={true} href={`/categorie/${slug}`} 
-                className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
+                className={`shrink-0 whitespace-nowrap rounded-full px-4 py-1.5 text-sm transition-colors ${
                   !cat.parent_id ? 'bg-accent font-medium text-white' : 'border hairline text-fg-muted hover:border-accent hover:text-accent'
                 }`}>Alles in {cat.name}</Link>
           
           {subcats.map((c) => (
             <Link prefetch={true} key={c.slug} href={`/categorie/${c.slug}`}
-              className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
+              className={`shrink-0 whitespace-nowrap rounded-full px-4 py-1.5 text-sm transition-colors ${
                 c.slug === slug ? 'bg-accent font-medium text-white' : 'border hairline text-fg-muted hover:border-accent hover:text-accent'
               }`}>
               {c.name}
