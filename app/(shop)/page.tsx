@@ -20,35 +20,44 @@ export default async function HomePage() {
   return (
     <>
       {/* ===== HERO WITH AUDI Q3 BACKGROUND ===== */}
-      <section className="relative flex min-h-[85vh] w-full items-start overflow-hidden pt-32 pb-16 md:pt-36 md:pb-24 -mt-24">
+      <section className="relative flex min-h-[100vh] w-full flex-col overflow-hidden pt-32 pb-8 md:pt-36 md:pb-12 -mt-24">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
             src="/images/audi_q3_detailing.png" 
-            alt="Audi Q3 Detailing by Vami Pro" 
+            alt="Audi Q3 Detailing by Fami Pro" 
             className="h-full w-full object-cover object-center"
           />
           {/* Gradient overlay to ensure text readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-bg/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent" />
         </div>
 
-        {/* Hero Content */}
-        <div className="wrap relative z-10 w-full max-w-3xl">
-          <p className="eyebrow text-base md:text-xs">Car detailing · NL &amp; BE</p>
-          <h1 className="h-hero mt-6 text-[3.5rem] leading-[1.05] md:text-[4rem] lg:text-[4.5rem] md:mt-5">
-            Een finish die<br />
-            <span className="gloss-text">het licht vangt.</span>
-          </h1>
-          <p className="mt-8 max-w-xl text-xl text-fg-muted md:mt-6 md:text-lg drop-shadow-md">
-            Professionele detailingproducten, ontwikkeld voor liefhebbers en pro&apos;s.
-            Van veilig wassen tot keramische coatings met jarenlange bescherming.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-3 md:mt-8">
-            <Link href="/producten" className="btn btn-primary shadow-2xl text-lg px-8 py-4 md:text-sm md:px-5 md:py-2.5">
-              Shop alle producten
-            </Link>
+        {/* Hero Content Wrap */}
+        <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-between">
+          
+          {/* Top Part: Title */}
+          <div className="max-w-3xl">
+            <p className="eyebrow text-base md:text-xs">Car detailing · NL &amp; BE</p>
+            <h1 className="h-hero mt-6 text-[3.5rem] leading-[1.05] md:text-[4rem] lg:text-[4.5rem] md:mt-5">
+              Een finish die<br />
+              <span className="gloss-text">het licht vangt.</span>
+            </h1>
           </div>
+
+          {/* Bottom Part: Text & Button */}
+          <div className="max-w-3xl mt-auto pt-16">
+            <p className="max-w-xl text-xl text-fg-muted md:text-lg drop-shadow-md">
+              Professionele detailingproducten, ontwikkeld voor liefhebbers en pro&apos;s.
+              Van veilig wassen tot keramische coatings met jarenlange bescherming.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3 md:mt-6">
+              <Link href="/producten" className="btn btn-primary shadow-2xl text-lg px-8 py-4 md:text-sm md:px-5 md:py-2.5">
+                Shop alle producten
+              </Link>
+            </div>
+          </div>
+          
         </div>
       </section>
 
