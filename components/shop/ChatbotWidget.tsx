@@ -69,11 +69,14 @@ export default function ChatbotWidget() {
         {/* Header */}
         <div className="flex items-center justify-between border-b hairline bg-panel-2 px-4 py-3">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/10 text-accent">
-              <Bot size={18} />
+            <div className="flex h-8 w-8 items-center justify-center rounded-full overflow-hidden border hairline">
+              <img src="/images/logo.svg" alt="Fami Pro Logo" className="h-full w-full object-cover" />
             </div>
             <div>
-              <h3 className="font-display text-sm font-medium">Vami Pro Assistent</h3>
+              <div className="flex items-center gap-1">
+                <img src="/images/logo.svg" alt="Fami Pro" className="h-3 w-auto" />
+                <h3 className="font-display text-sm font-medium">Assistent</h3>
+              </div>
               <p className="text-xs text-accent">Online</p>
             </div>
           </div>
@@ -90,7 +93,7 @@ export default function ChatbotWidget() {
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.length === 0 && (
             <div className="text-center text-sm text-fg-muted mt-4">
-              <p>Welkom bij Vami Pro! 👋</p>
+              <p>Welkom bij Fami Pro! 👋</p>
               <p className="mt-2">Heb je vragen over onze detailing producten, verzending of retourneren? Stel ze gerust!</p>
             </div>
           )}
