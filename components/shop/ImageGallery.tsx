@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { cldUrl } from '@/lib/cloudinary';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import ZoomImage from './ZoomImage';
 
 export default function ImageGallery({ images, productName }: { images: string[], productName: string }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -40,12 +41,14 @@ export default function ImageGallery({ images, productName }: { images: string[]
   return (
     <>
       <div className="space-y-3">
-        {/* Main Image */}
+        {/* Main Image with Zoom */}
         <div 
-          className="card aspect-square overflow-hidden cursor-pointer"
+          className="card aspect-square overflow-hidden bg-white/5 dark:bg-white/5"
           onClick={() => openLightbox(0)}
         >
-          <img src={cldUrl(images[0], { w: 1100 })} alt={productName} className="h-full w-full object-contain p-4 transition-transform hover:scale-105 duration-300" />
+          <div className="w-full h-full p-4 md:p-8">
+            <ZoomImage image={images[0]} alt={productName} />
+          </div>
         </div>
         
         {/* Thumbnails */}
