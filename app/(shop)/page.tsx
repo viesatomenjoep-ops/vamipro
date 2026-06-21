@@ -26,8 +26,8 @@ export default async function HomePage() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="/images/audi_q3_detailing.png" 
-            alt="Audi Q3 Detailing by Fami Pro" 
+            src="/images/hero-audi.jpg" 
+            alt="Audi Q3 Detailing by VaMiPro" 
             className="h-full w-full object-cover object-center"
           />
           {/* Gradient overlay to ensure text readability */}
