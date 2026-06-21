@@ -33,9 +33,7 @@ export async function saveProduct(formData: FormData, productId?: string) {
     if (error) console.error("Error inserting product:", error);
   }
 
-  revalidatePath('/admin/producten');
-  revalidatePath('/producten');
-  revalidatePath('/');
+  revalidatePath('/', 'layout');
   redirect('/admin/producten');
 }
 
@@ -70,8 +68,6 @@ export async function saveCategory(formData: FormData, categoryId?: string) {
     await supabase.from('categories').insert(payload);
   }
 
-  revalidatePath('/admin/categorieen');
-  revalidatePath('/producten');
-  revalidatePath('/');
+  revalidatePath('/', 'layout');
   redirect('/admin/categorieen');
 }
