@@ -6,9 +6,10 @@ import { isMock, getMockProducts } from '@/lib/mock-data';
 export const metadata = { title: 'Alle producten' };
 export const revalidate = 60;
 
-export default async function ProductsPage({ searchParams }: { searchParams: { q?: string } }) {
+export default async function ProductsPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const supabase = createServiceClient();
-  const q = searchParams?.q?.toLowerCase();
+  const params = await searchParams;
+  const q = params?.q?.toLowerCase();
 
   let { data: products } = isMock
     ? getMockProducts() as any
