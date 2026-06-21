@@ -3,8 +3,15 @@ import { cldUrl } from '@/lib/cloudinary';
 
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
+const compareAtPrices: Record<string, number> = {
+  'volledig-pakket-xxl': 20720,
+  'exterieur-pakket': 6970,
+  'combinatiedeal-interieur': 4780,
+};
+
 export default function ProductCard({ p }: { p: any }) {
   const img = p.cloudinary_images?.[0];
+  const oldPrice = p.compare_at_price_cents || compareAtPrices[p.slug];
   return (
     <Link prefetch={true} href={`/producten/${p.slug}`} className="card card-hover group block overflow-hidden">
       <div className="relative aspect-square overflow-hidden bg-panel-2">
@@ -30,7 +37,14 @@ export default function ProductCard({ p }: { p: any }) {
         <h3 className="mt-1 font-display text-sm font-medium leading-snug text-fg sm:text-base">{p.name}</h3>
         <p className="mt-1 line-clamp-2 text-xs text-fg-muted sm:text-sm">{p.short_description}</p>
         <div className="mt-3 flex items-center justify-between">
-          <span className="font-display text-base font-semibold text-fg sm:text-lg">{euro(p.price_cents)}</span>
+          <div className="flex flex-wrap items-baseline gap-2">
+            <span className="font-display text-base font-semibold text-fg sm:text-lg">{euro(p.price_cents)}</span>
+            {oldPrice && (
+              <span className="font-display text-xs text-fg-muted line-through decoration-red-500 sm:text-sm">
+                {euro(oldPrice)}
+              </span>
+            )}
+          </div>
           <span className="hidden text-sm text-accent opacity-0 transition-opacity group-hover:opacity-100 sm:block">Bekijk →</span>
         </div>
       </div>
