@@ -56,6 +56,27 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ===== SEARCH BAR ===== */}
+      <section className="bg-panel py-8 md:py-12 border-b hairline relative z-20">
+        <div className="wrap max-w-3xl mx-auto">
+          <form action="/producten" method="GET" className="relative flex items-center w-full">
+            <input 
+              type="text" 
+              name="q" 
+              placeholder="Zoek naar detailingproducten..." 
+              className="w-full bg-bg border-2 border-accent rounded-full py-4 pl-6 pr-32 text-fg focus:outline-none focus:ring-4 focus:ring-accent/20 transition-all text-sm sm:text-base font-medium shadow-md"
+              required
+            />
+            <button 
+              type="submit" 
+              className="absolute right-2 top-2 bottom-2 bg-accent text-white rounded-full px-6 font-semibold hover:opacity-90 transition-opacity shadow-sm"
+            >
+              Zoeken
+            </button>
+          </form>
+        </div>
+      </section>
+
       {/* ===== USP STRIP ===== */}
       <section className="border-y hairline bg-panel">
         <div className="wrap grid grid-cols-2 gap-px md:grid-cols-4">

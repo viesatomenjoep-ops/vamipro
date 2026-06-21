@@ -6,12 +6,21 @@ import { isMock, getMockProducts } from '@/lib/mock-data';
 export const metadata = { title: 'Alle producten' };
 export const revalidate = 60;
 
-export default async function ProductsPage() {
+export default async function ProductsPage({ searchParams }: { searchParams: { q?: string } }) {
   const supabase = createServiceClient();
-  const { data: products } = isMock
+  const q = searchParams?.q?.toLowerCase();
+
+  let { data: products } = isMock
     ? getMockProducts() as any
     : await supabase
         .from('products').select('*').eq('is_active', true).order('is_featured', { ascending: false }).order('name');
+
+  if (q && products) {
+    products = products.filter((p: any) => 
+      p.name.toLowerCase().includes(q) || 
+      (p.short_description && p.short_description.toLowerCase().includes(q))
+    );
+  }
         
   const { data: categories } = await supabase.from('categories').select('*').is('parent_id', null).order('sort_order');
 
