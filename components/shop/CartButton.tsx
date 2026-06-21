@@ -6,7 +6,7 @@ import { ShoppingBag } from 'lucide-react';
 export default function CartButton() {
   const count = useCart((s) => s.items.reduce((n, i) => n + i.quantity, 0));
   return (
-    <Link href="/winkelmandje" className="group flex items-center gap-2 text-sm text-fg hover:text-accent transition-colors">
+    <Link href="/winkelmandje" className="group flex items-center gap-2 text-sm text-white hover:text-accent transition-colors">
       <div className="relative flex items-center justify-center p-1">
         <ShoppingBag size={20} strokeWidth={1.5} className="group-hover:scale-105 transition-transform" />
         {count > 0 && (

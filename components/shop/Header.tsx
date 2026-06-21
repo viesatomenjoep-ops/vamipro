@@ -18,14 +18,14 @@ export default async function Header() {
             className="h-[72px] md:h-[84px] w-auto object-contain drop-shadow-sm" 
           />
         </Link>
-        <nav className="hidden items-center gap-8 text-sm text-fg-muted md:flex">
-          <Link prefetch={true} href="/producten" className="hover:text-fg transition-colors">Shop</Link>
+        <nav className="hidden items-center gap-8 text-sm text-white/70 md:flex">
+          <Link prefetch={true} href="/producten" className="hover:text-white transition-colors">Shop</Link>
           {categories?.map(c => (
-            <Link prefetch={true} key={c.id} href={`/categorie/${c.slug}`} className="hover:text-fg transition-colors">
+            <Link prefetch={true} key={c.id} href={`/categorie/${c.slug}`} className="hover:text-white transition-colors">
               {c.name}
             </Link>
           ))}
-          <Link prefetch={true} href="/contact" className="hover:text-fg transition-colors">Contact</Link>
+          <Link prefetch={true} href="/contact" className="hover:text-white transition-colors">Contact</Link>
         </nav>
         <div className="flex items-center gap-4">
           <ThemeToggle />

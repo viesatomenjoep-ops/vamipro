@@ -28,7 +28,7 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
     <div className="md:hidden">
       <button 
         onClick={() => setIsOpen(true)}
-        className="flex h-14 w-14 items-center justify-center rounded-full text-fg transition-colors hover:bg-panel-2"
+        className="flex h-14 w-14 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10"
         aria-label="Menu openen"
       >
         <Menu size={36} strokeWidth={1.5} />
