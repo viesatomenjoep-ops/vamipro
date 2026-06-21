@@ -5,6 +5,7 @@ import ProductCard from '@/components/shop/ProductCard';
 import Reveal from '@/components/shop/Reveal';
 import CountdownTimer from '@/components/shop/CountdownTimer';
 import ImageGallery from '@/components/shop/ImageGallery';
+import LiveSearchBar from '@/components/shop/LiveSearchBar';
 import { ShieldCheck, Truck, RotateCcw, Sparkles } from 'lucide-react';
 import { isMock, getMockProducts } from '@/lib/mock-data';
 
@@ -53,21 +54,7 @@ export default async function HomePage() {
           
           {/* Search bar pulled onto the hero image on mobile */}
           <div className="w-full -mt-[6.5rem] md:mt-0 mb-8 md:mb-10 relative z-30 px-2 sm:px-0">
-            <form action="/producten" method="GET" className="relative flex items-center w-full">
-              <input 
-                type="text" 
-                name="q" 
-                placeholder="Zoek naar detailingproducten..." 
-                className="w-full bg-bg border-2 border-accent rounded-full py-4 pl-6 pr-32 text-fg focus:outline-none focus:ring-4 focus:ring-accent/20 transition-all text-base font-medium shadow-2xl"
-                required
-              />
-              <button 
-                type="submit" 
-                className="absolute right-2 top-2 bottom-2 bg-accent text-white rounded-full px-6 font-semibold hover:opacity-90 transition-opacity shadow-sm"
-              >
-                Zoeken
-              </button>
-            </form>
+            <LiveSearchBar />
           </div>
 
           <p className="max-w-2xl text-base sm:text-lg text-fg-muted mb-6">
