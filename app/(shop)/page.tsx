@@ -48,33 +48,37 @@ export default async function HomePage() {
       </section>
 
       {/* ===== INTRO & SEARCH BAR ===== */}
-      <section className="bg-panel py-10 md:py-16 border-b hairline relative z-20 shadow-sm">
+      <section className="bg-panel pb-10 pt-16 md:py-16 border-b hairline relative z-20 shadow-sm mt-0">
         <div className="wrap max-w-3xl mx-auto flex flex-col items-center text-center">
+          
+          {/* Search bar pulled onto the hero image on mobile */}
+          <div className="w-full -mt-[6.5rem] md:mt-0 mb-8 md:mb-10 relative z-30 px-2 sm:px-0">
+            <form action="/producten" method="GET" className="relative flex items-center w-full">
+              <input 
+                type="text" 
+                name="q" 
+                placeholder="Zoek naar detailingproducten..." 
+                className="w-full bg-bg border-2 border-accent rounded-full py-4 pl-6 pr-32 text-fg focus:outline-none focus:ring-4 focus:ring-accent/20 transition-all text-base font-medium shadow-2xl"
+                required
+              />
+              <button 
+                type="submit" 
+                className="absolute right-2 top-2 bottom-2 bg-accent text-white rounded-full px-6 font-semibold hover:opacity-90 transition-opacity shadow-sm"
+              >
+                Zoeken
+              </button>
+            </form>
+          </div>
+
           <p className="max-w-2xl text-base sm:text-lg text-fg-muted mb-6">
             Professionele detailingproducten, ontwikkeld voor liefhebbers en pro&apos;s.
             Van veilig wassen tot keramische coatings met jarenlange bescherming.
           </p>
-          <div className="mb-10 flex flex-wrap justify-center gap-3">
+          <div className="mb-2 flex flex-wrap justify-center gap-3">
             <Link href="/producten" className="btn btn-primary shadow-xl text-base px-8 py-3.5 md:text-sm md:px-6 md:py-3 rounded-full font-semibold">
               Shop alle producten
             </Link>
           </div>
-          
-          <form action="/producten" method="GET" className="relative flex items-center w-full">
-            <input 
-              type="text" 
-              name="q" 
-              placeholder="Zoek naar detailingproducten..." 
-              className="w-full bg-bg border-2 border-accent rounded-full py-4 pl-6 pr-32 text-fg focus:outline-none focus:ring-4 focus:ring-accent/20 transition-all text-base font-medium shadow-md"
-              required
-            />
-            <button 
-              type="submit" 
-              className="absolute right-2 top-2 bottom-2 bg-accent text-white rounded-full px-6 font-semibold hover:opacity-90 transition-opacity shadow-sm"
-            >
-              Zoeken
-            </button>
-          </form>
         </div>
       </section>
 
