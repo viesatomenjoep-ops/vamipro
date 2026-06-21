@@ -25,8 +25,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <nav className="flex flex-row md:flex-col gap-2 md:gap-1 text-sm overflow-x-auto pb-2 md:pb-0 scrollbar-hide flex-1">
           {nav.map(([href, label, Icon]) => (
             <Link key={href} href={href}
-              className="flex items-center gap-2 md:gap-3 rounded-sm px-3 py-2 md:py-2.5 text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg whitespace-nowrap">
-              <Icon size={17} strokeWidth={1.6} /> <span className="hidden sm:inline md:block">{label}</span>
+              className="flex items-center gap-3 md:gap-4 rounded-md px-3 py-3 text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg whitespace-nowrap">
+              <Icon size={28} strokeWidth={1.5} className="shrink-0" /> <span className="hidden sm:inline md:block text-base font-medium">{label}</span>
             </Link>
           ))}
         </nav>
