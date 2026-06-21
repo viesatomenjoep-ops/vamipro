@@ -12,8 +12,8 @@ export default async function Header() {
       <div className="wrap flex h-24 items-center justify-between">
         <Link href="/" className="flex items-center">
           <img 
-            src="/images/logo.svg" 
-            alt="Fami Pro Logo" 
+            src="/images/logo.png" 
+            alt="VaMiPro Logo" 
             className="h-[72px] md:h-[84px] w-auto object-contain drop-shadow-sm" 
           />
         </Link>

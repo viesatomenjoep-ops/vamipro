@@ -10,7 +10,7 @@ export default async function Footer() {
       <div className="gloss-line" />
       <div className="wrap grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-1">
-          <img src="/images/logo.svg" alt="Fami Pro Logo" className="h-14 w-auto mb-2" />
+          <img src="/images/logo.png" alt="VaMiPro Logo" className="h-14 w-auto mb-2" />
           <p className="mt-3 max-w-xs text-sm text-fg-muted">
             Professionele detailingproducten voor een showroomresultaat. Geleverd in NL en BE.
           </p>

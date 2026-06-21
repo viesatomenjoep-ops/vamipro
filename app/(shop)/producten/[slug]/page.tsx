@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import AddToCart from '@/components/shop/AddToCart';
 import ProductCard from '@/components/shop/ProductCard';
 import ProductDescription from '@/components/shop/ProductDescription';
+import ImageGallery from '@/components/shop/ImageGallery';
 import { ShieldCheck, Truck, RotateCcw } from 'lucide-react';
 import { isMock, getMockProduct, getMockRelated } from '@/lib/mock-data';
 
@@ -49,24 +50,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       <div className="mt-8 grid gap-12 lg:grid-cols-2">
         {/* Gallery */}
-        <div className="space-y-3">
-          <div className="card aspect-square overflow-hidden">
-            {imgs[0]
-              ? <img src={cldUrl(imgs[0], { w: 1100 })} alt={p.name} className="h-full w-full object-contain p-4" />
-              : <div className="grid h-full w-full place-items-center bg-panel-2">
-                  <span className="font-display text-sm uppercase tracking-[0.25em] text-fg-faint">Vami Pro</span>
-                </div>}
-          </div>
-          {imgs.length > 1 && (
-            <div className="grid grid-cols-4 gap-3">
-              {imgs.slice(0, 4).map((id, i) => (
-                <div key={i} className="card aspect-square overflow-hidden">
-                  <img src={cldUrl(id, { w: 240 })} alt="" className="h-full w-full object-cover" />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <ImageGallery images={imgs} productName={p.name} />
 
         {/* Buy panel */}
         <div className="lg:sticky lg:top-24 lg:self-start">
