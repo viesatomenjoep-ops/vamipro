@@ -23,13 +23,13 @@ export default async function HomePage() {
   return (
     <>
       {/* ===== HERO WITH AUDI Q3 BACKGROUND ===== */}
-      <section className="relative flex min-h-[60vh] md:min-h-[80vh] w-full flex-col overflow-hidden pt-32 pb-4 md:pt-36 md:pb-4 -mt-[104px] md:-mt-[108px]">
+      <section className="relative flex min-h-[75vh] md:min-h-[80vh] w-full flex-col overflow-hidden pt-28 pb-8 md:pt-36 md:pb-12 -mt-[104px] md:-mt-[108px]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
             src="/images/hero-audi.jpg" 
             alt="Audi Q3 Detailing by VaMiPro" 
-            className="h-full w-full object-contain object-center opacity-90"
+            className="h-full w-full object-cover object-[center_90%] opacity-90"
           />
           {/* Gradient overlay to ensure text readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-bg/90 via-bg/40 to-transparent" />
@@ -40,7 +40,7 @@ export default async function HomePage() {
         <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-between">
           
           {/* Top Part: Title */}
-          <div className="max-w-3xl">
+          <div className="max-w-3xl mt-4 md:mt-0">
             <p className="eyebrow text-base md:text-xs">Car detailing · NL &amp; BE</p>
             <h1 className="h-hero mt-6 text-[3.5rem] leading-[1.05] md:text-[4rem] lg:text-[4.5rem] md:mt-5">
               Een finish die<br />
@@ -49,8 +49,8 @@ export default async function HomePage() {
           </div>
 
           {/* Bottom Part: Text & Button */}
-          <div className="max-w-3xl mt-auto pt-16">
-            <p className="max-w-xl text-xl text-fg-muted md:text-lg drop-shadow-md">
+          <div className="max-w-3xl mt-auto pt-8 md:pt-16 mb-4 md:mb-0">
+            <p className="max-w-xl text-lg text-fg-muted md:text-lg drop-shadow-md">
               Professionele detailingproducten, ontwikkeld voor liefhebbers en pro&apos;s.
               Van veilig wassen tot keramische coatings met jarenlange bescherming.
             </p>
