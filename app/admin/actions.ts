@@ -14,9 +14,9 @@ export async function saveProduct(formData: FormData, productId?: string) {
     short_description: formData.get('short_description') as string,
     description: formData.get('description') as string,
     brand: formData.get('brand') as string,
-    price_cents: Math.round(parseFloat(formData.get('price') as string) * 100),
-    stock: parseInt(formData.get('stock') as string, 10),
-    weight_grams: parseInt(formData.get('weight_grams') as string, 10),
+    price_cents: Math.round(parseFloat(formData.get('price') as string || '0') * 100),
+    stock: parseInt(formData.get('stock') as string || '0', 10),
+    weight_grams: parseInt(formData.get('weight_grams') as string || '0', 10),
     is_active: formData.get('is_active') === 'true',
     is_featured: formData.get('is_featured') === 'true',
     category_id: formData.get('category_id') as string,
@@ -26,9 +26,11 @@ export async function saveProduct(formData: FormData, productId?: string) {
   const images = imagesStr ? imagesStr.split(',').filter(Boolean) : [];
 
   if (productId) {
-    await supabase.from('products').update({ ...payload, cloudinary_images: images }).eq('id', productId);
+    const { error } = await supabase.from('products').update({ ...payload, cloudinary_images: images }).eq('id', productId);
+    if (error) console.error("Error updating product:", error);
   } else {
-    await supabase.from('products').insert({ ...payload, cloudinary_images: images });
+    const { error } = await supabase.from('products').insert({ ...payload, cloudinary_images: images });
+    if (error) console.error("Error inserting product:", error);
   }
 
   revalidatePath('/admin/producten');

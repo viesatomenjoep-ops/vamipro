@@ -21,28 +21,28 @@ export default function ProductForm({ product, categories }: { product?: any, ca
       <div className="card space-y-4">
         <div>
           <label className="block text-sm font-medium mb-1">Naam</label>
-          <input required name="name" defaultValue={product?.name} className="input w-full" />
+          <input required name="name" defaultValue={product?.name} className="input w-full text-black bg-white px-3 py-2 rounded-md" />
         </div>
         
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Slug (URL)</label>
-            <input required name="slug" defaultValue={product?.slug} className="input w-full" />
+            <input required name="slug" defaultValue={product?.slug} className="input w-full text-black bg-white px-3 py-2 rounded-md" />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">SKU (Artikelnummer)</label>
-            <input required name="sku" defaultValue={product?.sku} className="input w-full" />
+            <input required name="sku" defaultValue={product?.sku} className="input w-full text-black bg-white px-3 py-2 rounded-md" />
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Prijs (in euro)</label>
-            <input required type="number" step="0.01" name="price" defaultValue={product ? (product.price_cents / 100).toFixed(2) : ''} className="input w-full" />
+            <input required type="number" step="0.01" name="price" defaultValue={product ? (product.price_cents / 100).toFixed(2) : ''} className="input w-full text-black bg-white px-3 py-2 rounded-md" />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Categorie</label>
-            <select required name="category_id" defaultValue={product?.category_id} className="input w-full">
+            <select required name="category_id" defaultValue={product?.category_id} className="input w-full text-black bg-white px-3 py-2 rounded-md">
               <option value="">Kies categorie</option>
               {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
@@ -52,15 +52,15 @@ export default function ProductForm({ product, categories }: { product?: any, ca
         <div className="grid grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Voorraad</label>
-            <input required type="number" name="stock" defaultValue={product?.stock ?? 0} className="input w-full" />
+            <input required type="number" name="stock" defaultValue={product?.stock ?? 0} className="input w-full text-black bg-white px-3 py-2 rounded-md" />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Merk</label>
-            <input name="brand" defaultValue={product?.brand ?? 'Vami Pro'} className="input w-full" />
+            <input name="brand" defaultValue={product?.brand ?? 'Vami Pro'} className="input w-full text-black bg-white px-3 py-2 rounded-md" />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Gewicht (gram)</label>
-            <input required type="number" name="weight_grams" defaultValue={product?.weight_grams ?? 500} className="input w-full" />
+            <input required type="number" name="weight_grams" defaultValue={product?.weight_grams ?? 500} className="input w-full text-black bg-white px-3 py-2 rounded-md" />
           </div>
         </div>
       </div>
@@ -68,11 +68,11 @@ export default function ProductForm({ product, categories }: { product?: any, ca
       <div className="card space-y-4">
         <div>
           <label className="block text-sm font-medium mb-1">Korte omschrijving</label>
-          <textarea name="short_description" defaultValue={product?.short_description} rows={2} className="input w-full" />
+          <textarea name="short_description" defaultValue={product?.short_description} rows={2} className="input w-full text-black bg-white px-3 py-2 rounded-md" />
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Volledige omschrijving</label>
-          <textarea name="description" defaultValue={product?.description} rows={6} className="input w-full" />
+          <textarea name="description" defaultValue={product?.description} rows={6} className="input w-full text-black bg-white px-3 py-2 rounded-md" />
         </div>
       </div>
 
