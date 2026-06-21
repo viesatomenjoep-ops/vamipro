@@ -65,7 +65,7 @@ export default async function HomePage() {
               type="text" 
               name="q" 
               placeholder="Zoek naar detailingproducten..." 
-              className="w-full bg-bg border-2 border-accent rounded-full py-4 pl-6 pr-32 text-fg focus:outline-none focus:ring-4 focus:ring-accent/20 transition-all text-sm sm:text-base font-medium shadow-md"
+              className="w-full bg-bg border-2 border-accent rounded-full py-4 pl-6 pr-32 text-fg focus:outline-none focus:ring-4 focus:ring-accent/20 transition-all text-base font-medium shadow-md"
               required
             />
             <button 
