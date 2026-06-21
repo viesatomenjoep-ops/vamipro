@@ -37,8 +37,8 @@ export default async function HomePage() {
         </div>
 
         {/* Hero Content Wrap */}
-        <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-end pb-12 md:pb-24">
-          <div className="max-w-3xl mt-auto">
+        <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-center items-center pb-32 md:pb-48">
+          <div className="max-w-3xl flex flex-col items-center text-center">
             <p className="eyebrow text-base md:text-xs">Car detailing · NL &amp; BE</p>
             <h1 className="h-hero mt-4 text-[3.5rem] leading-[1.05] md:text-[4rem] lg:text-[4.5rem]">
               Een finish die<br />
@@ -48,7 +48,7 @@ export default async function HomePage() {
               Professionele detailingproducten, ontwikkeld voor liefhebbers en pro&apos;s.
               Van veilig wassen tot keramische coatings met jarenlange bescherming.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link href="/producten" className="btn btn-primary shadow-2xl text-lg px-8 py-4 md:text-sm md:px-5 md:py-2.5">
                 Shop alle producten
               </Link>
