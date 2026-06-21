@@ -23,13 +23,13 @@ export default async function HomePage() {
   return (
     <>
       {/* ===== HERO WITH AUDI Q3 BACKGROUND ===== */}
-      <section className="relative flex min-h-[95vh] md:min-h-[115vh] w-full flex-col overflow-hidden pt-28 pb-0 -mt-[104px] md:-mt-[108px] bg-black">
+      <section className="relative flex min-h-[90vh] md:min-h-[115vh] w-full flex-col overflow-hidden pt-[104px] pb-0 -mt-[104px] md:-mt-[108px] bg-black">
         {/* Background Image */}
-        <div className="absolute inset-0 z-0 pt-[104px] md:pt-0">
+        <div className="absolute inset-0 z-0">
           <img 
             src="/images/hero-audi.jpg" 
             alt="Audi Q3 Detailing by VaMiPro" 
-            className="h-full w-full object-contain object-top md:object-cover md:object-center opacity-90"
+            className="h-full w-full object-contain object-bottom md:object-cover md:object-center opacity-90"
           />
           {/* Gradient overlay to ensure text readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-bg/90 via-bg/40 to-transparent" />
@@ -37,19 +37,19 @@ export default async function HomePage() {
         </div>
 
         {/* Hero Content Wrap */}
-        <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-end md:justify-center items-center pb-12 md:pb-48">
-          <div className="max-w-3xl flex flex-col items-center text-center mt-auto md:mt-0">
-            <p className="eyebrow text-base md:text-xs">Car detailing · NL &amp; BE</p>
-            <h1 className="h-hero mt-4 text-[3.5rem] leading-[1.05] md:text-[4rem] lg:text-[4.5rem]">
+        <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-start md:justify-center items-center pt-8 md:pt-0 pb-0 md:pb-48">
+          <div className="max-w-3xl flex flex-col items-center text-center">
+            <p className="eyebrow text-sm md:text-xs">Car detailing · NL &amp; BE</p>
+            <h1 className="h-hero mt-3 text-[2.75rem] leading-[1.1] sm:text-[3.5rem] md:text-[4rem] lg:text-[4.5rem]">
               Een finish die<br />
               <span className="gloss-text">het licht vangt.</span>
             </h1>
-            <p className="max-w-xl text-lg text-fg-muted md:text-xl drop-shadow-md mt-6">
+            <p className="max-w-xl text-base text-fg-muted md:text-xl drop-shadow-md mt-4 md:mt-6">
               Professionele detailingproducten, ontwikkeld voor liefhebbers en pro&apos;s.
               Van veilig wassen tot keramische coatings met jarenlange bescherming.
             </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Link href="/producten" className="btn btn-primary shadow-2xl text-lg px-8 py-4 md:text-sm md:px-5 md:py-2.5">
+            <div className="mt-6 md:mt-8 flex flex-wrap justify-center gap-3">
+              <Link href="/producten" className="btn btn-primary shadow-2xl text-base px-6 py-3 md:text-sm md:px-5 md:py-2.5">
                 Shop alle producten
               </Link>
             </div>
