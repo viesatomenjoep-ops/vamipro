@@ -68,14 +68,19 @@ export default function CloudinaryUpload({
     <div className="space-y-3">
       {value.length > 0 && (
         <div className="flex flex-wrap gap-3">
-          {value.map((id) => (
-            <div key={id} className="relative h-24 w-24 overflow-hidden rounded border border-white/10">
-              <img src={`https://res.cloudinary.com/dxcohla4k/image/upload/c_fill,w_100,h_100/${id}`} alt="Preview" className="h-full w-full object-cover" />
-              <button type="button" onClick={() => removeImage(id)} className="absolute right-1 top-1 rounded-full bg-black/60 p-1 text-white hover:bg-black">
-                <X size={14} />
-              </button>
-            </div>
-          ))}
+          {value.map((id) => {
+            const previewUrl = id.startsWith('http') || id.startsWith('/') 
+              ? id 
+              : `https://res.cloudinary.com/dxcohla4k/image/upload/c_fill,w_100,h_100/${id}`;
+            return (
+              <div key={id} className="relative h-24 w-24 overflow-hidden rounded border border-white/10">
+                <img src={previewUrl} alt="Preview" className="h-full w-full object-cover" />
+                <button type="button" onClick={() => removeImage(id)} className="absolute right-1 top-1 rounded-full bg-black/60 p-1 text-white hover:bg-black">
+                  <X size={14} />
+                </button>
+              </div>
+            );
+          })}
         </div>
       )}
       <label className="flex cursor-pointer items-center justify-center gap-2 rounded border border-dashed border-white/20 bg-white/5 p-4 text-sm text-fg-muted hover:bg-white/10 transition-colors">
