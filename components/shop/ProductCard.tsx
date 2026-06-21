@@ -32,19 +32,18 @@ export default function ProductCard({ p }: { p: any }) {
           </span>
         )}
       </div>
-      <div className="p-3 sm:p-4">
-        {p.brand && <p className="text-[10px] uppercase tracking-[0.18em] text-fg-faint sm:text-[11px]">{p.brand}</p>}
-        <h3 className="mt-1 font-display text-sm font-medium leading-snug text-fg sm:text-base">{p.name}</h3>
-        <p className="mt-1 line-clamp-2 text-xs text-fg-muted sm:text-sm">{p.short_description}</p>
-        <div className="mt-3 flex items-center justify-between">
-          <div className="flex flex-wrap items-baseline gap-2">
-            <span className="font-display text-base font-semibold text-fg sm:text-lg">{euro(p.price_cents)}</span>
-            {oldPrice && (
-              <span className="font-display text-xs text-fg-muted line-through decoration-red-500 sm:text-sm">
-                {euro(oldPrice)}
-              </span>
-            )}
-          </div>
+      <div className="p-4">
+        {p.brand && <p className="text-[10px] sm:text-xs uppercase tracking-wider text-fg-faint mb-1">{p.brand}</p>}
+        <h3 className="text-sm sm:text-base font-medium leading-tight text-fg">{p.name}</h3>
+        <p className="mt-1.5 line-clamp-2 text-xs sm:text-sm text-fg-muted">{p.short_description}</p>
+        <div className="mt-4 flex flex-wrap items-baseline gap-2.5">
+          <span className="text-base sm:text-[17px] font-semibold text-fg">{euro(p.price_cents)}</span>
+          {oldPrice && (
+            <span className="text-xs sm:text-sm text-fg-faint line-through decoration-bad/70">
+              {euro(oldPrice)}
+            </span>
+          )}
+        </div>
           <span className="hidden text-sm text-accent opacity-0 transition-opacity group-hover:opacity-100 sm:block">Bekijk →</span>
         </div>
       </div>
