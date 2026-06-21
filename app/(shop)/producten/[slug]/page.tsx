@@ -16,6 +16,7 @@ const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 const compareAtPrices: Record<string, number> = {
   'volledig-pakket-xxl': 20720,
   'exterieur-pakket': 6970,
+  'combinatiedeal-interieur': 4780,
 };
 
 export async function generateStaticParams() {
