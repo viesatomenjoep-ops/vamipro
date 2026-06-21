@@ -23,17 +23,17 @@ export default async function HomePage() {
   return (
     <>
       {/* ===== HERO WITH AUDI Q3 BACKGROUND ===== */}
-      <section className="relative flex min-h-[100vh] w-full flex-col overflow-hidden pt-32 pb-8 md:pt-36 md:pb-12 -mt-[104px] md:-mt-[108px]">
+      <section className="relative flex min-h-[100vh] w-full flex-col overflow-hidden pt-32 pb-4 md:pt-36 md:pb-4 -mt-[104px] md:-mt-[108px]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
             src="/images/hero-audi.jpg" 
             alt="Audi Q3 Detailing by VaMiPro" 
-            className="h-full w-full object-cover object-center"
+            className="h-full w-full object-cover object-bottom md:object-[center_80%]"
           />
           {/* Gradient overlay to ensure text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-bg/90 via-bg/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-transparent to-transparent h-1/2 bottom-0 top-auto" />
         </div>
 
         {/* Hero Content Wrap */}
