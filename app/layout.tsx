@@ -11,11 +11,15 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl'),
 };
 
+import { ThemeProvider } from '@/components/ThemeProvider';
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="nl" className={`${display.variable} ${body.variable}`}>
+    <html lang="nl" suppressHydrationWarning className={`${display.variable} ${body.variable}`}>
       <body style={{ fontFamily: 'var(--font-body-next), var(--font-body)' } as React.CSSProperties}>
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

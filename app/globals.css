@@ -7,31 +7,62 @@
    Luxe, donkere, carbon-look met krachtige saffierblauwe accenten.
    ========================================================= */
 :root {
-  /* Surfaces (donker) */
-  --bg: #09090B;           /* Zwart antraciet */
-  --panel: #18181B;        /* Donkergrijs */
-  --panel-2: #27272A;      /* Hover state op panelen */
-  --raise: #3F3F46;        /* Hover op cards */
-  --line: #27272A;         /* Hairline borders */
-  --line-strong: #3F3F46;
+  /* =======================================
+     LIGHT THEME (Dagmodus)
+     ======================================= */
+  --bg: #FAFAFA;           /* Fris lichtgrijs/wit */
+  --panel: #FFFFFF;        /* Puur wit voor kaarten */
+  --panel-2: #F4F4F5;      /* Hover state op panelen */
+  --raise: #E4E4E7;        /* Hover op cards */
+  --line: #E4E4E7;         /* Lichte borders */
+  --line-strong: #D4D4D8;
 
   /* Text */
-  --fg: #FAFAFA;           /* Zuiver wit */
-  --fg-muted: #A1A1AA;     /* Staalgrijs */
-  --fg-faint: #71717A;     /* Donkerder grijs voor bijschriften */
+  --fg: #09090B;           /* Heel donker voor goede leesbaarheid */
+  --fg-muted: #52525B;     /* Middelgrijs */
+  --fg-faint: #A1A1AA;     /* Lichtgrijs voor bijschriften */
 
-  /* Accent — Saffierblauw */
-  --accent: #2563EB;       /* Diep Saffierblauw */
-  --accent-deep: #1D4ED8;  /* Dieper blauw voor hover state */
-  --accent-bright: #3B82F6;/* Levendig blauw voor gradients */
-  --accent-soft: rgba(37, 99, 235, 0.1);  /* Lichte wash */
+  /* Accent — Saffierblauw (Blijft gelijk) */
+  --accent: #2563EB;       
+  --accent-deep: #1D4ED8;  
+  --accent-bright: #3B82F6;
+  --accent-soft: rgba(37, 99, 235, 0.1);  
   --accent-glow: rgba(37, 99, 235, 0.2);
-  --on-accent: #FFFFFF;    /* Tekst op accent */
+  --on-accent: #FFFFFF;    
 
   /* Status */
   --good: #10b981;
   --bad: #ef4444;
+}
 
+.dark {
+  /* =======================================
+     DARK THEME (Nachtmodus) - Huidige stijl
+     ======================================= */
+  --bg: #09090B;           
+  --panel: #18181B;        
+  --panel-2: #27272A;      
+  --raise: #3F3F46;        
+  --line: #27272A;         
+  --line-strong: #3F3F46;
+
+  /* Text */
+  --fg: #FAFAFA;           
+  --fg-muted: #A1A1AA;     
+  --fg-faint: #71717A;     
+
+  /* Accent — Saffierblauw */
+  --accent: #2563EB;       
+  --accent-deep: #1D4ED8;  
+  --accent-bright: #3B82F6;
+  --accent-soft: rgba(37, 99, 235, 0.1);  
+  --accent-glow: rgba(37, 99, 235, 0.2);
+  --on-accent: #FFFFFF;    
+
+  /* Status */
+  --good: #10b981;
+  --bad: #ef4444;
+  /* Shared Variables */
   --radius: 14px;
   --radius-sm: 9px;
   --maxw: 1200px;
