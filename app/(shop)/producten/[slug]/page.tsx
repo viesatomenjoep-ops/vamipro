@@ -13,6 +13,11 @@ import { isMock, getMockProduct, getMockRelated } from '@/lib/mock-data';
 export const revalidate = 60;
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
+const compareAtPrices: Record<string, number> = {
+  'volledig-pakket-xxl': 20720,
+  'exterieur-pakket': 6970,
+};
+
 export async function generateStaticParams() {
   const supabase = createServiceClient();
   const { data } = await supabase.from('products').select('slug').eq('is_active', true);
@@ -58,9 +63,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div className="w-full lg:w-[42%] lg:sticky lg:top-24 lg:self-start">
           {p.brand && <p className="text-xs uppercase tracking-[0.2em] text-fg-faint">{p.brand}</p>}
           <h1 className="mt-2 font-display text-3xl font-semibold leading-tight">{p.name}</h1>
-          <div className="mt-4 flex items-baseline gap-3">
+          <div className="mt-4 flex flex-wrap items-baseline gap-3">
             <span className="font-display text-3xl font-semibold text-fg">{euro(p.price_cents)}</span>
-            <span className="text-sm text-fg-muted">incl. btw</span>
+            {compareAtPrices[p.slug] && (
+              <span className="font-display text-xl text-fg-muted line-through decoration-red-500">
+                {euro(compareAtPrices[p.slug])}
+              </span>
+            )}
+            <span className="text-sm text-fg-muted ml-1">incl. btw</span>
           </div>
           <p className="mt-1 text-sm">
             {p.stock > 0
