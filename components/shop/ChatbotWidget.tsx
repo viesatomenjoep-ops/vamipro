@@ -113,7 +113,7 @@ export default function ChatbotWidget() {
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.length === 0 && (
             <div className="text-center text-sm text-fg-muted mt-4">
-              <p>Welkom bij Fami Pro! 👋</p>
+              <p>Welkom bij VaMiPro! 👋</p>
               <p className="mt-2">Heb je vragen over onze detailing producten, verzending of retourneren? Stel ze gerust!</p>
             </div>
           )}
