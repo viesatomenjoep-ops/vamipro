@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react';
 
 export default function CountdownTimer({ targetDate }: { targetDate: string }) {
   const [timeLeft, setTimeLeft] = useState<{
-    days: number;
-    hours: number;
-    minutes: number;
-    seconds: number;
+    dagen: number;
+    uur: number;
+    minuten: number;
+    seconden: number;
   } | null>(null);
 
   useEffect(() => {
@@ -17,10 +17,10 @@ export default function CountdownTimer({ targetDate }: { targetDate: string }) {
 
       if (difference > 0) {
         timeLeft = {
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
+          dagen: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          uur: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minuten: Math.floor((difference / 1000 / 60) % 60),
+          seconden: Math.floor((difference / 1000) % 60),
         };
       }
       return timeLeft;
