@@ -43,7 +43,7 @@ export default async function HomePage() {
               Een finish die<br />
               <span className="gloss-text">het licht vangt.</span>
             </h1>
-            <p className="max-w-xl text-base text-fg-muted md:text-xl drop-shadow-md mt-4 md:mt-6">
+            <p className="max-w-xl mt-4 md:mt-6 rounded-3xl bg-black/50 backdrop-blur-md px-6 py-4 text-sm sm:text-base md:text-lg text-white font-medium drop-shadow-lg border border-white/10">
               Professionele detailingproducten, ontwikkeld voor liefhebbers en pro&apos;s.
               Van veilig wassen tot keramische coatings met jarenlange bescherming.
             </p>
