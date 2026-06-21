@@ -29,7 +29,7 @@ export default async function HomePage() {
           <img 
             src="/images/hero-audi.jpg" 
             alt="Audi Q3 Detailing by VaMiPro" 
-            className="h-full w-full object-contain md:object-cover md:scale-[0.85] origin-bottom md:origin-center opacity-90"
+            className="h-full w-full object-contain object-center opacity-90"
           />
           {/* Gradient overlay to ensure text readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-bg/90 via-bg/40 to-transparent" />
