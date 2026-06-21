@@ -77,7 +77,7 @@ export default function LiveSearchBar() {
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => { if (query.length >= 2) setIsOpen(true) }}
           placeholder="Zoek naar producten..." 
-          className="w-full bg-panel border-2 border-accent rounded-full py-4 pl-14 pr-32 text-fg focus:outline-none focus:ring-4 focus:ring-accent/20 transition-all text-base md:text-sm font-medium shadow-2xl"
+          className="w-full bg-fg border-2 border-accent rounded-full py-4 pl-14 pr-32 text-bg placeholder:text-bg placeholder:opacity-60 focus:outline-none focus:ring-4 focus:ring-accent/20 transition-all text-base md:text-sm font-medium shadow-2xl"
           required
         />
         
