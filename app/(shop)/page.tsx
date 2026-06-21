@@ -23,13 +23,13 @@ export default async function HomePage() {
   return (
     <>
       {/* ===== HERO WITH AUDI Q3 BACKGROUND ===== */}
-      <section className="relative flex min-h-[100vh] md:min-h-[115vh] w-full flex-col overflow-hidden pt-28 pb-0 -mt-[104px] md:-mt-[108px]">
+      <section className="relative flex min-h-[95vh] md:min-h-[115vh] w-full flex-col overflow-hidden pt-28 pb-0 -mt-[104px] md:-mt-[108px] bg-black">
         {/* Background Image */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 pt-[104px] md:pt-0">
           <img 
             src="/images/hero-audi.jpg" 
             alt="Audi Q3 Detailing by VaMiPro" 
-            className="h-full w-full object-cover object-center opacity-90"
+            className="h-full w-full object-contain object-top md:object-cover md:object-center opacity-90"
           />
           {/* Gradient overlay to ensure text readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-bg/90 via-bg/40 to-transparent" />
@@ -37,8 +37,8 @@ export default async function HomePage() {
         </div>
 
         {/* Hero Content Wrap */}
-        <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-center items-center pb-32 md:pb-48">
-          <div className="max-w-3xl flex flex-col items-center text-center">
+        <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-end md:justify-center items-center pb-12 md:pb-48">
+          <div className="max-w-3xl flex flex-col items-center text-center mt-auto md:mt-0">
             <p className="eyebrow text-base md:text-xs">Car detailing · NL &amp; BE</p>
             <h1 className="h-hero mt-4 text-[3.5rem] leading-[1.05] md:text-[4rem] lg:text-[4.5rem]">
               Een finish die<br />
