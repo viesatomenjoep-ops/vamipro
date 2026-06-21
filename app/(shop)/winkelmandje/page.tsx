@@ -7,7 +7,7 @@ import { Minus, Plus, X, ArrowLeft } from 'lucide-react';
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
 export default function CartPage() {
-  const { items, setQty, remove, subtotalCents } = useCart();
+  const { items, setQty, remove, subtotalCents, discountCode, setDiscountCode } = useCart();
   const sub = subtotalCents();
   const freeShip = sub >= 7500;
 
@@ -72,7 +72,7 @@ export default function CartPage() {
           <h2 className="font-display text-lg font-semibold">Overzicht</h2>
           <div className="mt-4 space-y-2 text-sm">
             <div className="flex justify-between text-fg-muted"><span>Subtotaal</span><span className="text-fg">{euro(sub)}</span></div>
-            {useCart().discountCode === 'VAMIPRO10' && (
+            {discountCode === 'VAMIPRO10' && (
               <div className="flex justify-between text-accent font-medium"><span>Korting (10%)</span><span>-{euro(Math.round(sub * 0.1))}</span></div>
             )}
             <div className="flex justify-between text-fg-muted"><span>Verzending</span><span className="text-fg">{freeShip ? 'Gratis' : 'Berekend bij kassa'}</span></div>
@@ -87,11 +87,19 @@ export default function CartPage() {
           )}
 
           <div className="mt-5 border-t hairline pt-4">
+            {!discountCode && (
+              <div className="mb-4 rounded-md bg-accent/10 p-3 text-center text-sm border border-accent/20">
+                <p className="text-fg-muted mb-1.5">Profiteer direct van 10% korting!</p>
+                <div className="flex items-center justify-center gap-2">
+                  <span className="select-all bg-bg border hairline px-3 py-1 rounded font-display tracking-widest text-accent font-semibold">VAMIPRO10</span>
+                </div>
+              </div>
+            )}
             <form onSubmit={(e) => {
               e.preventDefault();
               const code = (e.currentTarget.elements.namedItem('code') as HTMLInputElement).value;
               if (code.toUpperCase() === 'START10' || code.toUpperCase() === 'VAMIPRO10') {
-                useCart.getState().setDiscountCode('VAMIPRO10');
+                setDiscountCode('VAMIPRO10');
               } else {
                 alert('Ongeldige of verlopen kortingscode');
               }
@@ -101,7 +109,7 @@ export default function CartPage() {
             </form>
             <div className="flex justify-between">
               <span className="font-display font-semibold">Totaal</span>
-              <span className="font-display text-lg font-semibold">{euro(sub - (useCart().discountCode === 'VAMIPRO10' ? Math.round(sub * 0.1) : 0))}</span>
+              <span className="font-display text-lg font-semibold">{euro(sub - (discountCode === 'VAMIPRO10' ? Math.round(sub * 0.1) : 0))}</span>
             </div>
           </div>
           <Link href="/checkout" className="btn btn-primary mt-5 w-full justify-center">Naar de kassa</Link>

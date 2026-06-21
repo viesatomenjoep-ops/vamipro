@@ -31,8 +31,31 @@ export default async function ProductsPage() {
         ))}
       </nav>
 
-      <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
-        {products?.map((p: any) => <ProductCard key={p.id} p={p} />)}
+      <div className="mt-5">
+        {categories?.map(c => {
+          const categoryProducts = products?.filter((p: any) => p.category_id === c.id) || [];
+          if (categoryProducts.length === 0) return null;
+          return (
+            <div key={c.id} className="mt-12 first:mt-4">
+              <h2 className="font-display text-xl font-semibold border-b hairline pb-2 mb-5">{c.name}</h2>
+              <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+                {categoryProducts.map((p: any) => <ProductCard key={p.id} p={p} />)}
+              </div>
+            </div>
+          );
+        })}
+        
+        {/* Uncategorized fallback */}
+        {products?.filter((p: any) => !categories?.find(c => c.id === p.category_id))?.length > 0 && (
+          <div className="mt-12">
+            <h2 className="font-display text-xl font-semibold border-b hairline pb-2 mb-5">Overige producten</h2>
+            <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+              {products?.filter((p: any) => !categories?.find(c => c.id === p.category_id)).map((p: any) => (
+                <ProductCard key={p.id} p={p} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
