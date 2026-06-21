@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { MessageSquare, X, Send, Bot, User, Loader2 } from 'lucide-react';
 
 type Message = { id: string; role: 'user' | 'assistant'; content: string };
@@ -10,8 +11,27 @@ export default function ChatbotWidget() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const pathname = usePathname();
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Scroll logic for homepage visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      if (pathname === '/') {
+        // Show after scrolling past the hero + intro (approx 80vh)
+        setIsVisible(window.scrollY > window.innerHeight * 0.8);
+      } else {
+        // Always show on other pages
+        setIsVisible(true);
+      }
+    };
+
+    handleScroll(); // Initial check
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [pathname]);
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -52,9 +72,9 @@ export default function ChatbotWidget() {
       {/* Chat Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-bg shadow-lg shadow-accent/20 transition-transform duration-300 hover:scale-105 active:scale-95 ${
-          isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'
-        }`}
+        className={`fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-bg shadow-lg shadow-accent/20 transition-all duration-300 active:scale-95 ${
+          !isVisible && !isOpen ? 'translate-y-24 opacity-0 pointer-events-none' : 'translate-y-0 opacity-100 hover:scale-105'
+        } ${isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}
         aria-label="Open klantenservice chat"
       >
         <MessageSquare size={24} />
