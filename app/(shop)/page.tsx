@@ -140,7 +140,7 @@ export default async function HomePage() {
           </div>
           <div className="flex-1 relative z-10 w-full max-w-lg lg:max-w-xl">
             <img 
-              src="https://res.cloudinary.com/dxcohla4k/image/upload/v1782067009/vamipro/products/ujo3qg2lmxecvraekt8p.jpg" 
+              src="https://res.cloudinary.com/dxcohla4k/image/upload/v1782069195/vamipro/promos/ecqreng4ydhi5ej7lram.jpg" 
               alt="Volledig Pakket XXL" 
               className="w-full h-auto rounded-xl shadow-2xl object-cover"
             />
