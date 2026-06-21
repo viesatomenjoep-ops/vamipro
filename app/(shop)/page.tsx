@@ -37,28 +37,29 @@ export default async function HomePage() {
         </div>
 
         {/* Hero Content Wrap */}
-        <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-start md:justify-center items-center pt-12 md:pt-0 pb-0 md:pb-48">
+        <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-start items-center pt-12 md:pt-16 pb-0">
           <div className="max-w-3xl flex flex-col items-center text-center">
             <h1 className="h-hero mt-3 text-[2.75rem] leading-[1.1] sm:text-[3.5rem] md:text-[4rem] lg:text-[4.5rem]">
               Een finish die<br />
               <span className="gloss-text">het licht vangt.</span>
             </h1>
-            <p className="max-w-xl mt-4 md:mt-6 rounded-3xl bg-black/50 backdrop-blur-md px-6 py-4 text-sm sm:text-base md:text-lg text-white font-medium drop-shadow-lg border border-white/10">
-              Professionele detailingproducten, ontwikkeld voor liefhebbers en pro&apos;s.
-              Van veilig wassen tot keramische coatings met jarenlange bescherming.
-            </p>
-            <div className="mt-6 md:mt-8 flex flex-wrap justify-center gap-3">
-              <Link href="/producten" className="btn btn-primary shadow-2xl text-base px-6 py-3 md:text-sm md:px-5 md:py-2.5">
-                Shop alle producten
-              </Link>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* ===== SEARCH BAR ===== */}
-      <section className="bg-panel py-8 md:py-12 border-b hairline relative z-20">
-        <div className="wrap max-w-3xl mx-auto">
+      {/* ===== INTRO & SEARCH BAR ===== */}
+      <section className="bg-panel py-10 md:py-16 border-b hairline relative z-20 shadow-sm">
+        <div className="wrap max-w-3xl mx-auto flex flex-col items-center text-center">
+          <p className="max-w-2xl text-base sm:text-lg text-fg-muted mb-6">
+            Professionele detailingproducten, ontwikkeld voor liefhebbers en pro&apos;s.
+            Van veilig wassen tot keramische coatings met jarenlange bescherming.
+          </p>
+          <div className="mb-10 flex flex-wrap justify-center gap-3">
+            <Link href="/producten" className="btn btn-primary shadow-xl text-base px-8 py-3.5 md:text-sm md:px-6 md:py-3 rounded-full font-semibold">
+              Shop alle producten
+            </Link>
+          </div>
+          
           <form action="/producten" method="GET" className="relative flex items-center w-full">
             <input 
               type="text" 
