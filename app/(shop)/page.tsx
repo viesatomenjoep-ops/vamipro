@@ -39,7 +39,7 @@ export default async function HomePage() {
         {/* Hero Content Wrap */}
         <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-start items-center pt-12 md:pt-16 pb-0">
           <div className="max-w-3xl flex flex-col items-center text-center">
-            <h1 className="h-hero mt-3 text-[2.75rem] leading-[1.1] sm:text-[3.5rem] md:text-[4rem] lg:text-[4.5rem]">
+            <h1 className="h-hero mt-3 text-[2rem] leading-[1.1] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.5rem]">
               Een finish die<br />
               <span className="gloss-text">het licht vangt.</span>
             </h1>
