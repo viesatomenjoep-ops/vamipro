@@ -119,10 +119,10 @@ export default async function HomePage() {
                style={{ background: 'radial-gradient(ellipse at top, var(--accent-glow), transparent 70%)' }} />
           <div className="flex-1 relative z-10">
             <p className="eyebrow text-accent">Tijdelijke Actie</p>
-            <h2 className="mt-3 font-display text-3xl md:text-5xl font-semibold">
-              Volledig pakket XXL
+            <h2 className="mt-3 font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight">
+              Showroom pakket XXL
             </h2>
-            <p className="mt-4 text-fg-muted max-w-xl text-lg">
+            <p className="mt-4 text-fg-muted md:text-lg max-w-md">
               Alles wat je nodig hebt voor de perfecte wasbeurt en detailing. 
               Haal alles in huis voor een schitterende glans.
             </p>
@@ -142,7 +142,7 @@ export default async function HomePage() {
           <div className="flex-1 relative z-10 w-full max-w-lg lg:max-w-xl">
             <img 
               src="https://res.cloudinary.com/dxcohla4k/image/upload/v1782069195/vamipro/promos/ecqreng4ydhi5ej7lram.jpg" 
-              alt="Volledig Pakket XXL" 
+              alt="Showroom pakket XXL" 
               className="w-full h-auto rounded-xl shadow-2xl object-cover"
             />
           </div>

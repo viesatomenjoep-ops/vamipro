@@ -66,9 +66,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <h1 className="mt-2 font-display text-3xl font-semibold leading-tight">{p.name}</h1>
           <div className="mt-4 flex flex-wrap items-baseline gap-3">
             <span className="font-display text-3xl font-semibold text-fg">{euro(p.price_cents)}</span>
-            {compareAtPrices[p.slug] && (
+            {(p.compare_at_price_cents || compareAtPrices[p.slug]) && (
               <span className="font-display text-xl text-fg-muted line-through decoration-red-500">
-                {euro(compareAtPrices[p.slug])}
+                {euro(p.compare_at_price_cents || compareAtPrices[p.slug])}
               </span>
             )}
             <span className="text-sm text-fg-muted ml-1">incl. btw</span>

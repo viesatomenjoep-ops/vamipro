@@ -35,12 +35,16 @@ export default function ProductForm({ product, categories }: { product?: any, ca
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Prijs (in euro)</label>
             <input required type="number" step="0.01" name="price" defaultValue={product ? (product.price_cents / 100).toFixed(2) : ''} className="input w-full text-black bg-white px-3 py-2 rounded-md" />
           </div>
           <div>
+            <label className="block text-sm font-medium mb-1">Oude Prijs (optioneel)</label>
+            <input type="number" step="0.01" name="compare_at_price" defaultValue={product?.compare_at_price_cents ? (product.compare_at_price_cents / 100).toFixed(2) : ''} placeholder="bijv. 69.70" className="input w-full text-black bg-white px-3 py-2 rounded-md" />
+          </div>
+          <div className="col-span-2 md:col-span-1">
             <label className="block text-sm font-medium mb-1">Categorie</label>
             <select required name="category_id" defaultValue={product?.category_id} className="input w-full text-black bg-white px-3 py-2 rounded-md">
               <option value="">Kies categorie</option>

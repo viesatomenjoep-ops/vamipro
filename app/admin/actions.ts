@@ -15,6 +15,7 @@ export async function saveProduct(formData: FormData, productId?: string) {
     description: formData.get('description') as string,
     brand: formData.get('brand') as string,
     price_cents: Math.round(parseFloat(formData.get('price') as string || '0') * 100),
+    compare_at_price_cents: formData.get('compare_at_price') ? Math.round(parseFloat(formData.get('compare_at_price') as string) * 100) : null,
     stock: parseInt(formData.get('stock') as string || '0', 10),
     weight_grams: parseInt(formData.get('weight_grams') as string || '0', 10),
     is_active: formData.get('is_active') === 'true',
