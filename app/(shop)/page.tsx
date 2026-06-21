@@ -4,6 +4,7 @@ import { CATEGORIES } from '@/lib/categories';
 import ProductCard from '@/components/shop/ProductCard';
 import Reveal from '@/components/shop/Reveal';
 import CountdownTimer from '@/components/shop/CountdownTimer';
+import ImageGallery from '@/components/shop/ImageGallery';
 import { ShieldCheck, Truck, RotateCcw, Sparkles } from 'lucide-react';
 import { isMock, getMockProducts } from '@/lib/mock-data';
 
@@ -166,15 +167,11 @@ export default async function HomePage() {
       {/* ===== DROOGDOEK XXL FEATURE ===== */}
       {droogdoekXxl && (
         <section className="wrap py-12 md:py-20">
-          <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
-            <div className="flex-1 w-full order-2 md:order-1">
-              <div className="grid grid-cols-2 gap-4">
-                {droogdoekXxl.cloudinary_images?.slice(0, 2).map((img: string, i: number) => (
-                  <img key={i} src={img} alt="Droogdoek XXL" className="rounded-xl shadow-md w-full object-cover aspect-square" />
-                ))}
-              </div>
+          <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+            <div className="w-full lg:w-[55%] order-2 lg:order-1">
+              <ImageGallery images={droogdoekXxl.cloudinary_images || []} productName="Droogdoek XXL" />
             </div>
-            <div className="flex-1 order-1 md:order-2">
+            <div className="w-full lg:w-[45%] order-1 lg:order-2">
               <p className="eyebrow text-accent">Nieuw in assortiment</p>
               <h2 className="mt-3 font-display text-3xl md:text-5xl font-semibold">
                 Drooghandoek XXL 1200 GSM

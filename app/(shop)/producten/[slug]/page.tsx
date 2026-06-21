@@ -48,12 +48,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         {meta && (<><span>/</span><Link href={`/categorie/${meta.slug}`} className="hover:text-accent">{meta.name}</Link></>)}
       </div>
 
-      <div className="mt-8 grid gap-12 lg:grid-cols-2">
+      <div className="mt-8 flex flex-col lg:flex-row gap-12">
         {/* Gallery */}
-        <ImageGallery images={imgs} productName={p.name} />
+        <div className="w-full lg:w-[58%]">
+          <ImageGallery images={imgs} productName={p.name} />
+        </div>
 
         {/* Buy panel */}
-        <div className="lg:sticky lg:top-24 lg:self-start">
+        <div className="w-full lg:w-[42%] lg:sticky lg:top-24 lg:self-start">
           {p.brand && <p className="text-xs uppercase tracking-[0.2em] text-fg-faint">{p.brand}</p>}
           <h1 className="mt-2 font-display text-3xl font-semibold leading-tight">{p.name}</h1>
           <div className="mt-4 flex items-baseline gap-3">
