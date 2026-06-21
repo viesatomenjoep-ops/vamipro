@@ -134,7 +134,7 @@ export default async function HomePage() {
             <CountdownTimer targetDate="2026-07-31T00:00:00+02:00" />
             
             <div className="mt-8">
-              <Link href="/producten" className="btn btn-primary px-8 py-3 text-lg">
+              <Link href="/producten/volledig-pakket-xxl" className="btn btn-primary px-8 py-3 text-lg">
                 Profiteer Nu
               </Link>
             </div>
