@@ -8,7 +8,7 @@ export default async function Header() {
   const { data: categories } = await supabase.from('categories').select('*').is('parent_id', null).order('sort_order');
 
   return (
-    <header className="sticky top-0 z-50 border-b hairline bg-bg/60 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b hairline bg-black">
       <div className="wrap flex h-24 items-center justify-between">
         <Link href="/" className="flex items-center">
           <img 
