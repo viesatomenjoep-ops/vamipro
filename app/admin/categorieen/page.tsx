@@ -14,8 +14,8 @@ export default async function AdminCategories() {
         <div><p className="eyebrow">Beheer</p><h1 className="h-section mt-2">Categorieën</h1></div>
         <Link href="/admin/categorieen/nieuw" className="btn btn-primary text-sm">Nieuwe categorie</Link>
       </div>
-      <div className="card overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="card overflow-x-auto">
+        <table className="w-full text-sm min-w-[500px]">
           <thead>
             <tr className="text-left text-fg-faint border-b hairline">
               <th className="p-4 font-normal">Naam</th>

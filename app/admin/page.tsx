@@ -34,9 +34,9 @@ export default async function AdminDashboard() {
           </div>
         ))}
       </div>
-      <section className="card overflow-hidden">
-        <div className="border-b hairline p-5"><h2 className="font-display font-semibold">Laatste bestellingen</h2></div>
-        <table className="w-full text-sm">
+      <section className="card overflow-x-auto">
+        <div className="border-b hairline p-5 min-w-[500px]"><h2 className="font-display font-semibold">Laatste bestellingen</h2></div>
+        <table className="w-full text-sm min-w-[500px]">
           <thead><tr className="text-left text-fg-faint"><th className="p-4 font-normal">Order</th><th className="font-normal">Status</th><th className="font-normal">Totaal</th><th className="font-normal">Datum</th></tr></thead>
           <tbody>
             {orders?.map((o: any) => (

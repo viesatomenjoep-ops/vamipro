@@ -17,20 +17,20 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   // if (!user || user.email !== process.env.ADMIN_EMAIL) redirect('/admin/login');
 
   return (
-    <div className="flex min-h-screen bg-bg text-fg">
-      <aside className="w-60 shrink-0 border-r hairline bg-panel p-5">
-        <p className="font-display text-lg font-semibold">VAMI<span className="text-accent">.</span>PRO</p>
-        <p className="mb-8 text-xs uppercase tracking-[0.2em] text-fg-faint">Admin</p>
-        <nav className="flex flex-col gap-1 text-sm">
+    <div className="flex flex-col md:flex-row min-h-screen bg-bg text-fg overflow-x-hidden">
+      <aside className="w-full md:w-60 shrink-0 border-b md:border-b-0 md:border-r hairline bg-panel p-4 md:p-5">
+        <p className="font-display text-lg font-semibold hidden md:block">VAMI<span className="text-accent">.</span>PRO</p>
+        <p className="mb-8 text-xs uppercase tracking-[0.2em] text-fg-faint hidden md:block">Admin</p>
+        <nav className="flex flex-row md:flex-col gap-2 md:gap-1 text-sm overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
           {nav.map(([href, label, Icon]) => (
             <Link key={href} href={href}
-              className="flex items-center gap-3 rounded-sm px-3 py-2.5 text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg">
-              <Icon size={17} strokeWidth={1.6} /> {label}
+              className="flex items-center gap-2 md:gap-3 rounded-sm px-3 py-2 md:py-2.5 text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg whitespace-nowrap">
+              <Icon size={17} strokeWidth={1.6} /> <span className="hidden sm:inline md:block">{label}</span>
             </Link>
           ))}
         </nav>
       </aside>
-      <main className="flex-1 p-10">{children}</main>
+      <main className="flex-1 p-4 md:p-10 max-w-full overflow-x-hidden">{children}</main>
     </div>
   );
 }

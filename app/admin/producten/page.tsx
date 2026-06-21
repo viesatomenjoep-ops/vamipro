@@ -15,8 +15,8 @@ export default async function AdminProducts() {
         <div><p className="eyebrow">Beheer</p><h1 className="h-section mt-2">Producten</h1></div>
         <Link href="/admin/producten/nieuw" className="btn btn-primary text-sm">Nieuw product</Link>
       </div>
-      <div className="card overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="card overflow-x-auto">
+        <table className="w-full text-sm min-w-[600px]">
           <thead><tr className="text-left text-fg-faint"><th className="p-4 font-normal">Naam</th><th className="font-normal">SKU</th><th className="font-normal">Prijs</th><th className="font-normal">Voorraad</th><th></th></tr></thead>
           <tbody>
             {products?.map((p: any) => (
