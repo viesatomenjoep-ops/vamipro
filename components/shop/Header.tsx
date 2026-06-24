@@ -20,17 +20,14 @@ export default async function Header() {
         </Link>
         <nav className="hidden items-center gap-8 text-base text-white/70 md:flex">
           <Link prefetch={true} href="/producten" className="hover:text-white transition-colors">Shop</Link>
-          {categories?.map(c => (
-            <Link prefetch={true} key={c.id} href={`/categorie/${c.slug}`} className="hover:text-white transition-colors">
-              {c.name}
-            </Link>
-          ))}
+          <Link prefetch={true} href="/categorie/accessoires" className="hover:text-white transition-colors">Accessoires</Link>
+          <Link prefetch={true} href="/categorie/combinatiedeals" className="hover:text-white transition-colors">Combinatiedeals</Link>
           <Link prefetch={true} href="/contact" className="hover:text-white transition-colors">Contact</Link>
         </nav>
         <div className="flex items-center gap-4">
           <ThemeToggle />
           <CartButton />
-          <MobileMenu categories={categories || []} />
+          <MobileMenu categories={categories?.filter(c => ['accessoires', 'combinatiedeals'].includes(c.slug.toLowerCase())) || []} />
         </div>
       </div>
     </header>
