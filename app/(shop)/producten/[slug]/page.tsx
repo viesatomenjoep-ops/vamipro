@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
   const url = `${siteUrl}/producten/${p.slug}`;
-  const imageUrl = p.cloudinary_images?.[0] ? cldUrl(p.cloudinary_images[0], { w: 1200, h: 630, c: 'fill' }) : `${siteUrl}/images/hero-audi.jpg`;
+  const imageUrl = p.cloudinary_images?.[0] ? cldUrl(p.cloudinary_images[0], { w: 1200, h: 630 }) : `${siteUrl}/images/hero-audi.jpg`;
 
   return { 
     title: p.name, 

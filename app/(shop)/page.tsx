@@ -6,7 +6,7 @@ import Reveal from '@/components/shop/Reveal';
 import CountdownTimer from '@/components/shop/CountdownTimer';
 import ImageGallery from '@/components/shop/ImageGallery';
 import LiveSearchBar from '@/components/shop/LiveSearchBar';
-import CategoryCarousel from '@/components/shop/CategoryCarousel';
+
 import { ShieldCheck, Truck, RotateCcw, Sparkles } from 'lucide-react';
 import { isMock, getMockProducts } from '@/lib/mock-data';
 
