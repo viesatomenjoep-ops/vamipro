@@ -10,15 +10,15 @@ export default async function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b hairline bg-black">
-      <div className="wrap flex h-24 items-center justify-between">
+      <div className="wrap flex h-24 md:h-28 items-center justify-between">
         <Link href="/" className="flex items-center">
           <img 
             src="/images/logo.png" 
             alt="VaMiPro Logo" 
-            className="h-[72px] md:h-[84px] w-auto object-contain drop-shadow-sm" 
+            className="h-[72px] md:h-[100px] w-auto object-contain drop-shadow-sm" 
           />
         </Link>
-        <nav className="hidden items-center gap-8 text-sm text-white/70 md:flex">
+        <nav className="hidden items-center gap-8 text-base text-white/70 md:flex">
           <Link prefetch={true} href="/producten" className="hover:text-white transition-colors">Shop</Link>
           {categories?.map(c => (
             <Link prefetch={true} key={c.id} href={`/categorie/${c.slug}`} className="hover:text-white transition-colors">

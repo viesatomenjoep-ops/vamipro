@@ -6,6 +6,7 @@ import Reveal from '@/components/shop/Reveal';
 import CountdownTimer from '@/components/shop/CountdownTimer';
 import ImageGallery from '@/components/shop/ImageGallery';
 import LiveSearchBar from '@/components/shop/LiveSearchBar';
+import CategoryCarousel from '@/components/shop/CategoryCarousel';
 import { ShieldCheck, Truck, RotateCcw, Sparkles } from 'lucide-react';
 import { isMock, getMockProducts } from '@/lib/mock-data';
 
@@ -23,8 +24,33 @@ export default async function HomePage() {
 
   return (
     <>
+      {/* ===== CATEGORIES SLIDER ===== */}
+      <CategoryCarousel categories={categories || []} />
+
+      {/* ===== USP STRIP (Subtle narrow bar) ===== */}
+      <section className="border-b hairline bg-panel/50 text-xs sm:text-sm">
+        <div className="wrap py-2">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 md:justify-between opacity-80">
+            {[
+              [Truck, 'Voor 16:00 besteld', 'vandaag verzonden'],
+              [ShieldCheck, 'Veilig betalen', 'iDEAL & Bancontact'],
+              [Sparkles, 'Gratis verzending', 'vanaf € 75'],
+              [RotateCcw, '14 dagen', 'bedenktijd'],
+            ].map(([Icon, t, s]: any, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <Icon size={16} className="text-accent" strokeWidth={1.8} />
+                <div className="flex sm:flex-col sm:gap-0 gap-1 items-center sm:items-start">
+                  <span className="font-medium text-fg whitespace-nowrap">{t}</span>
+                  <span className="text-fg-muted whitespace-nowrap hidden sm:inline">{s}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ===== HERO WITH AUDI Q3 BACKGROUND ===== */}
-      <section className="relative flex min-h-[85vh] md:min-h-[115vh] w-full flex-col overflow-hidden pt-[104px] pb-0 -mt-[104px] md:-mt-[108px] bg-black">
+      <section className="relative flex min-h-[70vh] md:min-h-[85vh] w-full flex-col overflow-hidden bg-black">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
@@ -38,7 +64,7 @@ export default async function HomePage() {
         </div>
 
         {/* Hero Content Wrap */}
-        <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-start items-center pt-12 md:pt-16 pb-0">
+        <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-start items-center pt-16 md:pt-24 pb-0">
           <div className="max-w-3xl flex flex-col items-center text-center">
             <h1 className="h-hero mt-3 text-white text-[2rem] leading-[1.1] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.5rem]">
               Een finish die<br />
@@ -66,54 +92,6 @@ export default async function HomePage() {
               Shop alle producten
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* ===== USP STRIP ===== */}
-      <section className="border-y hairline bg-panel">
-        <div className="wrap grid grid-cols-2 gap-px md:grid-cols-4">
-          {[
-            [Truck, 'Voor 16:00 besteld', 'vandaag verzonden'],
-            [ShieldCheck, 'Veilig betalen', 'iDEAL & Bancontact'],
-            [Sparkles, 'Gratis verzending', 'vanaf € 75'],
-            [RotateCcw, '14 dagen', 'bedenktijd'],
-          ].map(([Icon, t, s]: any, i) => (
-            <div key={i} className="flex items-center gap-3 py-6">
-              <Icon size={20} className="text-accent" strokeWidth={1.6} />
-              <div>
-                <p className="text-sm font-medium text-fg">{t}</p>
-                <p className="text-xs text-fg-muted">{s}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ===== CATEGORIES ===== */}
-      <section className="wrap py-12 md:py-20">
-        <div className="flex items-end justify-between">
-          <div>
-            <p className="eyebrow">Aanbod</p>
-            <h2 className="h-section mt-3">Ons assortiment</h2>
-          </div>
-          <Link prefetch={true} href="/producten" className="hidden text-sm text-accent hover:underline sm:inline">Alles bekijken →</Link>
-        </div>
-        <div className="mt-8 grid gap-px overflow-hidden rounded border hairline grid-cols-2 lg:grid-cols-3">
-          {categories?.map((c, i) => (
-            <Reveal key={c.slug} delay={i * 60}>
-              <Link prefetch={true} href={`/categorie/${c.slug}`}
-                className="group flex h-full flex-col justify-between bg-panel p-4 transition-all duration-300 hover:bg-panel-2 hover:-translate-y-1 hover:shadow-lg sm:p-7">
-                <span className="font-display text-xs text-accent transition-transform duration-300 group-hover:scale-110 group-hover:translate-x-1 sm:text-sm">0{i + 1}</span>
-                <div className="mt-6 sm:mt-10">
-                  <h3 className="font-display text-base font-medium transition-colors duration-300 group-hover:text-accent-bright sm:text-xl">{c.name}</h3>
-                  {c.description && <p className="mt-1 text-xs text-fg-muted sm:mt-2 sm:text-sm">{c.description}</p>}
-                  <span className="mt-3 inline-block text-xs text-fg-faint transition-all duration-300 group-hover:text-accent group-hover:translate-x-1 sm:mt-4 sm:text-sm">
-                    Bekijk categorie →
-                  </span>
-                </div>
-              </Link>
-            </Reveal>
-          ))}
         </div>
       </section>
 
