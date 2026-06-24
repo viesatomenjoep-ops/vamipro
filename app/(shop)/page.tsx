@@ -24,33 +24,8 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ===== CATEGORIES SLIDER ===== */}
-      <CategoryCarousel categories={categories || []} />
-
-      {/* ===== USP STRIP (Subtle narrow bar) ===== */}
-      <section className="border-b hairline bg-panel/50 text-xs sm:text-sm">
-        <div className="wrap py-2">
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 md:justify-between opacity-80">
-            {[
-              [Truck, 'Voor 16:00 besteld', 'vandaag verzonden'],
-              [ShieldCheck, 'Veilig betalen', 'iDEAL & Bancontact'],
-              [Sparkles, 'Gratis verzending', 'vanaf € 75'],
-              [RotateCcw, '14 dagen', 'bedenktijd'],
-            ].map(([Icon, t, s]: any, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <Icon size={16} className="text-accent" strokeWidth={1.8} />
-                <div className="flex sm:flex-col sm:gap-0 gap-1 items-center sm:items-start">
-                  <span className="font-medium text-fg whitespace-nowrap">{t}</span>
-                  <span className="text-fg-muted whitespace-nowrap hidden sm:inline">{s}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ===== HERO WITH AUDI Q3 BACKGROUND ===== */}
-      <section className="relative flex min-h-[70vh] md:min-h-[85vh] w-full flex-col overflow-hidden bg-black">
+      <section className="relative flex min-h-[85vh] md:min-h-[115vh] w-full flex-col overflow-hidden pt-[104px] pb-0 -mt-[104px] md:-mt-[108px] bg-black">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
@@ -64,12 +39,34 @@ export default async function HomePage() {
         </div>
 
         {/* Hero Content Wrap */}
-        <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-start items-center pt-16 md:pt-24 pb-0">
+        <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-start items-center pt-12 md:pt-16 pb-0">
           <div className="max-w-3xl flex flex-col items-center text-center">
             <h1 className="h-hero mt-3 text-white text-[2rem] leading-[1.1] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.5rem]">
-              Een finish die<br />
-              <span className="gloss-text">het licht vangt.</span>
+              Ultieme glans en bescherming<br />
+              <span className="gloss-text">voor de échte liefhebber.</span>
             </h1>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== USP STRIP (Subtle narrow bar) ===== */}
+      <section className="border-b hairline bg-panel/80 backdrop-blur-md text-xs sm:text-sm">
+        <div className="wrap py-3 md:py-4">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 md:justify-between opacity-90">
+            {[
+              [Truck, 'Voor 16:00 besteld', 'vandaag verzonden'],
+              [ShieldCheck, 'Veilig betalen', 'iDEAL & Bancontact'],
+              [Sparkles, 'Gratis verzending', 'vanaf € 75'],
+              [RotateCcw, '14 dagen', 'bedenktijd'],
+            ].map(([Icon, t, s]: any, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <Icon size={18} className="text-accent" strokeWidth={1.8} />
+                <div className="flex sm:flex-col sm:gap-0 gap-1 items-center sm:items-start">
+                  <span className="font-medium text-fg whitespace-nowrap">{t}</span>
+                  <span className="text-fg-muted whitespace-nowrap hidden sm:inline">{s}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
