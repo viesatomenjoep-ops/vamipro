@@ -24,27 +24,68 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ===== HERO WITH AUDI Q3 BACKGROUND ===== */}
-      <section className="relative flex min-h-[85vh] md:min-h-[115vh] w-full flex-col overflow-hidden pt-[104px] pb-0 -mt-[104px] md:-mt-[108px] bg-black">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="/images/hero-audi.jpg" 
-            alt="Audi Q3 Detailing by VaMiPro" 
-            className="h-full w-full object-cover object-[center_20%] md:object-center opacity-90"
-          />
-          {/* Gradient overlay to ensure text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-bg/90 via-bg/40 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-transparent to-transparent h-1/2 bottom-0 top-auto" />
-        </div>
+      {/* ===== HERO SPLIT ===== */}
+      <section className="relative w-full overflow-hidden bg-black pt-[104px] -mt-[104px] md:-mt-[108px]">
+        <div className="flex flex-col lg:flex-row min-h-[85vh] lg:min-h-[105vh]">
+          {/* LEFT: HERO IMAGE & TEXT */}
+          <div className="relative flex-1 flex flex-col justify-center items-center p-6 lg:p-12 overflow-hidden min-h-[60vh] lg:min-h-full">
+            {/* Background Image */}
+            <div className="absolute inset-0 z-0">
+              <img 
+                src="/images/hero-audi.jpg" 
+                alt="Audi Q3 Detailing by VaMiPro" 
+                className="h-full w-full object-cover object-[center_20%] lg:object-center opacity-90"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
+            </div>
+            
+            {/* Hero Text */}
+            <div className="relative z-10 w-full max-w-xl text-center mt-auto lg:mt-24 mb-12 lg:mb-0">
+              <h1 className="h-hero text-white text-[2rem] leading-[1.1] sm:text-[2.5rem] lg:text-[3rem] drop-shadow-lg">
+                Ultieme glans en bescherming<br />
+                <span className="gloss-text">voor de échte liefhebber.</span>
+              </h1>
+              <div className="w-full mt-8 md:mt-10 relative z-30 px-2 sm:px-0 drop-shadow-xl">
+                <LiveSearchBar />
+              </div>
+            </div>
+          </div>
 
-        {/* Hero Content Wrap */}
-        <div className="wrap relative z-10 flex flex-1 w-full flex-col justify-start items-center pt-12 md:pt-16 pb-0">
-          <div className="max-w-3xl flex flex-col items-center text-center">
-            <h1 className="h-hero mt-3 text-white text-[2rem] leading-[1.1] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.5rem]">
-              Ultieme glans en bescherming<br />
-              <span className="gloss-text">voor de échte liefhebber.</span>
-            </h1>
+          {/* RIGHT: PROMO ACTION */}
+          <div className="relative lg:w-[45%] xl:w-[40%] flex flex-col justify-center bg-panel lg:border-l hairline p-8 lg:p-12 xl:p-16">
+            <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-40"
+                 style={{ background: 'radial-gradient(ellipse at top, var(--accent-glow), transparent 70%)' }} />
+            <div className="relative z-10 w-full max-w-md mx-auto">
+              <p className="eyebrow text-accent">Tijdelijke Actie</p>
+              <h2 className="mt-2 font-display text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight">
+                Showroom pakket XXL
+              </h2>
+              <p className="mt-4 text-fg-muted lg:text-lg">
+                Alles wat je nodig hebt voor de perfecte wasbeurt en detailing. 
+                Haal alles in huis voor een schitterende glans.
+              </p>
+              
+              <div className="mt-6 flex items-center gap-4">
+                <span className="text-3xl lg:text-4xl font-bold text-fg">€ 189,95</span>
+                <span className="text-lg lg:text-xl text-fg-muted line-through decoration-red-500">€ 207,20</span>
+              </div>
+              
+              <div className="mt-6">
+                <CountdownTimer targetDate="2026-07-31T00:00:00+02:00" />
+              </div>
+
+              <img 
+                src="https://res.cloudinary.com/dxcohla4k/image/upload/v1782069195/vamipro/promos/ecqreng4ydhi5ej7lram.jpg" 
+                alt="Showroom pakket XXL" 
+                className="w-full h-auto mt-8 rounded-xl shadow-2xl object-cover border hairline"
+              />
+              
+              <div className="mt-8">
+                <Link href="/producten/volledig-pakket-xxl" className="btn btn-primary w-full py-4 text-lg justify-center">
+                  Profiteer Nu
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -71,15 +112,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ===== INTRO & SEARCH BAR ===== */}
-      <section className="bg-panel pb-10 pt-16 md:py-16 border-b hairline relative z-20 shadow-sm mt-0">
+      {/* ===== INTRO & SHOP BUTTON ===== */}
+      <section className="bg-panel py-10 md:py-16 border-b hairline relative z-20 shadow-sm mt-0">
         <div className="wrap max-w-3xl mx-auto flex flex-col items-center text-center">
-          
-          {/* Search bar pulled onto the hero image on mobile */}
-          <div className="w-full -mt-[6.5rem] md:mt-0 mb-8 md:mb-10 relative z-30 px-2 sm:px-0">
-            <LiveSearchBar />
-          </div>
-
           <p className="max-w-2xl text-base sm:text-lg text-fg-muted mb-6">
             Professionele detailingproducten, ontwikkeld voor liefhebbers en pro&apos;s.
             Van veilig wassen tot keramische coatings met jarenlange bescherming.
@@ -92,42 +127,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ===== PROMO ACTION ===== */}
-      <section className="wrap py-12 md:py-20 border-t hairline">
-        <div className="flex flex-col lg:flex-row items-center gap-12 bg-panel rounded-2xl border hairline p-8 md:p-12 shadow-lg relative overflow-hidden">
-          <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-40"
-               style={{ background: 'radial-gradient(ellipse at top, var(--accent-glow), transparent 70%)' }} />
-          <div className="flex-1 relative z-10">
-            <p className="eyebrow text-accent">Tijdelijke Actie</p>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight">
-              Showroom pakket XXL
-            </h2>
-            <p className="mt-4 text-fg-muted md:text-lg max-w-md">
-              Alles wat je nodig hebt voor de perfecte wasbeurt en detailing. 
-              Haal alles in huis voor een schitterende glans.
-            </p>
-            <div className="mt-6 flex items-center gap-4">
-              <span className="text-4xl font-bold text-fg">€ 189,95</span>
-              <span className="text-xl text-fg-muted line-through decoration-red-500">€ 207,20</span>
-            </div>
-            
-            <CountdownTimer targetDate="2026-07-31T00:00:00+02:00" />
-            
-            <div className="mt-8">
-              <Link href="/producten/volledig-pakket-xxl" className="btn btn-primary px-8 py-3 text-lg">
-                Profiteer Nu
-              </Link>
-            </div>
-          </div>
-          <div className="flex-1 relative z-10 w-full max-w-lg lg:max-w-xl">
-            <img 
-              src="https://res.cloudinary.com/dxcohla4k/image/upload/v1782069195/vamipro/promos/ecqreng4ydhi5ej7lram.jpg" 
-              alt="Showroom pakket XXL" 
-              className="w-full h-auto rounded-xl shadow-2xl object-cover"
-            />
-          </div>
-        </div>
-      </section>
 
       {/* ===== FEATURED ===== */}
       {featured && featured.length > 0 && (
