@@ -26,9 +26,9 @@ export default async function HomePage() {
     <>
       {/* ===== HERO SPLIT ===== */}
       <section className="relative w-full overflow-hidden bg-black pt-[104px] -mt-[104px] md:-mt-[108px]">
-        <div className="flex flex-col lg:flex-row min-h-[85vh] lg:min-h-[105vh]">
+        <div className="flex flex-col lg:flex-row min-h-[70vh] lg:min-h-[85vh]">
           {/* LEFT: HERO IMAGE & TEXT */}
-          <div className="relative flex-1 flex flex-col justify-center items-center p-6 lg:p-12 overflow-hidden min-h-[60vh] lg:min-h-full">
+          <div className="relative flex-1 flex flex-col justify-center items-center p-6 lg:p-12 overflow-hidden min-h-[50vh] lg:min-h-full">
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
               <img 
@@ -40,7 +40,7 @@ export default async function HomePage() {
             </div>
             
             {/* Hero Text */}
-            <div className="relative z-10 w-full max-w-xl text-center mt-auto lg:mt-24 mb-12 lg:mb-0">
+            <div className="relative z-10 w-full max-w-xl text-center mt-auto lg:mt-16 mb-8 lg:mb-0">
               <h1 className="h-hero text-white text-[2rem] leading-[1.1] sm:text-[2.5rem] lg:text-[3rem] drop-shadow-lg">
                 Ultieme glans en bescherming<br />
                 <span className="gloss-text">voor de échte liefhebber.</span>
@@ -52,36 +52,37 @@ export default async function HomePage() {
           </div>
 
           {/* RIGHT: PROMO ACTION */}
-          <div className="relative lg:w-[45%] xl:w-[40%] flex flex-col justify-center bg-panel lg:border-l hairline p-8 lg:p-12 xl:p-16">
+          <div className="relative lg:w-[35%] xl:w-[30%] flex flex-col justify-center bg-panel lg:border-l hairline p-6 md:p-8 xl:p-10">
             <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-40"
                  style={{ background: 'radial-gradient(ellipse at top, var(--accent-glow), transparent 70%)' }} />
-            <div className="relative z-10 w-full max-w-md mx-auto">
-              <p className="eyebrow text-accent">Tijdelijke Actie</p>
-              <h2 className="mt-2 font-display text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight">
+            <div className="relative z-10 w-full max-w-[340px] mx-auto">
+              <p className="eyebrow text-accent text-xs">Tijdelijke Actie</p>
+              <h2 className="mt-1 font-display text-2xl sm:text-3xl font-semibold leading-tight">
                 Showroom pakket XXL
               </h2>
-              <p className="mt-4 text-fg-muted lg:text-lg">
-                Alles wat je nodig hebt voor de perfecte wasbeurt en detailing. 
-                Haal alles in huis voor een schitterende glans.
+              <p className="mt-2 text-sm text-fg-muted">
+                Alles wat je nodig hebt voor de perfecte wasbeurt en detailing.
               </p>
               
-              <div className="mt-6 flex items-center gap-4">
-                <span className="text-3xl lg:text-4xl font-bold text-fg">€ 189,95</span>
-                <span className="text-lg lg:text-xl text-fg-muted line-through decoration-red-500">€ 207,20</span>
+              <div className="mt-4 flex items-center gap-3">
+                <span className="text-2xl font-bold text-fg">€ 189,95</span>
+                <span className="text-base text-fg-muted line-through decoration-red-500">€ 207,20</span>
               </div>
               
-              <div className="mt-6">
+              <div className="mt-4 transform scale-90 origin-left">
                 <CountdownTimer targetDate="2026-07-31T00:00:00+02:00" />
               </div>
 
-              <img 
-                src="https://res.cloudinary.com/dxcohla4k/image/upload/v1782069195/vamipro/promos/ecqreng4ydhi5ej7lram.jpg" 
-                alt="Showroom pakket XXL" 
-                className="w-full h-auto mt-8 rounded-xl shadow-2xl object-cover border hairline"
-              />
+              <div className="mt-5 aspect-[4/3] overflow-hidden rounded-xl shadow-lg border hairline bg-black">
+                <img 
+                  src="https://res.cloudinary.com/dxcohla4k/image/upload/v1782069195/vamipro/promos/ecqreng4ydhi5ej7lram.jpg" 
+                  alt="Showroom pakket XXL" 
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+              </div>
               
-              <div className="mt-8">
-                <Link href="/producten/volledig-pakket-xxl" className="btn btn-primary w-full py-4 text-lg justify-center">
+              <div className="mt-6">
+                <Link href="/producten/volledig-pakket-xxl" className="btn btn-primary w-full py-3 text-base justify-center shadow-lg">
                   Profiteer Nu
                 </Link>
               </div>
