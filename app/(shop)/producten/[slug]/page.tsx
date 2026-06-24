@@ -28,8 +28,41 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const supabase = createServiceClient();
-  const { data: p } = isMock ? getMockProduct(slug) as any : await supabase.from('products').select('name, short_description').eq('slug', slug).single();
-  return { title: p?.name ?? 'Product', description: p?.short_description };
+  const { data: p } = isMock ? getMockProduct(slug) as any : await supabase.from('products').select('*').eq('slug', slug).single();
+  
+  if (!p) return { title: 'Product niet gevonden' };
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
+  const url = `${siteUrl}/producten/${p.slug}`;
+  const imageUrl = p.cloudinary_images?.[0] ? cldUrl(p.cloudinary_images[0], { w: 1200, h: 630, c: 'fill' }) : `${siteUrl}/images/hero-audi.jpg`;
+
+  return { 
+    title: p.name, 
+    description: p.short_description || p.description?.substring(0, 160),
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: p.name,
+      description: p.short_description || p.description?.substring(0, 160),
+      url,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: p.name,
+        },
+      ],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: p.name,
+      description: p.short_description || p.description?.substring(0, 160),
+      images: [imageUrl],
+    },
+  };
 }
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -46,9 +79,35 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const catSlug = (p.categories as any)?.slug;
   const meta = catSlug ? catBySlug(catSlug) : null;
   const imgs: string[] = p.cloudinary_images?.length ? p.cloudinary_images : [];
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: p.name,
+    image: imgs.length > 0 ? imgs.map(img => cldUrl(img, { w: 800 })) : [`${siteUrl}/images/hero-audi.jpg`],
+    description: p.description || p.short_description || '',
+    sku: p.sku || p.slug,
+    brand: {
+      '@type': 'Brand',
+      name: p.brand || 'VaMiPro',
+    },
+    offers: {
+      '@type': 'Offer',
+      url: `${siteUrl}/producten/${p.slug}`,
+      priceCurrency: 'EUR',
+      price: (p.price_cents / 100).toFixed(2),
+      itemCondition: 'https://schema.org/NewCondition',
+      availability: p.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+    },
+  };
 
   return (
     <div className="wrap pt-0 pb-12 lg:pt-0">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="flex items-center gap-2 text-sm text-fg-faint">
         <Link href="/producten" className="hover:text-accent">Producten</Link>
         {meta && (<><span>/</span><Link href={`/categorie/${meta.slug}`} className="hover:text-accent">{meta.name}</Link></>)}

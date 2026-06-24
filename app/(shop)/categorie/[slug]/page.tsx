@@ -14,8 +14,31 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const supabase = createServiceClient();
-  const { data: cat } = await supabase.from('categories').select('name').eq('slug', slug).single();
-  return { title: cat?.name ?? 'Categorie' };
+  const { data: cat } = await supabase.from('categories').select('name, description, slug').eq('slug', slug).single();
+  
+  if (!cat) return { title: 'Categorie niet gevonden' };
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
+  const url = `${siteUrl}/categorie/${cat.slug}`;
+
+  return { 
+    title: `${cat.name} | VaMiPro`, 
+    description: cat.description || `Bekijk onze professionele producten in de categorie ${cat.name}.`,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: `${cat.name} | VaMiPro`,
+      description: cat.description || `Bekijk onze professionele producten in de categorie ${cat.name}.`,
+      url,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary',
+      title: `${cat.name} | VaMiPro`,
+      description: cat.description || `Bekijk onze professionele producten in de categorie ${cat.name}.`,
+    },
+  };
 }
 
 export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
