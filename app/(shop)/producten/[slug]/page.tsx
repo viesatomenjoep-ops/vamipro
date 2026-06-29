@@ -28,7 +28,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const supabase = createServiceClient();
-  const { data: p } = isMock ? getMockProduct(slug) as any : await supabase.from('products').select('*').eq('slug', slug).single();
+  const { data: p } = isMock ? getMockProduct(slug) as any : await supabase.from('products').select('*').ilike('slug', slug).single();
   
   if (!p) return { title: 'Product niet gevonden' };
 
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const supabase = createServiceClient();
-  const { data: p } = isMock ? getMockProduct(slug) as any : await supabase.from('products').select('*, categories(slug, name)').eq('slug', slug).single();
+  const { data: p } = isMock ? getMockProduct(slug) as any : await supabase.from('products').select('*, categories(slug, name)').ilike('slug', slug).single();
   if (!p) notFound();
 
   const { data: related } = isMock
