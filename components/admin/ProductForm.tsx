@@ -1,23 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { saveProduct } from '@/app/admin/actions';
 import CloudinaryUpload from './CloudinaryUpload';
 
 export default function ProductForm({ product, categories }: { product?: any, categories: any[] }) {
   const [images, setImages] = useState<string[]>(product?.cloudinary_images || []);
-  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    const formData = new FormData(e.currentTarget);
+  const handleAction = (formData: FormData) => {
     formData.append('cloudinary_images', images.join(','));
-    await saveProduct(formData, product?.id);
+    startTransition(async () => {
+      await saveProduct(formData, product?.id);
+    });
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl">
+    <form action={handleAction} className="space-y-6 max-w-2xl">
       <div className="card space-y-4">
         <div>
           <label className="block text-sm font-medium mb-1">Naam</label>
@@ -96,8 +95,8 @@ export default function ProductForm({ product, categories }: { product?: any, ca
         </label>
       </div>
 
-      <button type="submit" disabled={loading} className="btn btn-primary w-full">
-        {loading ? 'Bezig met opslaan...' : 'Product opslaan'}
+      <button type="submit" disabled={isPending} className="btn btn-primary w-full">
+        {isPending ? 'Bezig met opslaan...' : 'Product opslaan'}
       </button>
     </form>
   );

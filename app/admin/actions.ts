@@ -4,12 +4,21 @@ import { createServiceClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
+function slugify(text: string) {
+  return (text || '').toString().toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '');            // Trim - from end of text
+}
+
 export async function saveProduct(formData: FormData, productId?: string) {
   const supabase = createServiceClient();
   
   const payload = {
     name: formData.get('name') as string,
-    slug: formData.get('slug') as string,
+    slug: slugify(formData.get('slug') as string || formData.get('name') as string),
     sku: formData.get('sku') as string,
     short_description: formData.get('short_description') as string,
     description: formData.get('description') as string,
@@ -57,7 +66,7 @@ export async function saveCategory(formData: FormData, categoryId?: string) {
   
   const payload = {
     name: formData.get('name') as string,
-    slug: formData.get('slug') as string,
+    slug: slugify(formData.get('slug') as string || formData.get('name') as string),
     description: formData.get('description') as string,
     sort_order: parseInt(formData.get('sort_order') as string, 10),
     parent_id: formData.get('parent_id') as string || null,

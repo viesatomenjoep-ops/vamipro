@@ -50,13 +50,10 @@ export default function ZoomImage({ image, alt }: ZoomImageProps) {
   return (
     <div 
       ref={containerRef}
-      className="relative w-full h-full overflow-hidden cursor-crosshair touch-none rounded-2xl"
+      className="relative w-full h-full overflow-hidden cursor-crosshair rounded-2xl"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
       onMouseMove={handleMove}
-      onTouchStart={handleEnter}
-      onTouchEnd={handleLeave}
-      onTouchMove={handleMove}
     >
       <img
         src={cldUrl(image, { w: 1000 })}
