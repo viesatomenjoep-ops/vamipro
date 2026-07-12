@@ -25,7 +25,7 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
   }, [isOpen]);
 
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <button 
         onClick={() => setIsOpen(true)}
         className="flex h-14 w-14 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10"
