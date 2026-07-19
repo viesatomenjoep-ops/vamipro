@@ -39,8 +39,8 @@ export default async function Footer() {
         <div>
           <p className="eyebrow mb-4">Vami Pro</p>
           <ul className="space-y-1 text-sm text-fg-muted">
-            <li>{/* {{ADRES}} */}Adres invullen</li>
-            <li>KVK {/* {{KVK}} */}________</li>
+            <li>{/* {{ADRES}} */}Kroonstraat 33, 4879 AV Etten-Leur</li>
+            <li>KVK {/* {{KVK}} */}86797840</li>
             <li>BTW {/* {{BTW_NL}} */}________</li>
             <li>{/* {{EMAIL}} */}info@vamipro.nl</li>
           </ul>

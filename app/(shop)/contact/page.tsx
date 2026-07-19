@@ -15,11 +15,11 @@ export default function ContactPage() {
           <ul className="mt-8 space-y-4 text-sm">
             <li className="flex items-center gap-3"><Mail size={18} className="text-accent" /> {/* {{EMAIL}} */}info@vamipro.nl</li>
             <li className="flex items-center gap-3"><Phone size={18} className="text-accent" /> {/* {{TELEFOON}} */}________</li>
-            <li className="flex items-center gap-3"><MapPin size={18} className="text-accent" /> {/* {{ADRES}} */}Adres invullen</li>
+            <li className="flex items-center gap-3"><MapPin size={18} className="text-accent" /> {/* {{ADRES}} */}Kroonstraat 33, 4879 AV Etten-Leur, Nederland</li>
           </ul>
           <div className="mt-8 rounded border hairline bg-panel p-4 text-sm text-fg-muted">
             <p className="font-display text-fg">Vami Pro</p>
-            <p>KVK {/* {{KVK}} */}________ · BTW {/* {{BTW_NL}} */}________</p>
+            <p>KVK {/* {{KVK}} */}86797840 · BTW {/* {{BTW_NL}} */}________</p>
           </div>
         </div>
         <form className="card space-y-3 p-6">

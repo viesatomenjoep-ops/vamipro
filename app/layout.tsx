@@ -56,10 +56,34 @@ export const metadata: Metadata = {
 
 import { ThemeProvider } from '@/components/ThemeProvider';
 
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Store',
+  name: 'Vami Pro',
+  url: siteUrl,
+  email: 'info@vamipro.nl',
+  image: `${siteUrl}/images/logo-clean.png`,
+  description: 'Professionele car-detailingproducten voor een showroomresultaat. Geleverd in NL en BE.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Kroonstraat 33',
+    postalCode: '4879 AV',
+    addressLocality: 'Etten-Leur',
+    addressCountry: 'NL',
+  },
+  vatID: '',
+  taxID: '86797840',
+  areaServed: ['NL', 'BE'],
+};
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="nl" suppressHydrationWarning className={`${display.variable} ${mono.variable}`}>
       <body style={{ fontFamily: 'var(--font-display-next), var(--font-body)' } as React.CSSProperties}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
           {children}
         </ThemeProvider>

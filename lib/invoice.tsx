@@ -20,8 +20,8 @@ function InvoiceDoc({ order, items, invoiceNumber }: any) {
         <View style={styles.header}>
           <View>
             <Text style={styles.h1}>Vami Pro</Text>
-            <Text>{/* {{ADRES}} */}Adres invullen</Text>
-            <Text>KVK: {/* {{KVK}} */}________  BTW: {/* {{BTW_NL}} */}________</Text>
+            <Text>{/* {{ADRES}} */}Kroonstraat 33, 4879 AV Etten-Leur</Text>
+            <Text>KVK: {/* {{KVK}} */}86797840  BTW: {/* {{BTW_NL}} */}________</Text>
             <Text>{/* {{EMAIL}} */}info@vamipro.nl</Text>
           </View>
           <View>

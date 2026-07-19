@@ -8,10 +8,6 @@ export default function VoorwaardenPage() {
       
       <article className="mt-10 space-y-10 text-base md:text-lg leading-relaxed text-fg-muted">
         
-        <div className="rounded-sm border border-orange-500/30 bg-orange-500/10 p-4 text-sm text-orange-200/90 mb-8">
-          <strong className="font-semibold text-orange-100">Belangrijk:</strong> Dit is een degelijke, bruikbare basis op maat van een NL-webshop die ook aan Belgische consumenten levert. Let op: vergeet niet om je officiële KVK, BTW en adresgegevens in te vullen in de code.
-        </div>
-
         <section>
           <h2 className="font-display text-2xl font-semibold text-fg mb-4">Algemene Voorwaarden Vami Pro</h2>
           
@@ -24,8 +20,8 @@ export default function VoorwaardenPage() {
             <div>
               <h3 className="font-semibold text-fg mb-1">Artikel 2 – Identiteit van de ondernemer</h3>
               <p>
-                Vami Pro, gevestigd te [JOUW ADRES]. <br />
-                KVK: [JOUW KVK NUMMER] <br />
+                Vami Pro, gevestigd aan de Kroonstraat 33, 4879 AV Etten-Leur, Nederland. <br />
+                KVK: 86797840 <br />
                 BTW: [JOUW BTW NUMMER] <br />
                 E-mail: info@vamipro.nl <br />
                 Telefoon: [JOUW TELEFOONNUMMER]
@@ -154,7 +150,7 @@ export default function VoorwaardenPage() {
         <section>
           <h2 className="font-display text-2xl font-semibold text-fg mb-4">Modelformulier voor herroeping</h2>
           <div className="rounded-md border hairline bg-panel-2 p-6 font-mono text-sm leading-relaxed text-fg-muted">
-            Aan Vami Pro, [JOUW ADRES], info@vamipro.nl:<br /><br />
+            Aan Vami Pro, Kroonstraat 33, 4879 AV Etten-Leur, info@vamipro.nl:<br /><br />
             Ik/Wij deel/delen u mede dat ik/wij onze overeenkomst betreffende de verkoop van de volgende producten herroep/herroepen:<br /><br />
             - [Producten invullen]<br /><br />
             Besteld op / Ontvangen op: [Datum invullen]<br />

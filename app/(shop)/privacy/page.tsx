@@ -16,7 +16,8 @@ export default function PrivacyPage() {
               <p>
                 <strong className="text-fg font-medium">Verwerkingsverantwoordelijke:</strong><br />
                 Vami Pro<br />
-                [JOUW ADRES]<br />
+                Kroonstraat 33, 4879 AV Etten-Leur, Nederland<br />
+                KVK 86797840<br />
                 info@vamipro.nl
               </p>
             </div>
