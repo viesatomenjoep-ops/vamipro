@@ -41,7 +41,7 @@ export default async function Footer() {
           <ul className="space-y-1 text-sm text-fg-muted">
             <li>{/* {{ADRES}} */}Kroonstraat 33, 4879 AV Etten-Leur</li>
             <li>KVK {/* {{KVK}} */}86797840</li>
-            <li>BTW {/* {{BTW_NL}} */}________</li>
+            <li>BTW {/* {{BTW_NL}} */}NL004313236B58</li>
             <li>{/* {{EMAIL}} */}info@vamipro.nl</li>
           </ul>
         </div>

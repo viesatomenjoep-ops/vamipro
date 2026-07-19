@@ -19,7 +19,7 @@ export default function ContactPage() {
           </ul>
           <div className="mt-8 rounded border hairline bg-panel p-4 text-sm text-fg-muted">
             <p className="font-display text-fg">Vami Pro</p>
-            <p>KVK {/* {{KVK}} */}86797840 · BTW {/* {{BTW_NL}} */}________</p>
+            <p>KVK {/* {{KVK}} */}86797840 · BTW {/* {{BTW_NL}} */}NL004313236B58</p>
           </div>
         </div>
         <form className="card space-y-3 p-6">

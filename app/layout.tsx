@@ -71,7 +71,7 @@ const organizationJsonLd = {
     addressLocality: 'Etten-Leur',
     addressCountry: 'NL',
   },
-  vatID: '',
+  vatID: 'NL004313236B58',
   taxID: '86797840',
   areaServed: ['NL', 'BE'],
 };

@@ -22,7 +22,7 @@ export default function VoorwaardenPage() {
               <p>
                 Vami Pro, gevestigd aan de Kroonstraat 33, 4879 AV Etten-Leur, Nederland. <br />
                 KVK: 86797840 <br />
-                BTW: [JOUW BTW NUMMER] <br />
+                BTW: NL004313236B58 <br />
                 E-mail: info@vamipro.nl <br />
                 Telefoon: [JOUW TELEFOONNUMMER]
               </p>
