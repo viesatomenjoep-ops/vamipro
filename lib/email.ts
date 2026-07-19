@@ -41,6 +41,43 @@ function confirmationHtml(order: any, invoiceUrl: string) {
   </div>`;
 }
 
+function shippingHtml(order: any) {
+  const tracking = order.tracking_url
+    ? `<a href="${order.tracking_url}" style="display:inline-block;background:#b8863b;color:#fff;text-decoration:none;padding:11px 22px;border-radius:6px;font-weight:bold">
+         Volg je pakket
+       </a>
+       <p style="color:#888;font-size:13px;margin-top:14px">Trackingnummer: <b>${order.tracking_number ?? ''}</b></p>`
+    : `<p style="color:#555">Je pakket is onderweg.</p>`;
+  return `
+  <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#141414">
+    <div style="background:#141414;padding:24px 28px">
+      <span style="color:#fff;font-size:22px;font-weight:bold;letter-spacing:2px">VAMIPRO</span>
+    </div>
+    <div style="padding:28px">
+      <h2 style="margin:0 0 8px">Je pakket is onderweg! 📦</h2>
+      <p style="color:#555;margin:0 0 20px">
+        Goed nieuws — je bestelling <b>${order.order_number}</b> is verzonden.
+      </p>
+      ${tracking}
+      <p style="color:#141414;margin-top:24px">— Vami Pro</p>
+    </div>
+    <div style="border-top:1px solid #eee;padding:16px 28px;color:#999;font-size:12px">
+      Vami Pro · Kroonstraat 33, 4879 AV Etten-Leur · KVK 86797840 · BTW NL004313236B58
+    </div>
+  </div>`;
+}
+
+export async function sendShippingNotification(order: any) {
+  await transporter.sendMail({
+    from: `"Vami Pro" <${GMAIL_USER}>`,
+    to: order.ship_email,
+    bcc: GMAIL_USER,
+    replyTo: 'info@vamipro.nl',
+    subject: `Je bestelling ${order.order_number} is verzonden`,
+    html: shippingHtml(order),
+  });
+}
+
 export async function sendOrderConfirmation(
   order: any,
   invoiceUrl: string,

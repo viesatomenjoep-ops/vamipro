@@ -1,4 +1,5 @@
 import { createServiceClient } from '@/lib/supabase/server';
+import { markAsShipped } from './actions';
 
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
@@ -30,6 +31,14 @@ export default async function OrderDetail({ params }: { params: Promise<{ id: st
         {o.invoice_pdf_url && <a href={o.invoice_pdf_url} target="_blank" className="btn btn-primary">Factuur openen</a>}
         {o.label_pdf_url && <a href={o.label_pdf_url} target="_blank" className="btn btn-ghost">Verzendlabel printen</a>}
       </div>
+      {(o.status === 'paid' || o.status === 'processing') && (
+        <form action={markAsShipped} className="pt-2">
+          <input type="hidden" name="id" value={o.id} />
+          <button type="submit" className="btn btn-primary">Markeer als verzonden &amp; mail track &amp; trace</button>
+          <p className="mt-2 text-xs text-fg-faint">De klant krijgt automatisch een verzendmail met track &amp; trace.</p>
+        </form>
+      )}
+      {o.status === 'shipped' && <p className="pt-2 text-sm text-accent">✓ Verzonden — track &amp; trace naar de klant gemaild.</p>}
     </div>
   );
 }
