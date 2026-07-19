@@ -7,14 +7,14 @@ const schema = z.object({
   items: z.array(z.object({ productId: z.string(), quantity: z.number().int().positive() })),
   shipping: z.object({
     firstName: z.string().min(1), lastName: z.string().min(1),
-    address: z.string().min(1), houseNumber: z.string().min(1), addition: z.string().optional(),
+    address: z.string().min(1), houseNumber: z.string().min(1), addition: z.string().nullish(),
     postalCode: z.string().min(1), city: z.string().min(1), country: z.enum(['NL', 'BE']),
     email: z.string().email(), phone: z.string().min(1),
   }),
-  billing: z.object({ company: z.string().optional(), vatNumber: z.string().optional() }).optional(),
+  billing: z.object({ company: z.string().nullish(), vatNumber: z.string().nullish() }).nullish(),
   shippingMethodId: z.string(),
   paymentMethod: z.enum(['ideal', 'bancontact']),
-  discountCode: z.string().optional(),
+  discountCode: z.string().nullish(),
 });
 
 // Simpele verzendkosten-logica (pas aan / koppel aan Sendcloud-tarieven)
