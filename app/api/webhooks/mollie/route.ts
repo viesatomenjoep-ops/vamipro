@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
       const { data: invNum } = await supabase.rpc('next_counter', { counter_key: 'invoice' });
       const invoiceNumber = `2026-${String(invNum).padStart(5, '0')}`;
-      const invoiceUrl = await generateInvoice(order, items ?? [], invoiceNumber);
+      const { url: invoiceUrl, buffer: invoiceBuffer } = await generateInvoice(order, items ?? [], invoiceNumber);
 
       let label: any = {};
       try { label = await createSendcloudLabel(order, items ?? []); } catch (e) { console.error('Sendcloud', e); }
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
         tracking_url: label.trackingUrl, label_pdf_url: label.labelUrl,
       }).eq('id', orderId);
 
-      try { await sendOrderConfirmation(order, invoiceUrl); } catch (e) { console.error('Email', e); }
+      try { await sendOrderConfirmation(order, invoiceUrl, invoiceBuffer, invoiceNumber); } catch (e) { console.error('Email', e); }
     }
 
     if (['expired', 'canceled', 'failed'].includes(payment.status)) {
