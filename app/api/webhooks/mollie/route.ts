@@ -5,6 +5,8 @@ import { generateInvoice } from '@/lib/invoice';
 import { createSendcloudLabel } from '@/lib/sendcloud';
 import { sendOrderConfirmation } from '@/lib/email';
 
+export const runtime = 'nodejs';
+
 export async function POST(req: NextRequest) {
   try {
     const form = await req.formData();

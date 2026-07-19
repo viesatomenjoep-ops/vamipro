@@ -1,8 +1,13 @@
-import { Resend } from 'resend';
-const resend = new Resend(process.env.RESEND_API_KEY);
+import nodemailer from 'nodemailer';
 
-// Adres waar de eigenaar een kopie van elke bestelling + factuur ontvangt.
-const OWNER_EMAIL = process.env.ORDER_NOTIFY_EMAIL ?? 'Vamipro2@gmail.com';
+// Mails worden verstuurd vanaf je Gmail-account (Vamipro2@gmail.com).
+// GMAIL_USER = het volledige gmail-adres, GMAIL_APP_PASSWORD = een Google "app-wachtwoord" (niet je gewone wachtwoord).
+const GMAIL_USER = process.env.GMAIL_USER ?? 'Vamipro2@gmail.com';
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: { user: GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD },
+});
 
 const euro = (c: number) => `€ ${(c / 100).toFixed(2).replace('.', ',')}`;
 
@@ -46,10 +51,10 @@ export async function sendOrderConfirmation(
     ? [{ filename: `factuur-${invoiceNumber ?? order.order_number}.pdf`, content: pdfBuffer }]
     : undefined;
 
-  await resend.emails.send({
-    from: 'Vami Pro <orders@vamipro.nl>',
+  await transporter.sendMail({
+    from: `"Vami Pro" <${GMAIL_USER}>`,
     to: order.ship_email,
-    bcc: OWNER_EMAIL,
+    bcc: GMAIL_USER, // kopie van elke bestelling + factuur naar jezelf
     replyTo: 'info@vamipro.nl',
     subject: `Bevestiging bestelling ${order.order_number}`,
     html: confirmationHtml(order, invoiceUrl),
