@@ -122,7 +122,7 @@ function InvoiceDoc({ order, items, invoiceNumber }: any) {
         {/* Footer */}
         <View style={styles.footer} fixed>
           <Text style={styles.footTxt}>Vami Pro · Kroonstraat 33, 4879 AV Etten-Leur</Text>
-          <Text style={styles.footTxt}>KVK 86797840 · BTW NL004313236B58 · IBAN {/* {{IBAN}} */}________</Text>
+          <Text style={styles.footTxt}>KVK 86797840 · BTW NL004313236B58 · IBAN {/* {{IBAN}} */}NL86 RABO 0176 0635 95</Text>
         </View>
       </Page>
     </Document>
