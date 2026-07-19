@@ -74,7 +74,12 @@ export async function POST(req: NextRequest) {
       vat_rate: it.product.vat_rate, quantity: it.quantity, line_total_cents: it.line,
     })));
 
-    const site = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
+    // Bepaal de basis-URL uit het echte verzoek (dat adres is per definitie bereikbaar voor Mollie).
+    // Bij lokaal testen (localhost) valt 'ie terug op NEXT_PUBLIC_SITE_URL, zodat je daar een
+    // publieke tunnel-URL (bv. ngrok) kunt instellen.
+    const origin = req.nextUrl.origin;
+    const isLocal = origin.includes('localhost') || origin.includes('127.0.0.1');
+    const site = isLocal ? (process.env.NEXT_PUBLIC_SITE_URL ?? origin) : origin;
     const payment = await mollie.payments.create({
       amount: { currency: 'EUR', value: (total / 100).toFixed(2) },
       description: `Vami Pro bestelling ${orderNumber}`,
