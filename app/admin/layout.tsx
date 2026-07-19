@@ -1,5 +1,3 @@
-import { redirect } from 'next/navigation';
-import { createServerClient } from '@/lib/supabase/server';
 import Link from 'next/link';
 import { LayoutDashboard, Package, ShoppingCart, FileText, Settings } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -13,9 +11,7 @@ const nav = [
 ] as const;
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const supabase = await createServerClient();
-  // const { data: { user } } = await supabase.auth.getUser();
-  // if (!user || user.email !== process.env.ADMIN_EMAIL) redirect('/admin/login');
+  // Auth wordt afgehandeld in middleware.ts (beschermt alle /admin routes, behalve /admin/login).
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-bg text-fg overflow-x-hidden">
