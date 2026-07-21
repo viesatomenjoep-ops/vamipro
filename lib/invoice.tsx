@@ -6,8 +6,8 @@ const euro = (c: number) => `€ ${(c / 100).toFixed(2).replace('.', ',')}`;
 
 // Licht thema — witte factuur, zwarte tekst, met een zwarte kopbalk voor het logo
 const INK = '#141414';
-const MUTED = '#6b7280';
-const FAINT = '#9aa1ac';
+const MUTED = '#2f333a';   // adressen e.d. — duidelijk leesbaar donkergrijs
+const FAINT = '#474c55';   // KVK/BTW, labels, voettekst — iets lichter maar goed leesbaar
 const LINE = '#e6e8ec';
 const PANEL = '#f4f4f5';
 const BAR = '#000000';
@@ -142,7 +142,7 @@ function InvoiceDoc({ order, items, invoiceNumber }: any) {
               <View style={styles.tRow}><Text style={styles.muted}>Subtotaal producten</Text><Text>{euro(order.subtotal_cents)}</Text></View>
               <View style={styles.tRow}><Text style={styles.muted}>Verzendkosten</Text><Text>{order.shipping_cents === 0 ? 'Gratis' : euro(order.shipping_cents)}</Text></View>
               <View style={styles.tGrand}><Text style={styles.tGrandTxt}>Totaal (incl. btw)</Text><Text style={styles.tGrandTxt}>{euro(order.total_cents)}</Text></View>
-              <View style={styles.tVat}><Text style={styles.faint}>Waarvan btw 21%</Text><Text style={styles.faint}>{euro(order.vat_cents)}</Text></View>
+              <View style={styles.tVat}><Text style={{ color: INK }}>Waarvan btw 21%</Text><Text style={{ color: INK }}>{euro(order.vat_cents)}</Text></View>
             </View>
           </View>
 
