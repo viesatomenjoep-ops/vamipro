@@ -17,7 +17,10 @@ export default function CheckoutPage() {
   const [method, setMethod] = useState<'ideal' | 'bancontact'>('ideal');
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState('');
-  const set = (k: string) => (e: any) => setF({ ...f, [k]: e.target.value });
+  const set = (k: string) => (e: any) => {
+    const value = e.target.value;
+    setF((prev) => ({ ...prev, [k]: value }));
+  };
 
   const sub = subtotalCents();
   const disc = useCart().discountCode === 'VAMIPRO10' ? Math.round(sub * 0.1) : 0;
