@@ -1,4 +1,16 @@
-export const metadata = { title: "Algemene Voorwaarden" };
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Algemene Voorwaarden',
+  description: 'De algemene voorwaarden van Vami Pro: bestellen, betalen, levering, herroepingsrecht en garantie voor consumenten in Nederland en België.',
+  alternates: { canonical: '/voorwaarden' },
+  openGraph: {
+    title: 'Algemene Voorwaarden',
+    description: 'De algemene voorwaarden van Vami Pro: bestellen, betalen, levering, herroepingsrecht en garantie voor consumenten in Nederland en België.',
+    url: '/voorwaarden',
+    type: 'website',
+  },
+};
 
 export default function VoorwaardenPage() {
   return (

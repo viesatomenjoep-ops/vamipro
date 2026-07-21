@@ -1,4 +1,16 @@
-export const metadata = { title: "Verzending & Retourneren" };
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Verzending & Retourneren',
+  description: 'Gratis verzending vanaf €75 in NL & BE. Voor 16:00 besteld = vandaag verzonden, met track & trace. Bekijk tarieven en levertijden.',
+  alternates: { canonical: '/verzending' },
+  openGraph: {
+    title: 'Verzending & Retourneren',
+    description: 'Gratis verzending vanaf €75 in NL & BE. Voor 16:00 besteld = vandaag verzonden, met track & trace. Bekijk tarieven en levertijden.',
+    url: '/verzending',
+    type: 'website',
+  },
+};
 
 export default function Page() {
   return (

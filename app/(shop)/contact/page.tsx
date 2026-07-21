@@ -1,5 +1,17 @@
 import { Mail, Phone, MapPin } from 'lucide-react';
-export const metadata = { title: 'Contact' };
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contact',
+  description: 'Vragen over car detailing, coating of je bestelling? Neem contact op met Vami Pro — persoonlijk advies voor klanten in Nederland en België.',
+  alternates: { canonical: '/contact' },
+  openGraph: {
+    title: 'Contact',
+    description: 'Vragen over car detailing, coating of je bestelling? Neem contact op met Vami Pro — persoonlijk advies voor klanten in Nederland en België.',
+    url: '/contact',
+    type: 'website',
+  },
+};
 
 export default function ContactPage() {
   return (

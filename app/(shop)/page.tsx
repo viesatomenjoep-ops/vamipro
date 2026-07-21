@@ -16,6 +16,11 @@ import ImageGallery from '@/components/shop/ImageGallery';
 import { ArrowRight } from 'lucide-react';
 import { isMock, getMockProducts } from '@/lib/mock-data';
 import { cldUrl } from '@/lib/cloudinary';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+};
 
 export const revalidate = 60;
 

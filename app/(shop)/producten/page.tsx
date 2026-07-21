@@ -2,8 +2,19 @@ import Link from 'next/link';
 import { createServiceClient } from '@/lib/supabase/server';
 import ProductCard from '@/components/shop/ProductCard';
 import { isMock, getMockProducts } from '@/lib/mock-data';
+import type { Metadata } from 'next';
 
-export const metadata = { title: 'Alle producten' };
+export const metadata: Metadata = {
+  title: 'Alle producten',
+  description: 'Het complete assortiment professionele autopoetsproducten: shampoo, coating, droogdoeken en detailing-tools. Veilig wassen tot showroomglans in NL & BE.',
+  alternates: { canonical: '/producten' },
+  openGraph: {
+    title: 'Alle producten',
+    description: 'Het complete assortiment professionele autopoetsproducten: shampoo, coating, droogdoeken en detailing-tools. Veilig wassen tot showroomglans in NL & BE.',
+    url: '/producten',
+    type: 'website',
+  },
+};
 export const revalidate = 60;
 
 export default async function ProductsPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {

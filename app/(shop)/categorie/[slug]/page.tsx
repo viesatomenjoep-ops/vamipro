@@ -64,8 +64,23 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   const { data: products } = await supabase.from('products')
     .select('*').in('category_id', categoryIds).eq('is_active', true).order('name');
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+      { '@type': 'ListItem', position: 2, name: 'Producten', item: `${siteUrl}/producten` },
+      { '@type': 'ListItem', position: 3, name: cat.name, item: `${siteUrl}/categorie/${cat.slug}` },
+    ],
+  };
+
   return (
     <div className="wrap pt-0 pb-16 lg:pt-0">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <div className="flex items-center gap-3 text-sm text-fg-faint">
         <Link href="/producten" className="hover:text-accent">Producten</Link>
         <span>/</span><span className="text-fg-muted">{cat.name}</span>

@@ -11,13 +11,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: 'Vami Pro — Professionele detailingproducten', template: '%s · Vami Pro' },
   description: 'Showroomresultaat voor elke auto. Professionele car-detailingproducten voor liefhebbers en pro\'s. Veilig betalen met iDEAL en Bancontact.',
-  keywords: ['auto wassen', 'car detailing', 'professionele detailing producten', 'autopoets', 'microvezeldoek', 'showroom glans'],
+  keywords: ['auto wassen', 'car detailing', 'professionele detailing producten', 'autopoets', 'microvezeldoek', 'showroom glans', 'car detailing Nederland', 'autopoetsproducten', 'auto detailing België', 'coating auto', 'auto wassen webshop', 'detailing webshop NL'],
   alternates: {
     canonical: '/',
-    languages: {
-      'nl-NL': '/',
-      'nl-BE': '/',
-    },
   },
   openGraph: {
     title: 'Vami Pro — Professionele detailingproducten',

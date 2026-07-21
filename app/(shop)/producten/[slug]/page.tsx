@@ -81,6 +81,24 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const imgs: string[] = p.cloudinary_images?.length ? p.cloudinary_images : [];
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+      { '@type': 'ListItem', position: 2, name: 'Producten', item: `${siteUrl}/producten` },
+      ...(meta
+        ? [{ '@type': 'ListItem', position: 3, name: meta.name, item: `${siteUrl}/categorie/${meta.slug}` }]
+        : []),
+      {
+        '@type': 'ListItem',
+        position: meta ? 4 : 3,
+        name: p.name,
+        item: `${siteUrl}/producten/${p.slug}`,
+      },
+    ],
+  };
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -107,6 +125,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <div className="flex items-center gap-2 text-sm text-fg-faint">
         <Link href="/producten" className="hover:text-accent">Producten</Link>

@@ -1,4 +1,16 @@
-export const metadata = { title: 'Veelgestelde vragen' };
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Veelgestelde vragen',
+  description: 'Antwoorden over bestellen, betalen met iDEAL & Bancontact, verzending en retour van je car-detailingproducten in Nederland en België.',
+  alternates: { canonical: '/faq' },
+  openGraph: {
+    title: 'Veelgestelde vragen',
+    description: 'Antwoorden over bestellen, betalen met iDEAL & Bancontact, verzending en retour van je car-detailingproducten in Nederland en België.',
+    url: '/faq',
+    type: 'website',
+  },
+};
 
 const groups: [string, [string, string][]][] = [
   ['Bestellen & betalen', [
@@ -18,9 +30,25 @@ const groups: [string, [string, string][]][] = [
   ]],
 ];
 
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: groups.flatMap(([, items]) =>
+    items.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    }))
+  ),
+};
+
 export default function FaqPage() {
   return (
     <div className="wrap py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <p className="eyebrow">Hulp</p>
       <h1 className="h-section mt-3">Veelgestelde vragen</h1>
       <div className="mt-10 grid gap-12 lg:grid-cols-[240px_1fr]">

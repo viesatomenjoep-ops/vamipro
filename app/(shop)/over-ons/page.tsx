@@ -3,7 +3,14 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Over Ons',
-  description: 'Ontdek het verhaal achter Vami Pro. Wij leveren professionele detailingproducten voor de ultieme glans en bescherming.',
+  description: 'Het verhaal achter Vami Pro: premium car-detailingproducten voor showroomglans en bescherming, geleverd aan liefhebbers en pro\'s in NL & BE.',
+  alternates: { canonical: '/over-ons' },
+  openGraph: {
+    title: 'Over Ons',
+    description: 'Het verhaal achter Vami Pro: premium car-detailingproducten voor showroomglans en bescherming, geleverd aan liefhebbers en pro\'s in NL & BE.',
+    url: '/over-ons',
+    type: 'website',
+  },
 };
 
 export default function OverOnsPage() {

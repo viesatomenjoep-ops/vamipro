@@ -1,4 +1,16 @@
-export const metadata = { title: "Privacybeleid" };
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Privacybeleid',
+  description: 'Lees hoe Vami Pro je persoonsgegevens verwerkt en beschermt volgens de AVG/GDPR bij het bestellen van car-detailingproducten in NL & BE.',
+  alternates: { canonical: '/privacy' },
+  openGraph: {
+    title: 'Privacybeleid',
+    description: 'Lees hoe Vami Pro je persoonsgegevens verwerkt en beschermt volgens de AVG/GDPR bij het bestellen van car-detailingproducten in NL & BE.',
+    url: '/privacy',
+    type: 'website',
+  },
+};
 
 export default function PrivacyPage() {
   return (

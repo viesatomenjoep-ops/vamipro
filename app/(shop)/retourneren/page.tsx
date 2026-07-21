@@ -1,4 +1,16 @@
-export const metadata = { title: "Retourneren & Verzending" };
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Retourneren & Verzending',
+  description: '14 dagen bedenktijd op je detailingproducten. Zo meld en verstuur je een retour, plus verzendtarieven en levertijden voor NL & BE.',
+  alternates: { canonical: '/retourneren' },
+  openGraph: {
+    title: 'Retourneren & Verzending',
+    description: '14 dagen bedenktijd op je detailingproducten. Zo meld en verstuur je een retour, plus verzendtarieven en levertijden voor NL & BE.',
+    url: '/retourneren',
+    type: 'website',
+  },
+};
 
 export default function Page() {
   return (
