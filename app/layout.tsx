@@ -52,6 +52,11 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  // Google Search Console verificatie — zet de code uit Search Console in
+  // de env-variabele GOOGLE_SITE_VERIFICATION. De meta-tag verschijnt dan automatisch.
+  verification: process.env.GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+    : undefined,
 };
 
 import { ThemeProvider } from '@/components/ThemeProvider';
