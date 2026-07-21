@@ -5,7 +5,7 @@ import { LOGO_DATA_URI } from '@/lib/logo';
 const euro = (c: number) => `€ ${(c / 100).toFixed(2).replace('.', ',')}`;
 
 // Donker thema — afgestemd op het zwarte Vami Pro logo
-const BG = '#0a0b0f';
+const BG = '#000000';
 const WHITE = '#ffffff';
 const MUTED = '#aab0bb';
 const FAINT = '#787f8d';
@@ -21,13 +21,12 @@ const styles = StyleSheet.create({
   logo: { width: 132, height: 86, objectFit: 'contain' },
   invBlock: { alignItems: 'flex-end' },
   invTitle: { fontSize: 22, fontFamily: 'Helvetica-Bold', color: WHITE, letterSpacing: 2 },
-  invUnderline: { height: 2, width: 46, backgroundColor: ACCENT, marginTop: 3, alignSelf: 'flex-end' },
   metaTable: { marginTop: 10 },
   metaRow: { flexDirection: 'row', marginTop: 2 },
   metaLabel: { color: FAINT, width: 78, textAlign: 'right', marginRight: 10 },
   metaVal: { fontFamily: 'Helvetica-Bold', minWidth: 90, textAlign: 'right', color: WHITE },
 
-  rule: { height: 2, backgroundColor: ACCENT, marginTop: 8, marginBottom: 22 },
+  rule: { height: 1, backgroundColor: '#20232b', marginTop: 8, marginBottom: 22 },
 
   // Adresblokken
   parties: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 26 },
@@ -84,7 +83,6 @@ function InvoiceDoc({ order, items, invoiceNumber }: any) {
           <Image style={styles.logo} src={LOGO_DATA_URI} />
           <View style={styles.invBlock}>
             <Text style={styles.invTitle}>FACTUUR</Text>
-            <View style={styles.invUnderline} />
             <View style={styles.metaTable}>
               <View style={styles.metaRow}><Text style={styles.metaLabel}>Factuurnummer</Text><Text style={styles.metaVal}>{invoiceNumber}</Text></View>
               <View style={styles.metaRow}><Text style={styles.metaLabel}>Factuurdatum</Text><Text style={styles.metaVal}>{invoiceDate}</Text></View>
