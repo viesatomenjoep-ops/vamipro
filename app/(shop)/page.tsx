@@ -30,7 +30,7 @@ const CAT_IMAGES: Record<string, string> = {
   'exterieur-wassen': '/images/audi_q3_detailing.png',
   'droogdoeken': '/images/drying_towel.jpg',
   'washandschoenen': '/images/wash_mitt_chenille.jpg',
-  'interieur': '/images/microfiber.jpg',
+  'interieur': 'https://res.cloudinary.com/dxcohla4k/image/upload/v1782070137/vamipro/products/oxbmsyomx1wa8ui9hlib.jpg',
   'accessoires': '/images/washing_tools_detailing.png',
   'accessoires-washulpmiddelen': '/images/washing_tools_detailing.png',
   'combinatiedeals': '/images/pakket-xxl.png',
