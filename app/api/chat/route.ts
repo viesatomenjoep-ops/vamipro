@@ -12,7 +12,7 @@ export async function POST(req: Request) {
 
     // Keywords matching for FAQ
     if (userText.includes('verzend') || userText.includes('pakket') || userText.includes('bezorg') || userText.includes('kosten')) {
-      responseText = "📦 **Verzending & Levering**\n\n- Bestellingen voor 16:00 uur worden dezelfde dag nog verzonden.\n- Levering in NL is doorgaans 1–2 werkdagen.\n- Verzendkosten zijn € 4,95 binnen NL.\n- Bij bestellingen vanaf € 75,- is verzending gratis!";
+      responseText = "📦 **Verzending & Levering**\n\n- Bestellingen voor 16:00 uur worden dezelfde dag nog verzonden.\n- Levering in NL is doorgaans 1–2 werkdagen.\n- Verzendkosten zijn € 6,95.\n- Bij bestellingen vanaf € 75,- is verzending gratis!";
       matched = true;
     } else if (userText.includes('retour') || userText.includes('terugsturen') || userText.includes('bedenktijd')) {
       responseText = "🔄 **Retourneren**\n\nJe hebt 14 dagen bedenktijd op al onze producten, mits ongeopend en ongebruikt. Neem via de contactpagina contact met ons op om een retour aan te melden.";

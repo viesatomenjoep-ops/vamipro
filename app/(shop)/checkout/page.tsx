@@ -24,7 +24,7 @@ export default function CheckoutPage() {
 
   const sub = subtotalCents();
   const disc = useCart().discountCode === 'VAMIPRO10' ? Math.round(sub * 0.1) : 0;
-  const shipping = (sub - disc) >= 7500 ? 0 : f.country === 'NL' ? 495 : 695;
+  const shipping = (sub - disc) >= 7500 ? 0 : 695;
   const total = sub - disc + shipping;
 
   async function pay() {

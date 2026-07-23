@@ -18,9 +18,9 @@ const schema = z.object({
 });
 
 // Simpele verzendkosten-logica (pas aan / koppel aan Sendcloud-tarieven)
-function shippingCost(subtotalCents: number, country: 'NL' | 'BE') {
+function shippingCost(subtotalCents: number, _country: 'NL' | 'BE') {
   if (subtotalCents >= 7500) return 0;       // gratis vanaf 75 euro
-  return country === 'NL' ? 495 : 695;
+  return 695;                                // vast tarief 6,95 (NL en BE)
 }
 
 export async function POST(req: NextRequest) {
