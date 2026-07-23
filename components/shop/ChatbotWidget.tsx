@@ -89,13 +89,12 @@ export default function ChatbotWidget() {
         {/* Header */}
         <div className="flex items-center justify-between border-b hairline bg-panel-2 px-4 py-3">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full overflow-hidden border hairline">
-              <img src="/images/logo.jpeg" alt="VaMiPro Logo" className="h-full w-full object-cover" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-full overflow-hidden border hairline bg-black">
+              <img src="/images/logo.png" alt="VaMiPro Logo" className="h-full w-full object-contain p-1" />
             </div>
             <div>
               <div className="flex items-center gap-1">
-                <img src="/images/logo.jpeg" alt="VaMiPro" className="h-3 w-auto" />
-                <h3 className="font-display text-sm font-medium">Assistent</h3>
+                <h3 className="font-display text-sm font-medium">VaMiPro Assistent</h3>
               </div>
               <p className="text-xs text-accent">Online</p>
             </div>

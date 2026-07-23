@@ -34,7 +34,7 @@ export default function Preloader() {
   if (gone) return null;
   return (
     <div id="vp-preloader" className={done ? 'done' : ''} aria-hidden="true">
-      <img src="/images/logo-clean.png" alt="" style={{ height: 68, width: 'auto' }} />
+      <img src="/images/logo.png" alt="" style={{ height: 68, width: 'auto' }} />
       <div className="pl-bar"><i ref={barRef as any} /></div>
       <div className="pl-count"><span ref={numRef}>00</span> %</div>
     </div>

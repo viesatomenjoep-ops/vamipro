@@ -49,7 +49,7 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
         }`}
       >
         <div className="flex items-center justify-between mb-8 mt-2">
-          <img src="/images/logo.jpeg" alt="VaMiPro Logo" className="h-12 w-auto" />
+          <img src="/images/logo.png" alt="VaMiPro Logo" className="h-12 w-auto" />
           <button 
             onClick={() => setIsOpen(false)}
             className="flex h-14 w-14 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white -mr-2"

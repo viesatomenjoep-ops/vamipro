@@ -33,7 +33,7 @@ const CAT_IMAGES: Record<string, string> = {
   'interieur': 'https://res.cloudinary.com/dxcohla4k/image/upload/v1782070137/vamipro/products/oxbmsyomx1wa8ui9hlib.jpg',
   'accessoires': '/images/washing_tools_detailing.png',
   'accessoires-washulpmiddelen': '/images/washing_tools_detailing.png',
-  'combinatiedeals': '/images/pakket-xxl.png',
+  'combinatiedeals': 'https://res.cloudinary.com/dxcohla4k/image/upload/vamipro/wvdx3jkdkbvlsc9jc5vh',
 };
 const CAT_DESC: Record<string, string> = {
   'exterieur': 'Wassen, reinigen en beschermen — alles voor lak, velgen en glas.',
@@ -284,7 +284,7 @@ export default async function HomePage() {
             </div>
             <div className="img-sheen relative min-h-[340px] overflow-hidden bg-black">
               <img
-                src={pakket?.cloudinary_images?.[0] ? cldUrl(pakket.cloudinary_images[0], { w: 1000 }) : '/images/pakket-xxl.png'}
+                src={pakket?.cloudinary_images?.[0] ? cldUrl(pakket.cloudinary_images[0], { w: 1000 }) : 'https://res.cloudinary.com/dxcohla4k/image/upload/vamipro/wvdx3jkdkbvlsc9jc5vh'}
                 alt="Showroom pakket XXL"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out hover:scale-105"
               />

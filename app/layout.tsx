@@ -63,7 +63,7 @@ const organizationJsonLd = {
   name: 'Vami Pro',
   url: siteUrl,
   email: 'info@vamipro.nl',
-  image: `${siteUrl}/images/logo-clean.png`,
+  image: `${siteUrl}/images/logo.png`,
   description: 'Professionele car-detailingproducten voor een showroomresultaat. Geleverd in NL en BE.',
   address: {
     '@type': 'PostalAddress',

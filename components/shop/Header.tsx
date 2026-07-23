@@ -13,7 +13,7 @@ export default async function Header() {
       <div className="wrap flex h-24 md:h-28 items-center justify-between">
         <Link href="/" className="flex items-center">
           <img
-            src="/images/logo-clean.png"
+            src="/images/logo.png"
             alt="VamiPro — professionele detailingproducten"
             className="h-[56px] md:h-[72px] w-auto object-contain drop-shadow-sm"
           />
