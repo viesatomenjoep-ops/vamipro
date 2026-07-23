@@ -74,9 +74,9 @@ export default async function HomePage() {
       {/* ===== HERO ===== */}
       <section className="relative -mt-[104px] flex min-h-[100svh] flex-col justify-end overflow-hidden bg-black pt-[104px] md:-mt-[108px]">
         <div className="absolute inset-0 overflow-hidden">
-          <ParallaxImg strength={7} className="h-[112%]">
+          <ParallaxImg strength={4} className="h-[104%]">
             <img src="/images/hero-audi.jpg" alt="Audi gedetaild met VamiPro producten"
-              className="h-full w-full object-cover object-[center_26%] opacity-85" />
+              className="h-full w-full object-cover object-[center_38%] opacity-85" />
           </ParallaxImg>
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-black/30" />
         </div>
