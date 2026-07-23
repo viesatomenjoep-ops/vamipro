@@ -14,10 +14,10 @@ export default function ProductCard({ p }: { p: any }) {
   const oldPrice = p.compare_at_price_cents || compareAtPrices[p.slug];
   return (
     <Link prefetch={true} href={`/producten/${p.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden">
-      <div className="img-sheen relative aspect-square overflow-hidden bg-panel-2">
+      <div className="img-sheen relative aspect-square overflow-hidden bg-white">
         {img
           ? <img src={cldUrl(img, { w: 700 })} alt={p.name} loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]" />
+              className="h-full w-full object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-[1.06]" />
           : <div className="grid h-full w-full place-items-center bg-gradient-to-b from-panel-2 to-panel">
               <span className="mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Vami Pro</span>
             </div>}
