@@ -145,7 +145,9 @@ export default async function HomePage() {
         </div>
         <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-6">
           {(categories || []).map((c: any, i: number) => {
-            const img = CAT_IMAGES[c.slug] || '/images/hero-audi.jpg';
+            const img = (c.slug === 'combinatiedeals' && pakket?.cloudinary_images?.[0])
+              ? cldUrl(pakket.cloudinary_images[0], { w: 900 })
+              : (CAT_IMAGES[c.slug] || '/images/hero-audi.jpg');
             const big = i < 2;
             const isExterieur = c.slug.startsWith('exterieur');
             return (
