@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Search, X } from 'lucide-react';
 import { saveContent, updateCategoryInline, setProductImages, setProductPrice } from '@/app/admin/actions';
 import { CONTENT_FIELDS } from '@/lib/content-fields';
 import { cldUrl } from '@/lib/cloudinary';
@@ -57,15 +57,35 @@ export default function PreviewEditor({
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  // Welke groepen zijn opengeklapt (standaard alles dicht behalve de eerste secties).
+  // Welke groepen zijn opengeklapt (standaard: alles dicht → schone, scanbare lijst).
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => {
-    const init: Record<string, boolean> = { __images: true, __categories: false, __products: false };
-    CONTENT_FIELDS.forEach((g, i) => { init[g.group] = i === 0; });
+    const init: Record<string, boolean> = { __images: false, __categories: false, __products: false };
+    CONTENT_FIELDS.forEach((g) => { init[g.group] = false; });
     return init;
   });
 
   const toggleGroup = (key: string) =>
     setOpenGroups((prev) => ({ ...prev, [key]: !prev[key] }));
+
+  // Zoekterm voor het snel vinden van een veld (case-insensitive).
+  const [search, setSearch] = useState('');
+  const query = search.trim().toLowerCase();
+  const searching = query.length > 0;
+
+  // Platte lijst met tekstvelden die matchen op label OF groepsnaam.
+  const matchingFields = searching
+    ? CONTENT_FIELDS.flatMap((g) =>
+        g.items
+          .filter(
+            (f) =>
+              f.label.toLowerCase().includes(query) ||
+              g.group.toLowerCase().includes(query),
+          )
+          .map((f) => ({ field: f, group: g.group })),
+      )
+    : [];
+
+  const titleMatches = (title: string) => title.toLowerCase().includes(query);
 
   // Vind de standaardtekst voor een key (zodat lege velden de default tonen in de preview).
   const defFor = (key: string) => {
@@ -222,15 +242,20 @@ export default function PreviewEditor({
 
   // ── Highlight helpers ─────────────────────────────────────────────────────
   const highlightHeroCard = () => {
-    const el = heroCardRef.current;
-    if (!el) return;
+    // Zoekmodus verlaten zodat de normale (uitgeklapte) sectie weer gerenderd wordt.
+    setSearch('');
     setOpenGroups((prev) => ({ ...prev, __images: true }));
-    el.scrollIntoView({ block: 'center' });
-    el.classList.add('ring-2', 'ring-accent');
-    window.setTimeout(() => el.classList.remove('ring-2', 'ring-accent'), 1500);
+    window.setTimeout(() => {
+      const el = heroCardRef.current;
+      if (!el) return;
+      el.scrollIntoView({ block: 'center' });
+      el.classList.add('ring-2', 'ring-accent');
+      window.setTimeout(() => el.classList.remove('ring-2', 'ring-accent'), 1500);
+    }, 0);
   };
 
   const highlightBlock = (elId: string, group: string) => {
+    setSearch('');
     setOpenGroups((prev) => ({ ...prev, [group]: true }));
     window.setTimeout(() => {
       const el = document.getElementById(elId);
@@ -265,7 +290,8 @@ export default function PreviewEditor({
       }
 
       if (data.type === 'cms-click') {
-        // Zorg dat de groep waarin dit veld staat opengeklapt is.
+        // Zoekmodus verlaten en de groep waarin dit veld staat openklappen.
+        setSearch('');
         const group = CONTENT_FIELDS.find((g) => g.items.some((f) => f.key === data.key));
         if (group) setOpenGroups((prev) => ({ ...prev, [group.group]: true }));
         // Wacht een frame zodat het veld gerenderd is na het openklappen.
@@ -311,6 +337,28 @@ export default function PreviewEditor({
   const catList = categories;
   const prodList = products;
 
+  // Eén tekstveld (label + "Wis" + input/textarea). Wordt hergebruikt in de
+  // gegroepeerde weergave én de platte zoekresultatenlijst.
+  const renderField = (
+    f: { key: string; label: string; type?: 'text' | 'textarea'; def: string },
+    groupCaption?: string,
+  ) => (
+    <div key={f.key}>
+      <div className="mb-1 flex items-center justify-between">
+        <label className="block text-sm font-medium" htmlFor={'cms-field-' + f.key}>{f.label}</label>
+        {values[f.key] ? (
+          <button type="button" onClick={() => { if (confirm('Weet je zeker dat je deze tekst wilt wissen? De standaardtekst wordt dan weer gebruikt.')) setVal(f.key, ''); }} className="text-xs text-red-400 hover:underline">Wis</button>
+        ) : null}
+      </div>
+      {groupCaption && <p className="mb-1 text-xs text-fg-faint">{groupCaption}</p>}
+      {f.type === 'textarea' ? (
+        <textarea id={'cms-field-' + f.key} value={values[f.key] ?? ''} onChange={(e) => setVal(f.key, e.target.value)} placeholder={f.def} rows={3} className="input w-full" />
+      ) : (
+        <input id={'cms-field-' + f.key} value={values[f.key] ?? ''} onChange={(e) => setVal(f.key, e.target.value)} placeholder={f.def} className="input w-full" />
+      )}
+    </div>
+  );
+
   return (
     <div className="grid gap-6 lg:grid-cols-2">
       <div className="lg:sticky lg:top-6 lg:self-start">
@@ -325,21 +373,63 @@ export default function PreviewEditor({
       </div>
 
       <div className="space-y-4">
-        {/* Sticky opslaan-balk */}
-        <div className="sticky top-0 z-10 -mx-1 flex items-center gap-3 rounded-lg border hairline bg-bg/90 px-4 py-3 backdrop-blur">
-          <button type="button" onClick={handleSave} disabled={loading} className="btn btn-primary">
-            {loading ? 'Bezig met opslaan...' : 'Opslaan'}
-          </button>
-          {saved && <span className="text-sm text-accent">Opgeslagen ✓ — de website is bijgewerkt.</span>}
+        {/* Sticky kop: instructie + opslaan-balk + zoekbalk */}
+        <div className="sticky top-0 z-10 -mx-1 space-y-3 rounded-lg border hairline bg-bg/90 px-4 py-3 backdrop-blur">
+          <p className="text-xs text-fg-muted">
+            Klik links in de voorvertoning op een tekst, foto of prijs om het juiste veld te openen — of zoek hieronder.
+          </p>
+          <div className="flex items-center gap-3">
+            <button type="button" onClick={handleSave} disabled={loading} className="btn btn-primary">
+              {loading ? 'Bezig met opslaan...' : 'Opslaan'}
+            </button>
+            {saved && <span className="text-sm text-accent">Opgeslagen ✓ — de website is bijgewerkt.</span>}
+          </div>
+          <div className="relative">
+            <Search size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-fg-faint" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Zoek een tekstveld…"
+              aria-label="Zoek een tekstveld"
+              className="input w-full pl-9 pr-9"
+            />
+            {searching && (
+              <button
+                type="button"
+                onClick={() => setSearch('')}
+                aria-label="Zoekopdracht wissen"
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-fg-faint hover:text-fg"
+              >
+                <X size={16} />
+              </button>
+            )}
+          </div>
         </div>
 
+        {searching ? (
+          /* ── Zoekresultaten: platte lijst met matchende tekstvelden ── */
+          <div className="card space-y-4">
+            <p className="text-xs text-fg-muted">
+              {matchingFields.length === 0
+                ? `Geen tekstvelden gevonden voor “${search.trim()}”.`
+                : `${matchingFields.length} tekstveld${matchingFields.length === 1 ? '' : 'en'} gevonden.`}
+            </p>
+            {matchingFields.map(({ field, group }) => renderField(field, group))}
+          </div>
+        ) : null}
+
         {/* Afbeeldingen */}
+        {(!searching || titleMatches('Afbeeldingen')) && (
         <details open={openGroups.__images} className="card !p-0 overflow-hidden">
           <summary
             onClick={(e) => { e.preventDefault(); toggleGroup('__images'); }}
             className="flex cursor-pointer list-none items-center justify-between px-5 py-4 font-medium select-none"
           >
-            <span>Afbeeldingen</span>
+            <span className="flex items-center gap-2">
+              Afbeeldingen
+              <span className="text-xs font-normal text-fg-faint">1</span>
+            </span>
             <ChevronDown size={18} className={`text-fg-faint transition-transform ${openGroups.__images ? 'rotate-180' : ''}`} />
           </summary>
           {openGroups.__images && (
@@ -357,15 +447,19 @@ export default function PreviewEditor({
             </div>
           )}
         </details>
+        )}
 
         {/* Categorieën */}
-        {catList.length > 0 && (
+        {catList.length > 0 && (!searching || titleMatches('Categorieën')) && (
           <details open={openGroups.__categories} className="card !p-0 overflow-hidden">
             <summary
               onClick={(e) => { e.preventDefault(); toggleGroup('__categories'); }}
               className="flex cursor-pointer list-none items-center justify-between px-5 py-4 font-medium select-none"
             >
-              <span>Categorieën</span>
+              <span className="flex items-center gap-2">
+                Categorieën
+                <span className="text-xs font-normal text-fg-faint">{catList.length}</span>
+              </span>
               <ChevronDown size={18} className={`text-fg-faint transition-transform ${openGroups.__categories ? 'rotate-180' : ''}`} />
             </summary>
             {openGroups.__categories && (
@@ -414,13 +508,16 @@ export default function PreviewEditor({
         )}
 
         {/* Producten */}
-        {prodList.length > 0 && (
+        {prodList.length > 0 && (!searching || titleMatches('Producten')) && (
           <details open={openGroups.__products} className="card !p-0 overflow-hidden">
             <summary
               onClick={(e) => { e.preventDefault(); toggleGroup('__products'); }}
               className="flex cursor-pointer list-none items-center justify-between px-5 py-4 font-medium select-none"
             >
-              <span>Producten</span>
+              <span className="flex items-center gap-2">
+                Producten
+                <span className="text-xs font-normal text-fg-faint">{prodList.length}</span>
+              </span>
               <ChevronDown size={18} className={`text-fg-faint transition-transform ${openGroups.__products ? 'rotate-180' : ''}`} />
             </summary>
             {openGroups.__products && (
@@ -455,8 +552,8 @@ export default function PreviewEditor({
           </details>
         )}
 
-        {/* Teksten per sectie */}
-        {CONTENT_FIELDS.map((group) => {
+        {/* Teksten per sectie — tijdens het zoeken vervangen door de platte lijst hierboven. */}
+        {!searching && CONTENT_FIELDS.map((group) => {
           const open = !!openGroups[group.group];
           return (
             <details key={group.group} open={open} className="card !p-0 overflow-hidden">
@@ -464,26 +561,15 @@ export default function PreviewEditor({
                 onClick={(e) => { e.preventDefault(); toggleGroup(group.group); }}
                 className="flex cursor-pointer list-none items-center justify-between px-5 py-4 font-medium select-none"
               >
-                <span>{group.group}</span>
+                <span className="flex items-center gap-2">
+                  {group.group}
+                  <span className="text-xs font-normal text-fg-faint">{group.items.length}</span>
+                </span>
                 <ChevronDown size={18} className={`text-fg-faint transition-transform ${open ? 'rotate-180' : ''}`} />
               </summary>
               {open && (
                 <div className="space-y-4 border-t hairline px-5 py-4">
-                  {group.items.map((f) => (
-                    <div key={f.key}>
-                      <div className="mb-1 flex items-center justify-between">
-                        <label className="block text-sm font-medium" htmlFor={'cms-field-' + f.key}>{f.label}</label>
-                        {values[f.key] ? (
-                          <button type="button" onClick={() => { if (confirm('Weet je zeker dat je deze tekst wilt wissen? De standaardtekst wordt dan weer gebruikt.')) setVal(f.key, ''); }} className="text-xs text-red-400 hover:underline">Wis</button>
-                        ) : null}
-                      </div>
-                      {f.type === 'textarea' ? (
-                        <textarea id={'cms-field-' + f.key} value={values[f.key] ?? ''} onChange={(e) => setVal(f.key, e.target.value)} placeholder={f.def} rows={3} className="input w-full" />
-                      ) : (
-                        <input id={'cms-field-' + f.key} value={values[f.key] ?? ''} onChange={(e) => setVal(f.key, e.target.value)} placeholder={f.def} className="input w-full" />
-                      )}
-                    </div>
-                  ))}
+                  {group.items.map((f) => renderField(f))}
                 </div>
               )}
             </details>
