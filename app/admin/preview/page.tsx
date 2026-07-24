@@ -1,5 +1,6 @@
 import { createServiceClient } from '@/lib/supabase/server';
 import PreviewEditor from '@/components/admin/PreviewEditor';
+import { getCustomSections, type CustomSection } from '@/lib/custom-sections';
 
 export type PreviewCategory = {
   id: string;
@@ -52,11 +53,14 @@ export default async function PreviewPage() {
   });
   const products: PreviewProduct[] = Array.from(byId.values());
 
+  // Eigen (custom) secties — ook de inactieve, zodat de winkelier ze kan beheren.
+  const customSections: CustomSection[] = await getCustomSections(false);
+
   return (
     <div>
       <h1 className="text-2xl font-semibold mb-1">Voorvertoning</h1>
       <p className="text-fg-muted mb-6 text-sm">Klik in de live voorvertoning op een tekst, categorie of productfoto om die direct te bewerken. Wijzigingen zie je meteen; klik op Opslaan om ze op te slaan.</p>
-      <PreviewEditor content={content} categories={categories} products={products} />
+      <PreviewEditor content={content} categories={categories} products={products} customSections={customSections} />
     </div>
   );
 }

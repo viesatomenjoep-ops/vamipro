@@ -12,6 +12,7 @@ import Cursor from '@/components/shop/Cursor';
 import ParallaxImg from '@/components/shop/ParallaxImg';
 import { cldUrl } from '@/lib/cloudinary';
 import { getContent } from '@/lib/content';
+import { getCustomSections } from '@/lib/custom-sections';
 import GiantCounter from '@/components/shop/GiantCounter';
 import LiveSearchBar from '@/components/shop/LiveSearchBar';
 import ImageGallery from '@/components/shop/ImageGallery';
@@ -74,6 +75,7 @@ export default async function HomePage() {
   const reviews: any[] = reviewsData ?? [];
 
   const t = await getContent();
+  const customSections = await getCustomSections();
 
   const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
@@ -411,6 +413,24 @@ export default async function HomePage() {
           </Reveal>
         </div>
       </section>
+
+      {/* ===== EIGEN (CUSTOM) SECTIES — zelf toegevoegd via de liveviewer ===== */}
+      {customSections.map((s) => (
+        <section key={s.id} className="wrap py-20 md:py-28">
+          <div className="mx-auto max-w-2xl text-center">
+            {s.eyebrow && <Reveal><p className="eyebrow">{s.eyebrow}</p></Reveal>}
+            {s.title && <Reveal><h2 className="h-section mt-4">{amp(s.title)}</h2></Reveal>}
+            {s.body && <Reveal><p className="mt-5 whitespace-pre-line text-lg text-fg-muted">{s.body}</p></Reveal>}
+            {s.button_text && (
+              <Reveal>
+                <div className="mt-8">
+                  <Link href={s.button_link || '#'} className="btn btn-primary">{s.button_text}</Link>
+                </div>
+              </Reveal>
+            )}
+          </div>
+        </section>
+      ))}
 
       {/* ===== CTA ===== */}
       <section className="relative overflow-hidden">

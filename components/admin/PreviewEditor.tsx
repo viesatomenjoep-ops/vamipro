@@ -2,11 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, Search, X } from 'lucide-react';
-import { saveContent, updateCategoryInline, setProductImages, setProductPrice, setProductName } from '@/app/admin/actions';
+import { saveContent, updateCategoryInline, setProductImages, setProductPrice, setProductName, createCustomSection, updateCustomSection, deleteCustomSection } from '@/app/admin/actions';
 import { CONTENT_FIELDS } from '@/lib/content-fields';
 import { cldUrl } from '@/lib/cloudinary';
 import CloudinaryUpload from '@/components/admin/CloudinaryUpload';
 import type { PreviewCategory, PreviewProduct } from '@/app/admin/preview/page';
+import type { CustomSection } from '@/lib/custom-sections';
 
 /**
  * Live-voorvertoning met klik-om-te-bewerken.
@@ -47,10 +48,12 @@ export default function PreviewEditor({
   content,
   categories = [],
   products = [],
+  customSections = [],
 }: {
   content: Record<string, string>;
   categories?: PreviewCategory[];
   products?: PreviewProduct[];
+  customSections?: CustomSection[];
 }) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const heroCardRef = useRef<HTMLDivElement>(null);
@@ -59,10 +62,39 @@ export default function PreviewEditor({
 
   // Welke groepen zijn opengeklapt (standaard: alles dicht → schone, scanbare lijst).
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => {
-    const init: Record<string, boolean> = { __images: false, __categories: false, __products: false };
+    const init: Record<string, boolean> = { __images: false, __categories: false, __products: false, __custom: false };
     CONTENT_FIELDS.forEach((g) => { init[g.group] = false; });
     return init;
   });
+
+  // ── Eigen (custom) secties: titel + tekst + knop ──────────────────────────
+  const [sections, setSections] = useState<CustomSection[]>(customSections);
+  const [sectionSaved, setSectionSaved] = useState<Record<string, boolean>>({});
+  const reloadPreview = () => { if (iframeRef.current) iframeRef.current.src = iframeRef.current.src; };
+
+  const addSection = async () => {
+    const created = await createCustomSection();
+    if (created) {
+      setSections((prev) => [...prev, created as CustomSection]);
+      setOpenGroups((prev) => ({ ...prev, __custom: true }));
+      reloadPreview();
+    }
+  };
+  const setSectionField = (id: string, field: keyof CustomSection, value: string) =>
+    setSections((prev) => prev.map((s) => (s.id === id ? { ...s, [field]: value } : s)));
+  const commitSection = async (id: string) => {
+    const s = sections.find((x) => x.id === id);
+    if (!s) return;
+    await updateCustomSection(id, { eyebrow: s.eyebrow, title: s.title, body: s.body, button_text: s.button_text, button_link: s.button_link });
+    setSectionSaved((p) => ({ ...p, [id]: true }));
+    setTimeout(() => setSectionSaved((p) => ({ ...p, [id]: false })), 1500);
+  };
+  const removeSection = async (id: string) => {
+    if (!confirm('Weet je zeker dat je deze sectie wilt verwijderen?')) return;
+    setSections((prev) => prev.filter((s) => s.id !== id));
+    await deleteCustomSection(id);
+    reloadPreview();
+  };
 
   const toggleGroup = (key: string) =>
     setOpenGroups((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -576,6 +608,64 @@ export default function PreviewEditor({
                     <CloudinaryUpload value={prods[p.id] ?? []} onChange={(ids) => setProdImages(p.id, ids)} multiple />
                   </div>
                 ))}
+              </div>
+            )}
+          </details>
+        )}
+
+        {/* Eigen secties (titel + tekst + knop) */}
+        {(!searching || titleMatches('Eigen secties')) && (
+          <details open={openGroups.__custom} className="card !p-0 overflow-hidden">
+            <summary
+              onClick={(e) => { e.preventDefault(); toggleGroup('__custom'); }}
+              className="flex cursor-pointer list-none items-center justify-between px-5 py-4 font-medium select-none"
+            >
+              <span className="flex items-center gap-2">
+                Eigen secties
+                <span className="text-xs font-normal text-fg-faint">{sections.length}</span>
+              </span>
+              <ChevronDown size={18} className={`text-fg-faint transition-transform ${openGroups.__custom ? 'rotate-180' : ''}`} />
+            </summary>
+            {openGroups.__custom && (
+              <div className="space-y-4 border-t hairline px-5 py-4">
+                <p className="text-xs text-fg-faint">Voeg zelf een sectie toe met een titel, tekst en knop. Deze verschijnt onderaan de homepage (boven de slot-knop). Opslaan gebeurt zodra je een veld verlaat; tekstwijzigingen zie je na "Ververs voorvertoning".</p>
+                {sections.map((s) => (
+                  <div key={s.id} className="space-y-3 rounded-lg border hairline p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-medium uppercase tracking-wide text-fg-faint">Sectie</span>
+                      <div className="flex items-center gap-3">
+                        {sectionSaved[s.id] && <span className="text-xs text-accent">opgeslagen ✓</span>}
+                        <button type="button" onClick={() => removeSection(s.id)} className="text-xs text-red-400 hover:underline">Verwijderen</button>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-sm font-medium">Klein label (optioneel)</label>
+                      <input value={s.eyebrow ?? ''} onChange={(e) => setSectionField(s.id, 'eyebrow', e.target.value)} onBlur={() => commitSection(s.id)} className="input w-full" />
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-sm font-medium">Titel</label>
+                      <input value={s.title ?? ''} onChange={(e) => setSectionField(s.id, 'title', e.target.value)} onBlur={() => commitSection(s.id)} className="input w-full" />
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-sm font-medium">Tekst</label>
+                      <textarea value={s.body ?? ''} onChange={(e) => setSectionField(s.id, 'body', e.target.value)} onBlur={() => commitSection(s.id)} rows={3} className="input w-full" />
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="mb-1 block text-sm font-medium">Knop-tekst</label>
+                        <input value={s.button_text ?? ''} onChange={(e) => setSectionField(s.id, 'button_text', e.target.value)} onBlur={() => commitSection(s.id)} placeholder="bijv. Shop nu" className="input w-full" />
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-sm font-medium">Knop-link</label>
+                        <input value={s.button_link ?? ''} onChange={(e) => setSectionField(s.id, 'button_link', e.target.value)} onBlur={() => commitSection(s.id)} placeholder="/producten" className="input w-full" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <div className="flex flex-wrap gap-2">
+                  <button type="button" onClick={addSection} className="btn bg-panel-2 hover:bg-raise text-sm">+ Sectie toevoegen</button>
+                  <button type="button" onClick={reloadPreview} className="btn btn-ghost text-sm">Ververs voorvertoning</button>
+                </div>
               </div>
             )}
           </details>

@@ -137,6 +137,31 @@ export async function setProductName(productId: string, name: string) {
   revalidatePath('/', 'layout');
 }
 
+// ── Eigen (custom) secties: titel + tekst + knop ─────────────────────────────
+export async function createCustomSection() {
+  const supabase = createServiceClient();
+  const { data } = await supabase.from('custom_sections').insert({
+    eyebrow: '', title: 'Nieuwe sectie', body: '', button_text: '', button_link: '', sort_order: 100, is_active: true,
+  }).select().single();
+  revalidatePath('/', 'layout');
+  return data;
+}
+
+export async function updateCustomSection(
+  id: string,
+  fields: Partial<{ eyebrow: string; title: string; body: string; button_text: string; button_link: string; sort_order: number }>,
+) {
+  const supabase = createServiceClient();
+  await supabase.from('custom_sections').update(fields).eq('id', id);
+  revalidatePath('/', 'layout');
+}
+
+export async function deleteCustomSection(id: string) {
+  const supabase = createServiceClient();
+  await supabase.from('custom_sections').delete().eq('id', id);
+  revalidatePath('/', 'layout');
+}
+
 export async function saveSettings(formData: FormData) {
   const supabase = createServiceClient();
   
