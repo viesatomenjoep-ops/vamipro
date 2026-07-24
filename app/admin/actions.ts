@@ -13,6 +13,18 @@ function slugify(text: string) {
     .replace(/-+$/, '');            // Trim - from end of text
 }
 
+export async function saveContent(formData: FormData) {
+  const supabase = createServiceClient();
+  const rows: { key: string; value: string }[] = [];
+  for (const [key, value] of formData.entries()) {
+    if (typeof value === 'string') rows.push({ key, value });
+  }
+  if (rows.length) {
+    await supabase.from('site_content').upsert(rows, { onConflict: 'key' });
+  }
+  revalidatePath('/', 'layout');
+}
+
 export async function saveProduct(formData: FormData, productId?: string) {
   const supabase = createServiceClient();
   

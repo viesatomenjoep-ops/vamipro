@@ -11,6 +11,7 @@ import Magnetic from '@/components/shop/Magnetic';
 import Cursor from '@/components/shop/Cursor';
 import ParallaxImg from '@/components/shop/ParallaxImg';
 import { cldUrl } from '@/lib/cloudinary';
+import { getContent } from '@/lib/content';
 import GiantCounter from '@/components/shop/GiantCounter';
 import LiveSearchBar from '@/components/shop/LiveSearchBar';
 import ImageGallery from '@/components/shop/ImageGallery';
@@ -65,6 +66,8 @@ export default async function HomePage() {
   const { data: pakket } = await supabase.from('products').select('*')
     .eq('slug', 'volledig-pakket-xxl').maybeSingle();
 
+  const t = await getContent();
+
   const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
   return (
@@ -87,20 +90,19 @@ export default async function HomePage() {
         <div className="wrap relative z-10 w-full pb-8 pt-40 md:pb-12">
           <div className="fade-up flex items-center gap-4" style={{ '--d': '1500ms' } as React.CSSProperties}>
             <span className="h-px w-12 bg-accent-bright" />
-            <span className="eyebrow !text-accent-bright">Car detailing · NL &amp; BE</span>
+            <span className="eyebrow !text-accent-bright">{t('hero_eyebrow', 'Car detailing · NL & BE')}</span>
           </div>
           <h1 className="h-hero mt-6 text-white drop-shadow-lg">
-            <span className="mask-line"><span style={{ '--d': '1600ms' } as React.CSSProperties}>Ultieme glans</span></span>
-            <span className="mask-line"><span style={{ '--d': '1710ms' } as React.CSSProperties}>&amp; bescherming voor</span></span>
-            <span className="mask-line"><span className="gloss-text" style={{ '--d': '1820ms' } as React.CSSProperties}>de échte liefhebber.</span></span>
+            <span className="mask-line"><span style={{ '--d': '1600ms' } as React.CSSProperties}>{t('hero_title_1', 'Ultieme glans')}</span></span>
+            <span className="mask-line"><span style={{ '--d': '1710ms' } as React.CSSProperties}>{t('hero_title_2', '& bescherming voor')}</span></span>
+            <span className="mask-line"><span className="gloss-text" style={{ '--d': '1820ms' } as React.CSSProperties}>{t('hero_title_3', 'de échte liefhebber.')}</span></span>
           </h1>
           <p className="fade-up mt-7 max-w-xl text-lg text-zinc-300" style={{ '--d': '2050ms' } as React.CSSProperties}>
-            Professionele detailingproducten — van veilig wassen tot showroomglans.
-            Ontwikkeld voor liefhebbers en pro&apos;s.
+            {t('hero_subtitle', 'Professionele detailingproducten — van veilig wassen tot showroomglans. Ontwikkeld voor liefhebbers en pro’s.')}
           </p>
           <div className="fade-up mt-9 flex max-w-xl flex-wrap items-center gap-4" style={{ '--d': '2250ms' } as React.CSSProperties}>
-            <Magnetic><Link href="/producten" className="btn btn-primary">Shop de collectie <ArrowRight size={16} /></Link></Magnetic>
-            <Magnetic><a href="#collectie" className="btn btn-ghost">Bekijk categorieën</a></Magnetic>
+            <Magnetic><Link href="/producten" className="btn btn-primary">{t('hero_cta_primary', 'Shop de collectie')} <ArrowRight size={16} /></Link></Magnetic>
+            <Magnetic><a href="#collectie" className="btn btn-ghost">{t('hero_cta_secondary', 'Bekijk categorieën')}</a></Magnetic>
           </div>
           <div className="fade-up mt-9 max-w-xl drop-shadow-xl" style={{ '--d': '2400ms' } as React.CSSProperties}>
             <LiveSearchBar />

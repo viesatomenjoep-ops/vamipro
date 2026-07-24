@@ -13,6 +13,13 @@ create table categories (
   created_at timestamptz default now()
 );
 
+-- ========= WEBSITE-TEKSTEN (bewerkbaar via admin) =========
+create table site_content (
+  key text primary key,
+  value text,
+  updated_at timestamptz default now()
+);
+
 -- ========= PRODUCTEN =========
 create table products (
   id uuid primary key default gen_random_uuid(),

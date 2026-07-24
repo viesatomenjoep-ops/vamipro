@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { LayoutDashboard, Package, ShoppingCart, FileText, Settings } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingCart, FileText, Settings, Type } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 const nav = [
@@ -7,6 +7,7 @@ const nav = [
   ['/admin/bestellingen', 'Bestellingen', ShoppingCart],
   ['/admin/producten', 'Producten', Package],
   ['/admin/categorieen', 'Categorieën', Package],
+  ['/admin/content', 'Website teksten', Type],
   ['/admin/facturen', 'Facturen', FileText],
 ] as const;
 
