@@ -5,7 +5,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 // Standaard AAN. Zet in Vercel de env-variabele MAINTENANCE_MODE=0 om de winkel
 // weer live te zetten (of =1 om 'm weer offline te halen). De env wint van de
 // standaardwaarde hieronder.
-const MAINTENANCE_DEFAULT = true;
+const MAINTENANCE_DEFAULT = false;
 function maintenanceOn() {
   const v = process.env.MAINTENANCE_MODE;
   return v != null && v !== '' ? v === '1' : MAINTENANCE_DEFAULT;
