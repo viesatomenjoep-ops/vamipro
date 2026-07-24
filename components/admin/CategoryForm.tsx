@@ -2,14 +2,17 @@
 
 import { useState } from 'react';
 import { saveCategory } from '@/app/admin/actions';
+import CloudinaryUpload from '@/components/admin/CloudinaryUpload';
 
 export default function CategoryForm({ category, parents }: { category?: any, parents: any[] }) {
   const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState<string[]>(category?.cloudinary_image ? [category.cloudinary_image] : []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.currentTarget);
+    formData.append('cloudinary_image', image[0] || '');
     await saveCategory(formData, category?.id);
   };
 
@@ -47,6 +50,12 @@ export default function CategoryForm({ category, parents }: { category?: any, pa
         <div>
           <label className="block text-sm font-medium mb-1">Korte omschrijving</label>
           <textarea name="description" defaultValue={category?.description} rows={3} className="input w-full" />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Categoriefoto</label>
+          <p className="text-xs text-fg-faint mb-2">Deze foto wordt getoond op de tegel van deze categorie op de homepage. Elke foto wordt automatisch vierkant en passend gemaakt.</p>
+          <CloudinaryUpload value={image} onChange={setImage} multiple={false} />
         </div>
       </div>
 

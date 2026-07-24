@@ -70,6 +70,7 @@ export async function saveCategory(formData: FormData, categoryId?: string) {
     description: formData.get('description') as string,
     sort_order: parseInt(formData.get('sort_order') as string, 10),
     parent_id: formData.get('parent_id') as string || null,
+    cloudinary_image: (formData.get('cloudinary_image') as string) || null,
   };
 
   if (categoryId) {

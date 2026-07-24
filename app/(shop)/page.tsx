@@ -10,6 +10,7 @@ import Tilt from '@/components/shop/Tilt';
 import Magnetic from '@/components/shop/Magnetic';
 import Cursor from '@/components/shop/Cursor';
 import ParallaxImg from '@/components/shop/ParallaxImg';
+import { cldUrl } from '@/lib/cloudinary';
 import GiantCounter from '@/components/shop/GiantCounter';
 import LiveSearchBar from '@/components/shop/LiveSearchBar';
 import ImageGallery from '@/components/shop/ImageGallery';
@@ -144,7 +145,9 @@ export default async function HomePage() {
         </div>
         <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-6">
           {(categories || []).map((c: any, i: number) => {
-            const img = CAT_IMAGES[c.slug] || '/images/hero-audi.jpg';
+            const img = c.cloudinary_image
+              ? cldUrl(c.cloudinary_image, { w: 1200 })
+              : (CAT_IMAGES[c.slug] || '/images/hero-audi.jpg');
             const big = i < 2;
             const isExterieur = c.slug.startsWith('exterieur');
             return (

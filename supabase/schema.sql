@@ -8,6 +8,7 @@ create table categories (
   slug text unique not null,
   name text not null,
   description text,
+  cloudinary_image text,
   sort_order int default 0,
   created_at timestamptz default now()
 );
