@@ -18,13 +18,6 @@ export default async function Header() {
             className="h-[56px] md:h-[72px] w-auto object-contain drop-shadow-sm"
           />
         </Link>
-        <nav className="hidden items-center gap-7 text-[15px] text-white/70 lg:flex">
-          <Link prefetch={true} href="/producten" className="nav-link hover:text-white">Shop</Link>
-          {categories?.slice(0, 4).map(c => (
-            <Link key={c.id} prefetch={true} href={`/categorie/${c.slug}`} className="nav-link hover:text-white">{c.name}</Link>
-          ))}
-          <Link prefetch={true} href="/contact" className="nav-link hover:text-white">Contact</Link>
-        </nav>
         <div className="flex items-center gap-4">
           <ThemeToggle />
           <CartButton />
