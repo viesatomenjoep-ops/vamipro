@@ -113,10 +113,10 @@ export default async function HomePage() {
         <div className="fade-up relative z-10 border-t border-white/10 bg-black/35 backdrop-blur-md" style={{ '--d': '2550ms' } as React.CSSProperties}>
           <div className="wrap flex flex-wrap items-center justify-between gap-x-10 gap-y-4 py-5">
             {[
-              { v: 1200, suf: ' GSM', label: 'Dikste droogdoek' },
-              { v: 75, pre: '€ ', suf: '+', label: 'Gratis verzending' },
-              { v: 14, label: 'Dagen bedenktijd' },
-              { v: 16, suf: ':00', label: 'Besteld = vandaag verzonden' },
+              { v: 1200, suf: ' GSM', label: t('stat_1_label', 'Dikste droogdoek') },
+              { v: 70, pre: '€ ', suf: '+', label: t('stat_2_label', 'Gratis verzending') },
+              { v: 14, label: t('stat_3_label', 'Dagen bedenktijd') },
+              { v: 16, suf: ':00', label: t('stat_4_label', 'Besteld = vandaag verzonden') },
             ].map((s, i) => (
               <div key={i}>
                 <div className="disp text-xl text-white md:text-2xl">
@@ -136,8 +136,8 @@ export default async function HomePage() {
       <section id="collectie" className="wrap py-20 md:py-32">
         <div className="mb-10 flex items-end justify-between gap-6 md:mb-14">
           <Reveal>
-            <p className="eyebrow">De collectie</p>
-            <h2 className="h-section mt-4">Kies je categorie.<br />Direct naar de juiste tools.</h2>
+            <p className="eyebrow">{t('collection_eyebrow', 'De collectie')}</p>
+            <h2 className="h-section mt-4">{t('collection_title', 'Kies je categorie.')}<br />{t('collection_subtitle', 'Direct naar de juiste tools.')}</h2>
           </Reveal>
           <Reveal delay={120}>
             <Link href="/producten" className="mono hidden text-[11px] uppercase tracking-[0.2em] text-fg-muted transition-colors hover:text-accent-bright md:block">
@@ -222,23 +222,22 @@ export default async function HomePage() {
               </Reveal>
               <div>
                 <Reveal variant="right">
-                  <p className="eyebrow">Bestseller</p>
-                  <h2 className="h-section mt-4">De dikste droogdoek<br />die we verkopen.</h2>
+                  <p className="eyebrow">{t('towel_badge', 'Bestseller')}</p>
+                  <h2 className="h-section mt-4">{t('towel_title_1', 'De dikste droogdoek')}<br />{t('towel_title_2', 'die we verkopen.')}</h2>
                   <p className="mt-5 max-w-xl text-lg text-fg-muted">
-                    1200 gram per vierkante meter twisted-loop microvezel.
-                    Eén doek, één auto, nul strepen — zonder ooit de lak te raken.
+                    {t('towel_intro', '1200 gram per vierkante meter twisted-loop microvezel. Eén doek, één auto, nul strepen — zonder ooit de lak te raken.')}
                   </p>
                 </Reveal>
                 <ul className="mt-7 space-y-3">
                   {[
-                    ['60×90 cm', 'droogt een hele auto in één keer'],
-                    ['100% veilig', 'voor alle lakken en coatings'],
-                    ['Duurzaam', 'en honderden keren wasbaar'],
-                  ].map(([b, t], i) => (
+                    ['60×90 cm', t('towel_bullet_1', 'droogt een hele auto in één keer')],
+                    ['100% veilig', t('towel_bullet_2', 'voor alle lakken en coatings')],
+                    ['Duurzaam', t('towel_bullet_3', 'en honderden keren wasbaar')],
+                  ].map(([b, text], i) => (
                     <Reveal key={i} variant="right" delay={140 + i * 100}>
                       <li className="flex items-baseline gap-3 text-fg-muted">
                         <span className="mono text-accent-bright">—</span>
-                        <span><b className="font-semibold text-fg">{b}</b> {t}</span>
+                        <span><b className="font-semibold text-fg">{b}</b> {text}</span>
                       </li>
                     </Reveal>
                   ))}
@@ -247,7 +246,7 @@ export default async function HomePage() {
                   <div className="mt-9 flex flex-wrap items-center gap-5">
                     <Magnetic>
                       <Link href={`/producten/${towel.slug}`} className="btn btn-primary">
-                        Shop de droogdoek <ArrowRight size={16} />
+                        {t('towel_button', 'Shop de droogdoek')} <ArrowRight size={16} />
                       </Link>
                     </Magnetic>
                     <span className="disp text-2xl">{euro(towel.price_cents)}</span>
@@ -269,10 +268,9 @@ export default async function HomePage() {
               <span className="mono relative inline-flex self-start rounded-full border border-accent/40 px-3.5 py-1.5 text-[10px] uppercase tracking-[0.2em] text-accent-bright">
                 Tijdelijke actie · Bespaar € 17,25
               </span>
-              <h2 className="h-section relative">Showroom pakket XXL</h2>
+              <h2 className="h-section relative">{t('xxl_title', 'Showroom pakket XXL')}</h2>
               <p className="relative text-fg-muted">
-                Alles wat je nodig hebt voor de perfecte wasbeurt en detailing — in één doos.
-                Inclusief droogdoek, washandschoen, emmer met grit guard en meer.
+                {t('xxl_intro', 'Alles wat je nodig hebt voor de perfecte wasbeurt en detailing — in één doos. Inclusief droogdoek, washandschoen, emmer met grit guard en meer.')}
               </p>
               <div className="relative flex items-baseline gap-4">
                 <span className="disp text-4xl md:text-5xl">{pakket ? euro(pakket.price_cents) : '€ 189,95'}</span>
@@ -281,7 +279,7 @@ export default async function HomePage() {
               <div className="relative mt-2">
                 <Magnetic>
                   <Link href="/producten/volledig-pakket-xxl" className="btn btn-primary">
-                    Profiteer nu <ArrowRight size={16} />
+                    {t('xxl_button', 'Profiteer nu')} <ArrowRight size={16} />
                   </Link>
                 </Magnetic>
               </div>
@@ -301,20 +299,20 @@ export default async function HomePage() {
       <section className="wrap pb-20 md:pb-32">
         <div className="mb-10 md:mb-14">
           <Reveal>
-            <p className="eyebrow">Het ritueel</p>
-            <h2 className="h-section mt-4">Drie fases.<br />Eén showroomresultaat.</h2>
+            <p className="eyebrow">{t('ritual_eyebrow', 'Het ritueel')}</p>
+            <h2 className="h-section mt-4">{t('ritual_title_1', 'Drie fases.')}<br />{t('ritual_title_2', 'Eén showroomresultaat.')}</h2>
           </Reveal>
         </div>
         <div className="grid gap-3.5 md:grid-cols-3">
           {[
-            ['Wassen', 'Snow foam weekt het vuil los, de grit guard houdt je washandschoen schoon. Contactloos waar het kan, veilig waar het moet.'],
-            ['Drogen', 'De 1200 GSM droogdoek neemt alles in één beweging op. Geen strepen, geen swirls — de lak blijft onaangeraakt.'],
-            ['Detailen', 'Borstels, sponzen en microvezel voor velgen, naden en interieur. De details maken het verschil tussen schoon en showroom.'],
-          ].map(([t, d], i) => (
+            [t('ritual_1_title', 'Wassen'), t('ritual_1_text', 'Snow foam weekt het vuil los, de grit guard houdt je washandschoen schoon. Contactloos waar het kan, veilig waar het moet.')],
+            [t('ritual_2_title', 'Drogen'), t('ritual_2_text', 'De 1200 GSM droogdoek neemt alles in één beweging op. Geen strepen, geen swirls — de lak blijft onaangeraakt.')],
+            [t('ritual_3_title', 'Detailen'), t('ritual_3_text', 'Borstels, sponzen en microvezel voor velgen, naden en interieur. De details maken het verschil tussen schoon en showroom.')],
+          ].map(([title, d], i) => (
             <Reveal key={i} delay={i * 110}>
               <div className="card card-hover relative h-full overflow-hidden p-8 pb-10">
                 <span className="mono block text-[10px] tracking-[0.25em] text-accent-bright">0{i + 1}</span>
-                <h3 className="disp mt-9 text-xl">{t}</h3>
+                <h3 className="disp mt-9 text-xl">{title}</h3>
                 <p className="mt-3 text-sm text-fg-muted">{d}</p>
                 <span aria-hidden className="disp pointer-events-none absolute -bottom-8 right-0 select-none text-[7rem] leading-none text-transparent"
                   style={{ WebkitTextStroke: '1px var(--line)' }}>{i + 1}</span>
@@ -334,9 +332,9 @@ export default async function HomePage() {
         </div>
         <div className="wrap relative z-10 w-full py-16 text-center md:py-20">
           <Reveal variant="blur">
-            <p className="eyebrow !text-accent-bright drop-shadow-md">Professional grade</p>
+            <p className="eyebrow !text-accent-bright drop-shadow-md">{t('gallery_eyebrow', 'Professional grade')}</p>
             <h2 className="disp mt-4 text-4xl leading-[0.98] text-white drop-shadow-lg md:text-6xl">
-              Alles voor de<br />perfecte wasbeurt.
+              {t('gallery_title', 'Alles voor de perfecte wasbeurt.')}
             </h2>
           </Reveal>
         </div>
@@ -348,11 +346,11 @@ export default async function HomePage() {
           <Reveal>
             <div className="disp text-7xl leading-[0.5] text-accent-bright">"</div>
             <blockquote className="disp mt-7 max-w-3xl text-2xl leading-[1.28] md:text-4xl" style={{ textTransform: 'none', fontStretch: '108%' }}>
-              Mijn zwarte lak heeft nog nooit zo diep gestaan. De droogdoek alleen al is z&apos;n geld dubbel waard.
+              {t('testimonial_quote', 'Mijn zwarte lak heeft nog nooit zo diep gestaan. De droogdoek alleen al is z’n geld dubbel waard.')}
             </blockquote>
             <div className="mt-8 flex items-center gap-4">
               <span className="disp grid h-11 w-11 place-items-center rounded-full border hairline bg-gradient-to-br from-accent to-[#0E1524] text-sm text-white">MV</span>
-              <span><b className="block text-sm">Mark V.</b><span className="text-xs text-fg-faint">BMW M4 · Antwerpen</span></span>
+              <span><b className="block text-sm">{t('testimonial_author', 'Mark V.')}</b><span className="text-xs text-fg-faint">{t('testimonial_detail', 'BMW M4 · Antwerpen')}</span></span>
             </div>
           </Reveal>
         </div>
@@ -363,20 +361,20 @@ export default async function HomePage() {
         <div aria-hidden className="pointer-events-none absolute left-1/2 top-0 h-[420px] w-[900px] -translate-x-1/2 opacity-60"
           style={{ background: 'radial-gradient(ellipse at top, var(--accent-glow), transparent 70%)' }} />
         <div className="wrap relative flex flex-col items-center py-24 text-center md:py-40">
-          <Reveal><p className="eyebrow">Klaar om te beginnen?</p></Reveal>
+          <Reveal><p className="eyebrow">{t('final_eyebrow', 'Klaar om te beginnen?')}</p></Reveal>
           <Reveal delay={100} variant="blur">
-            <h2 className="h-hero mt-6">Showroomglans<br /><span className="gloss-text">begint hier.</span></h2>
+            <h2 className="h-hero mt-6">{t('final_title_1', 'Showroomglans')}<br /><span className="gloss-text">{t('final_title_2', 'begint hier.')}</span></h2>
           </Reveal>
           <Reveal delay={220}>
             <p className="mx-auto mt-6 max-w-md text-lg text-fg-muted">
-              Voor 16:00 besteld, vandaag verzonden. Gratis verzending vanaf € 75 in NL &amp; BE.
+              {t('final_text', 'Voor 16:00 besteld, vandaag verzonden. Gratis verzending vanaf € 70 in NL & BE.')}
             </p>
           </Reveal>
           <Reveal delay={340}>
             <div className="mt-10">
               <Magnetic>
                 <Link href="/producten" className="btn btn-primary !px-9 !py-4 !text-base">
-                  Shop de collectie <ArrowRight size={18} />
+                  {t('final_button', 'Shop de collectie')} <ArrowRight size={18} />
                 </Link>
               </Magnetic>
             </div>

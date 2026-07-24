@@ -9,7 +9,7 @@ const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 export default function CartPage() {
   const { items, setQty, remove, subtotalCents, discountCode, setDiscountCode } = useCart();
   const sub = subtotalCents();
-  const freeShip = sub >= 7500;
+  const freeShip = sub >= 7000;
 
   if (!items.length) return (
     <div className="wrap py-28 text-center">
@@ -75,13 +75,13 @@ export default function CartPage() {
             {discountCode === 'VAMIPRO10' && (
               <div className="flex justify-between text-accent font-medium"><span>Korting (10%)</span><span>-{euro(Math.round(sub * 0.1))}</span></div>
             )}
-            <div className="flex justify-between text-fg-muted"><span>Verzending</span><span className="text-fg">{freeShip ? 'Gratis' : 'Berekend bij kassa'}</span></div>
+            <div className="flex justify-between text-fg-muted"><span>Verzending</span><span className="text-fg">{freeShip ? 'Gratis' : euro(695)}</span></div>
           </div>
           {!freeShip && (
             <div className="mt-4 rounded-sm border hairline bg-panel-2 p-3 text-xs text-fg-muted">
-              Nog {euro(7500 - sub)} tot gratis verzending.
+              Nog {euro(7000 - sub)} tot gratis verzending.
               <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-line-strong">
-                <div className="h-full rounded-full bg-accent" style={{ width: `${Math.min(100, (sub / 7500) * 100)}%` }} />
+                <div className="h-full rounded-full bg-accent" style={{ width: `${Math.min(100, (sub / 7000) * 100)}%` }} />
               </div>
             </div>
           )}

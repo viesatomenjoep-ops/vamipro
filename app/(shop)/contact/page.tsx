@@ -1,5 +1,6 @@
 import { Mail, Phone, MapPin } from 'lucide-react';
 import type { Metadata } from 'next';
+import { getContent } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -13,7 +14,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const t = await getContent();
+  const phone = t('contact_phone', '');
   return (
     <div className="wrap py-16">
       <div className="grid gap-12 lg:grid-cols-2">
@@ -26,7 +29,7 @@ export default function ContactPage() {
           </p>
           <ul className="mt-8 space-y-4 text-sm">
             <li className="flex items-center gap-3"><Mail size={18} className="text-accent" /> {/* {{EMAIL}} */}info@vamipro.nl</li>
-            <li className="flex items-center gap-3"><Phone size={18} className="text-accent" /> {/* {{TELEFOON}} */}________</li>
+            {phone && <li className="flex items-center gap-3"><Phone size={18} className="text-accent" /> {phone}</li>}
             <li className="flex items-center gap-3"><MapPin size={18} className="text-accent" /> {/* {{ADRES}} */}Kroonstraat 33, 4879 AV Etten-Leur, Nederland</li>
           </ul>
           <div className="mt-8 rounded border hairline bg-panel p-4 text-sm text-fg-muted">

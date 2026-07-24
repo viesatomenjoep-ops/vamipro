@@ -1,9 +1,12 @@
 import Link from 'next/link';
 import { createServiceClient } from '@/lib/supabase/server';
+import { getContent } from '@/lib/content';
 
 export default async function Footer() {
   const supabase = createServiceClient();
   const { data: categories } = await supabase.from('categories').select('*').is('parent_id', null).order('sort_order');
+  const t = await getContent();
+  const phone = t('contact_phone', '');
 
   return (
     <footer className="mt-24 border-t hairline overflow-hidden">
@@ -15,7 +18,7 @@ export default async function Footer() {
         <div className="md:col-span-1">
           <span className="logo-chip inline-flex mb-2"><img src="/images/logo.png" alt="VamiPro" className="h-14 w-auto" /></span>
           <p className="mt-3 max-w-xs text-sm text-fg-muted">
-            Professionele detailingproducten voor een showroomresultaat. Geleverd in NL en BE.
+            {t('footer_tagline', 'Professionele detailingproducten voor een showroomresultaat. Geleverd in NL en BE.')}
           </p>
         </div>
         <div>
@@ -42,6 +45,7 @@ export default async function Footer() {
             <li>{/* {{ADRES}} */}Kroonstraat 33, 4879 AV Etten-Leur</li>
             <li>KVK {/* {{KVK}} */}86797840</li>
             <li>BTW {/* {{BTW_NL}} */}NL004313236B58</li>
+            {phone && <li>Tel: {phone}</li>}
             <li>{/* {{EMAIL}} */}info@vamipro.nl</li>
           </ul>
         </div>
