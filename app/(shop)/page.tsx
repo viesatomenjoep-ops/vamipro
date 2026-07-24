@@ -455,6 +455,20 @@ export default async function HomePage() {
           </Reveal>
         </div>
       </section>
+
+      {/* ===== SEO-tekst (bewerkbaar via admin) ===== */}
+      <section className="border-t hairline">
+        <div className="wrap py-14 md:py-16">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="font-display text-base font-semibold text-fg-muted" data-cms-key="seo_block_title">
+              {amp(t('seo_block_title', 'Professionele autopoetsproducten & car detailing voor NL & BE'))}
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-fg-faint" data-cms-key="seo_block_text">
+              {t('seo_block_text', 'Bij Vami Pro vind je alles voor een showroomresultaat: van pH-neutrale autoshampoo, snow foam en foam lances tot 1600 GSM droogdoeken, microvezeldoeken, velgenreinigers, interieurreinigers en complete detailingpakketten. Onze producten zijn geschikt voor liefhebbers én professionals en veilig voor gecoate en gewaxte lak. Betaal eenvoudig met iDEAL of Bancontact en profiteer van gratis verzending vanaf € 70 in Nederland en België — voor 16:00 besteld is dezelfde dag verzonden.')}
+            </p>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

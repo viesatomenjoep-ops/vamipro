@@ -1,5 +1,23 @@
 // Bewerkbare teksten, gegroepeerd per sectie. Nieuwe teksten toevoegen = hier een
 // regel bijzetten en op de betreffende pagina `t('<key>', '<standaard>')` gebruiken.
+
+// SEO-rijke standaard-FAQ's (bewerkbaar via de admin). Wordt gebruikt op /faq en
+// levert FAQ-structured-data (rich results) aan Google. Leeg = wordt overgeslagen.
+export const FAQ_DEFAULTS: { q: string; a: string }[] = [
+  { q: 'Welke autopoetsproducten verkoopt Vami Pro?', a: 'Vami Pro levert professionele car-detailingproducten: autoshampoos, snow foam, droogdoeken, microvezeldoeken, velgenreinigers, interieurreinigers, borstels, sponzen en complete pakketten — voor zowel liefhebbers als professionals in Nederland en België.' },
+  { q: 'Wat maakt een 1600 GSM droogdoek beter dan een gewone droogdoek?', a: 'Een 1600 GSM twisted-loop microvezel droogdoek neemt veel meer water op en droogt je auto krasvrij in één beweging. Zo droog je een hele auto zonder strepen of swirls, zonder de lak te belasten.' },
+  { q: 'Welke betaalmethodes accepteren jullie?', a: 'Je betaalt veilig met iDEAL (Nederland) en Bancontact (België), beide via Mollie. Wij ontvangen of bewaren zelf geen betaalgegevens.' },
+  { q: 'Wat zijn de verzendkosten en levertijden naar NL en BE?', a: 'De verzendkosten zie je in de checkout op basis van je land. Vanaf € 70 verzenden we gratis binnen Nederland en België. Voor 16:00 op werkdagen besteld en betaald = dezelfde dag verzonden, doorgaans 1–2 werkdagen (NL) en 2–3 werkdagen (BE).' },
+  { q: 'Zijn de producten veilig voor coating, wax en keramische lak?', a: 'Onze autoshampoos en reinigers zijn pH-neutraal en veilig voor gecoate, gewaxte en keramisch beschermde lak, tenzij anders vermeld op de productpagina.' },
+  { q: 'Hoe was ik mijn auto krasvrij?', a: 'Gebruik de twee-emmer-methode: week het vuil eerst los met snow foam, was daarna met een zachte washandschoen en een grit guard in de emmer, en droog met een dikke microvezel droogdoek. Zo minimaliseer je krassen en swirls.' },
+  { q: 'Wat is snow foam en waarvoor gebruik je het?', a: 'Snow foam is een dik reinigend schuim dat je vóór het wassen aanbrengt met een foam lance. Het weekt het grootste vuil los zodat je dat contactloos wegspoelt — de veiligste eerste stap tegen krassen.' },
+  { q: 'Hoe reinig ik mijn velgen veilig?', a: 'Gebruik een pH-neutrale velgenreiniger en een zachte velgenborstel. Laat de reiniger kort inwerken op koude velgen, borstel na en spoel goed. Zo verwijder je remstof zonder de coating aan te tasten.' },
+  { q: 'Welke producten heb ik nodig om te beginnen met detailing?', a: 'Een goede basis: een autoshampoo, snow foam met foam lance, een zachte washandschoen, een emmer met grit guard en een microvezel droogdoek. Wil je alles in één keer? Kies dan ons Showroom pakket XXL.' },
+  { q: 'Leveren jullie ook in België?', a: 'Ja, we verzenden naar zowel Nederland als België. Boven de € 70 is de verzending gratis; daaronder zie je het exacte tarief in de checkout.' },
+  { q: 'Kan ik mijn bestelling retourneren?', a: 'Je hebt 14 dagen bedenktijd. Ongeopende producten kun je retourneren volgens ons retourbeleid. Neem bij vragen contact op via info@vamipro.nl.' },
+  { q: 'Kan ik advies krijgen over de juiste producten?', a: 'Zeker. Stel je vraag via de chat op de site of mail naar info@vamipro.nl — we helpen je graag met de juiste keuze voor jouw auto en lak.' },
+];
+
 export const CONTENT_FIELDS: { group: string; items: { key: string; label: string; type?: 'text' | 'textarea'; def: string }[] }[] = [
   {
     group: 'Hero (bovenaan de homepage)',
@@ -118,5 +136,19 @@ export const CONTENT_FIELDS: { group: string; items: { key: string; label: strin
       { key: 'footer_tagline', label: 'Footer-slogan', type: 'textarea', def: 'Professionele detailingproducten voor een showroomresultaat. Geleverd in NL en BE.' },
       { key: 'contact_phone', label: 'Telefoonnummer (leeg = verbergen)', def: '' },
     ],
+  },
+  {
+    group: 'SEO-tekst (onderaan homepage)',
+    items: [
+      { key: 'seo_block_title', label: 'Titel', def: 'Professionele autopoetsproducten & car detailing voor NL & BE' },
+      { key: 'seo_block_text', label: 'Tekst', type: 'textarea', def: 'Bij Vami Pro vind je alles voor een showroomresultaat: van pH-neutrale autoshampoo, snow foam en foam lances tot 1600 GSM droogdoeken, microvezeldoeken, velgenreinigers, interieurreinigers en complete detailingpakketten. Onze producten zijn geschikt voor liefhebbers én professionals en veilig voor gecoate en gewaxte lak. Betaal eenvoudig met iDEAL of Bancontact en profiteer van gratis verzending vanaf € 70 in Nederland en België — voor 16:00 besteld is dezelfde dag verzonden.' },
+    ],
+  },
+  {
+    group: 'Veelgestelde vragen (FAQ)',
+    items: FAQ_DEFAULTS.flatMap((d, i) => ([
+      { key: `faq_${i + 1}_q`, label: `Vraag ${i + 1}`, def: d.q },
+      { key: `faq_${i + 1}_a`, label: `Antwoord ${i + 1}`, type: 'textarea', def: d.a },
+    ])) as { key: string; label: string; type?: 'text' | 'textarea'; def: string }[],
   },
 ];
