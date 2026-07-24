@@ -2,14 +2,20 @@
 
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
-import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useCart } from '@/lib/cart-store';
 
 export default function PromoPopup() {
   const [isOpen, setIsOpen] = useState(false);
   const { setDiscountCode } = useCart();
+  const pathname = usePathname();
+
+  // Niet tonen in de afrekenflow (winkelmandje/checkout): daar dekt de popup het
+  // hele scherm af en zou hij het invullen van adres/betaling blokkeren.
+  const suppressed = !!pathname && (pathname.startsWith('/checkout') || pathname.startsWith('/winkelmandje'));
 
   useEffect(() => {
+    if (suppressed) { setIsOpen(false); return; }
     // Check if the user has already seen the popup in this session
     const seen = sessionStorage.getItem('vami-promo-seen');
     if (!seen) {
@@ -19,7 +25,7 @@ export default function PromoPopup() {
       }, 1000);
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [suppressed]);
 
   const close = () => {
     setIsOpen(false);
@@ -31,7 +37,7 @@ export default function PromoPopup() {
     close();
   };
 
-  if (!isOpen) return null;
+  if (!isOpen || suppressed) return null;
 
   return (
     <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6">
