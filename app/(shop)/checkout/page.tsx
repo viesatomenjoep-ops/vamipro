@@ -34,10 +34,45 @@ export default function CheckoutPage() {
   const [method, setMethod] = useState<'ideal' | 'bancontact'>('ideal');
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState('');
+  const [addrStatus, setAddrStatus] = useState<'' | 'searching' | 'found' | 'notfound'>('');
   const set = (k: string) => (e: any) => {
     const value = e.target.value;
     setF((prev) => ({ ...prev, [k]: value }));
   };
+
+  // Land automatisch herkennen aan de postcode: NL = 1234 AB, BE = 4 cijfers.
+  useEffect(() => {
+    const pc = f.postalCode.replace(/\s/g, '').toUpperCase();
+    if (/^\d{4}[A-Z]{2}$/.test(pc)) {
+      setF((p) => (p.country === 'NL' ? p : { ...p, country: 'NL' }));
+    } else if (/^\d{4}$/.test(pc)) {
+      setF((p) => (p.country === 'BE' ? p : { ...p, country: 'BE' }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [f.postalCode]);
+
+  // Nederlands adres (straat + plaats) automatisch invullen op basis van postcode + huisnummer.
+  useEffect(() => {
+    const pc = f.postalCode.replace(/\s/g, '').toUpperCase();
+    const hn = f.houseNumber.trim();
+    if (!/^\d{4}[A-Z]{2}$/.test(pc) || !hn) { setAddrStatus(''); return; }
+    const ctrl = new AbortController();
+    setAddrStatus('searching');
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/postcode?pc=${encodeURIComponent(pc)}&hn=${encodeURIComponent(hn)}`, { signal: ctrl.signal });
+        const d = await res.json();
+        if (d.found) {
+          setF((p) => ({ ...p, address: d.street || p.address, city: d.city || p.city }));
+          setAddrStatus('found');
+        } else {
+          setAddrStatus('notfound');
+        }
+      } catch { /* geannuleerd of fout: negeer */ }
+    }, 500);
+    return () => { clearTimeout(timer); ctrl.abort(); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [f.postalCode, f.houseNumber]);
 
   const sub = subtotalCents();
   const disc = useCart().discountCode ? Math.round(sub * cfg.discountPercent / 100) : 0;
@@ -97,18 +132,22 @@ export default function CheckoutPage() {
           <section>
             <p className="eyebrow">02 · Bezorgadres</p>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <input className="field text-base w-full" placeholder="Voornaam" autoComplete="given-name" onChange={set('firstName')} />
-              <input className="field text-base w-full" placeholder="Achternaam" autoComplete="family-name" onChange={set('lastName')} />
-              <input className="field sm:col-span-2 text-base w-full" placeholder="Straatnaam" autoComplete="address-line1" onChange={set('address')} />
-              <input className="field text-base w-full" placeholder="Huisnummer" autoComplete="address-line2" onChange={set('houseNumber')} />
-              <input className="field text-base w-full" placeholder="Toevoeging (optioneel)" autoComplete="address-line3" onChange={set('addition')} />
-              <input className="field text-base w-full" placeholder="Postcode" autoComplete="postal-code" onChange={set('postalCode')} />
-              <input className="field text-base w-full" placeholder="Plaats" autoComplete="address-level2" onChange={set('city')} />
+              <input value={f.firstName} className="field text-base w-full" placeholder="Voornaam" autoComplete="given-name" onChange={set('firstName')} />
+              <input value={f.lastName} className="field text-base w-full" placeholder="Achternaam" autoComplete="family-name" onChange={set('lastName')} />
+              <input value={f.postalCode} className="field text-base w-full" placeholder="Postcode" autoComplete="postal-code" onChange={set('postalCode')} />
+              <input value={f.houseNumber} className="field text-base w-full" placeholder="Huisnummer" autoComplete="address-line2" onChange={set('houseNumber')} />
+              <input value={f.address} className="field sm:col-span-2 text-base w-full" placeholder="Straatnaam" autoComplete="address-line1" onChange={set('address')} />
+              <input value={f.city} className="field text-base w-full" placeholder="Plaats" autoComplete="address-level2" onChange={set('city')} />
+              <input value={f.addition} className="field text-base w-full" placeholder="Toevoeging (optioneel)" autoComplete="address-line3" onChange={set('addition')} />
               <select className="field sm:col-span-2 text-base w-full" value={f.country} autoComplete="country" onChange={set('country')}>
                 <option value="NL">Nederland</option>
                 <option value="BE">België</option>
               </select>
             </div>
+            {addrStatus === 'searching' && <p className="mt-2 text-xs text-fg-faint">Adres opzoeken…</p>}
+            {addrStatus === 'found' && <p className="mt-2 text-xs text-accent">✓ Straat en plaats automatisch ingevuld op basis van je postcode.</p>}
+            {addrStatus === 'notfound' && f.country === 'NL' && <p className="mt-2 text-xs text-fg-faint">Geen adres gevonden — vul straat en plaats handmatig in.</p>}
+            {f.country === 'BE' && <p className="mt-2 text-xs text-fg-faint">Belgisch adres herkend — vul straat en plaats zelf in.</p>}
             <label className="mt-4 flex items-center gap-2 text-sm text-fg-muted">
               <input type="checkbox" checked={biz} onChange={(e) => setBiz(e.target.checked)} className="accent-[var(--accent)] shrink-0" />
               <span>Ik bestel zakelijk (factuur op bedrijfsnaam)</span>
