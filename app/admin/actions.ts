@@ -89,6 +89,32 @@ export async function saveProduct(formData: FormData, productId?: string) {
   redirect('/admin/producten');
 }
 
+export async function updateCategoryInline(
+  id: string,
+  data: { name?: string; description?: string; cloudinary_image?: string | null },
+) {
+  const supabase = createServiceClient();
+  const payload: Record<string, unknown> = {};
+  if (data.name !== undefined) payload.name = data.name;
+  if (data.description !== undefined) payload.description = data.description;
+  if (data.cloudinary_image !== undefined) payload.cloudinary_image = data.cloudinary_image;
+  if (Object.keys(payload).length === 0) return;
+  await supabase.from('categories').update(payload).eq('id', id);
+  revalidatePath('/', 'layout');
+}
+
+export async function setProductImage(productId: string, publicId: string) {
+  const supabase = createServiceClient();
+  const { data: product } = await supabase
+    .from('products').select('cloudinary_images').eq('id', productId).maybeSingle();
+  const existing: string[] = Array.isArray(product?.cloudinary_images)
+    ? [...product!.cloudinary_images]
+    : [];
+  const next = existing.length ? [publicId, ...existing.slice(1)] : [publicId];
+  await supabase.from('products').update({ cloudinary_images: next }).eq('id', productId);
+  revalidatePath('/', 'layout');
+}
+
 export async function saveSettings(formData: FormData) {
   const supabase = createServiceClient();
   

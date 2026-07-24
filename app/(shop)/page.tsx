@@ -157,9 +157,9 @@ export default async function HomePage() {
             return (
               <Reveal key={c.id} delay={i * 90}
                 className={big ? 'lg:col-span-3' : 'lg:col-span-2'}>
-                <Link href={`/categorie/${c.slug}`}
+                <Link href={`/categorie/${c.slug}`} data-cms-cat={c.id}
                   className={`tile block ${big ? 'min-h-[320px]' : 'min-h-[240px]'}`}>
-                  <div className="t-bg"><img src={img} alt={c.name} loading="lazy" /></div>
+                  <div className="t-bg"><img data-cms-cat-img src={img} alt={c.name} loading="lazy" /></div>
                   <div className="t-scrim" />
                   <div className="t-sheen" />
                   {isExterieur && (
@@ -173,8 +173,8 @@ export default async function HomePage() {
                   <div className="t-go">→</div>
                   <div className="t-inner">
                     <div className="t-idx">{String(i + 1).padStart(2, '0')} — {c.name}</div>
-                    <h3>{c.name}</h3>
-                    <p className="t-desc">{c.description || CAT_DESC[c.slug] || 'Bekijk het assortiment.'}</p>
+                    <h3 data-cms-cat-field="name">{c.name}</h3>
+                    <p className="t-desc" data-cms-cat-field="desc">{c.description || CAT_DESC[c.slug] || 'Bekijk het assortiment.'}</p>
                   </div>
                 </Link>
               </Reveal>
@@ -219,7 +219,7 @@ export default async function HomePage() {
                 <div className="img-sheen overflow-hidden rounded-3xl border hairline shadow-2xl">
                   {towel.cloudinary_images?.length
                     ? <ImageGallery images={towel.cloudinary_images} productName={towel.name} />
-                    : <ParallaxImg className="h-full w-full"><img src="/images/drying_towel.jpg" alt={towel.name} className="h-full w-full object-cover" /></ParallaxImg>}
+                    : <ParallaxImg className="h-full w-full"><img data-cms-product={towel.id} src="/images/drying_towel.jpg" alt={towel.name} className="h-full w-full object-cover" /></ParallaxImg>}
                 </div>
               </Reveal>
               <div>
@@ -288,7 +288,8 @@ export default async function HomePage() {
             </div>
             <div className="img-sheen relative min-h-[340px] overflow-hidden bg-black">
               <img
-                src="/images/pakket-xxl.jpg"
+                {...(pakket ? { 'data-cms-product': pakket.id } : {})}
+                src={pakket?.cloudinary_images?.[0] ? cldUrl(pakket.cloudinary_images[0], { w: 800, h: 800 }) : '/images/pakket-xxl.jpg'}
                 alt="Showroom pakket XXL"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out hover:scale-105"
               />
