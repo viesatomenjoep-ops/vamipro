@@ -1,6 +1,7 @@
 import { createServiceClient } from '@/lib/supabase/server';
 import { isMock, MOCK_PRODUCTS } from '@/lib/mock-data';
 import Link from 'next/link';
+import DeleteProductButton from '@/components/admin/DeleteProductButton';
 
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
@@ -50,7 +51,12 @@ export default async function AdminProducts({ searchParams }: { searchParams: Pr
                   <td>{euro(p.price_cents)}</td>
                   <td className={p.stock <= 5 ? 'text-red-400' : 'text-fg-muted'}>{p.stock}</td>
                   <td className="text-fg-muted">{p.created_at ? new Date(p.created_at).toLocaleDateString('nl-NL') : '-'}</td>
-                  <td><Link href={`/admin/producten/${p.id}`} className="text-accent hover:underline">Bewerk</Link></td>
+                  <td>
+                    <div className="flex items-center gap-4 pr-4">
+                      <Link href={`/admin/producten/${p.id}`} className="text-accent hover:underline">Bewerk</Link>
+                      <DeleteProductButton id={p.id} name={p.name} />
+                    </div>
+                  </td>
                 </tr>
               ))}
               {!products?.length && (

@@ -25,6 +25,16 @@ export async function saveContent(formData: FormData) {
   revalidatePath('/', 'layout');
 }
 
+export async function deleteProduct(productId: string) {
+  const supabase = createServiceClient();
+  // Ontkoppel het product van bestaande bestellingen (die houden een snapshot van
+  // naam/prijs), zodat de bestelhistorie behouden blijft en het verwijderen niet faalt.
+  await supabase.from('order_items').update({ product_id: null }).eq('product_id', productId);
+  await supabase.from('products').delete().eq('id', productId);
+  revalidatePath('/admin/producten');
+  revalidatePath('/', 'layout');
+}
+
 export async function saveProduct(formData: FormData, productId?: string) {
   const supabase = createServiceClient();
   
