@@ -83,7 +83,8 @@ export default function ChatbotWidget() {
       {/* Chat Window */}
       <div
         className={`fixed z-50 flex flex-col overflow-hidden bg-panel shadow-2xl transition-all duration-300
-          bottom-24 right-4 h-[500px] max-h-[calc(100vh-8rem)] w-[calc(100vw-2rem)] sm:w-[350px] sm:bottom-6 sm:right-6 rounded-xl border hairline
+          inset-0 h-[100dvh] w-full rounded-none border-0
+          sm:inset-auto sm:bottom-6 sm:right-6 sm:h-[500px] sm:max-h-[calc(100vh-8rem)] sm:w-[350px] sm:rounded-xl sm:border sm:hairline
           ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'}`}
       >
         {/* Header */}
@@ -101,10 +102,10 @@ export default function ChatbotWidget() {
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            className="text-fg-faint hover:text-fg transition-colors p-1"
+            className="-mr-1 flex h-10 w-10 items-center justify-center rounded-full text-fg-faint transition-colors hover:bg-panel hover:text-fg"
             aria-label="Sluit chat"
           >
-            <X size={18} />
+            <X size={22} />
           </button>
         </div>
 
@@ -152,7 +153,7 @@ export default function ChatbotWidget() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Typ hier je vraag..."
-              className="flex-1 rounded-full border hairline bg-bg px-4 py-2 text-sm text-fg outline-none focus:border-accent transition-colors"
+              className="flex-1 rounded-full border hairline bg-bg px-4 py-2 text-base sm:text-sm text-fg outline-none focus:border-accent transition-colors"
               disabled={isLoading}
             />
             <button
