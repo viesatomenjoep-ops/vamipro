@@ -88,6 +88,13 @@ export const CONTENT_FIELDS: { group: string; items: { key: string; label: strin
     ],
   },
   {
+    group: 'Reviews-sectie',
+    items: [
+      { key: 'reviews_eyebrow', label: 'Klein label', def: 'Reviews' },
+      { key: 'reviews_title', label: 'Titel', def: 'Wat klanten over ons zeggen.' },
+    ],
+  },
+  {
     group: 'Aanbeveling / review',
     items: [
       { key: 'testimonial_quote', label: 'Quote', type: 'textarea', def: 'Mijn zwarte lak heeft nog nooit zo diep gestaan. De droogdoek alleen al is z’n geld dubbel waard.' },

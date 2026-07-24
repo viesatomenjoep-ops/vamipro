@@ -67,6 +67,12 @@ export default async function HomePage() {
   const { data: pakket } = await supabase.from('products').select('*')
     .eq('slug', 'volledig-pakket-xxl').maybeSingle();
 
+  // Klantreviews (zelf beheerd via de admin). Als de tabel nog niet bestaat, geeft
+  // Supabase { data: null, error } terug (het gooit geen error) — dan tonen we niets.
+  const { data: reviewsData } = await supabase.from('reviews')
+    .select('*').eq('is_active', true).order('sort_order');
+  const reviews: any[] = reviewsData ?? [];
+
   const t = await getContent();
 
   const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
@@ -342,6 +348,44 @@ export default async function HomePage() {
           </Reveal>
         </div>
       </section>
+
+      {/* ===== REVIEWS (zelf beheerd) ===== */}
+      {reviews.length > 0 && (
+        <section className="wrap pb-20 md:pb-32">
+          <div className="mb-10 md:mb-14">
+            <Reveal>
+              <p className="eyebrow" data-cms-key="reviews_eyebrow">{t('reviews_eyebrow', 'Reviews')}</p>
+              <h2 className="h-section mt-4" data-cms-key="reviews_title">{t('reviews_title', 'Wat klanten over ons zeggen.')}</h2>
+            </Reveal>
+          </div>
+          <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+            {reviews.map((r: any, i: number) => {
+              const rating = Math.min(5, Math.max(0, r.rating || 0));
+              return (
+                <Reveal key={r.id} delay={(i % 3) * 90}>
+                  <figure className="card card-hover flex h-full flex-col p-7">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="text-lg leading-none tracking-[0.15em] text-accent-bright" aria-label={`${rating} van 5 sterren`}>
+                        {'★'.repeat(rating)}<span className="text-line-strong">{'★'.repeat(5 - rating)}</span>
+                      </div>
+                      {r.source && (
+                        <span className="mono rounded-full border hairline px-2.5 py-1 text-[9px] uppercase tracking-[0.18em] text-fg-faint">
+                          via {r.source}
+                        </span>
+                      )}
+                    </div>
+                    <blockquote className="mt-5 flex-1 text-fg-muted">“{r.body}”</blockquote>
+                    <figcaption className="mt-6 border-t hairline pt-4 text-sm">
+                      <b className="font-semibold text-fg">{r.author}</b>
+                      {r.location && <span className="text-fg-faint"> · {r.location}</span>}
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* ===== QUOTE ===== */}
       <section className="border-b hairline bg-[color:var(--panel)]/40">

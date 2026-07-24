@@ -129,6 +129,40 @@ export async function saveSettings(formData: FormData) {
   revalidatePath('/', 'layout');
 }
 
+export async function saveReview(formData: FormData, reviewId?: string) {
+  const supabase = createServiceClient();
+
+  const rating = Math.min(5, Math.max(1, parseInt(formData.get('rating') as string || '5', 10) || 5));
+
+  const payload = {
+    author: formData.get('author') as string,
+    rating,
+    body: formData.get('body') as string,
+    source: (formData.get('source') as string) || 'Google',
+    location: (formData.get('location') as string) || null,
+    is_active: formData.get('is_active') === 'true',
+    sort_order: parseInt(formData.get('sort_order') as string || '0', 10) || 0,
+  };
+
+  if (reviewId) {
+    const { error } = await supabase.from('reviews').update(payload).eq('id', reviewId);
+    if (error) console.error('Error updating review:', error);
+  } else {
+    const { error } = await supabase.from('reviews').insert(payload);
+    if (error) console.error('Error inserting review:', error);
+  }
+
+  revalidatePath('/', 'layout');
+  redirect('/admin/reviews');
+}
+
+export async function deleteReview(reviewId: string) {
+  const supabase = createServiceClient();
+  await supabase.from('reviews').delete().eq('id', reviewId);
+  revalidatePath('/', 'layout');
+  revalidatePath('/admin/reviews');
+}
+
 export async function saveCategory(formData: FormData, categoryId?: string) {
   const supabase = createServiceClient();
   
