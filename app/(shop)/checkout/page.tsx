@@ -11,7 +11,7 @@ type ShopCfg = { shippingCents: number; shippingCentsBe: number; freeShipCents: 
 const DEFAULT_CFG: ShopCfg = { shippingCents: 695, shippingCentsBe: 850, freeShipCents: 7000, discountCode: 'VAMIPRO10', discountPercent: 10, oneCentCode: '' };
 
 export default function CheckoutPage() {
-  const { items, subtotalCents } = useCart();
+  const { items, subtotalCents, discountCode } = useCart();
   const [cfg, setCfg] = useState<ShopCfg>(DEFAULT_CFG);
 
   useEffect(() => {
@@ -76,10 +76,10 @@ export default function CheckoutPage() {
   }, [f.postalCode, f.houseNumber]);
 
   const sub = subtotalCents();
-  const appliedCode = (useCart().discountCode ?? '').toUpperCase();
+  const appliedCode = (discountCode ?? '').toUpperCase();
   const isOneCent = !!cfg.oneCentCode && appliedCode === cfg.oneCentCode;
   const shipping = isOneCent ? 0 : (sub >= cfg.freeShipCents ? 0 : (f.country === 'BE' ? cfg.shippingCentsBe : cfg.shippingCents));
-  const disc = isOneCent ? Math.max(0, sub - 1) : (useCart().discountCode ? Math.round(sub * cfg.discountPercent / 100) : 0);
+  const disc = isOneCent ? Math.max(0, sub - 1) : (discountCode ? Math.round(sub * cfg.discountPercent / 100) : 0);
   const total = isOneCent ? 1 : (sub - disc + shipping);
 
   async function pay() {
@@ -96,7 +96,7 @@ export default function CheckoutPage() {
           },
           billing: biz ? { company: f.company, vatNumber: f.vatNumber } : undefined,
           paymentMethod: method, shippingMethodId: 'standaard',
-          discountCode: useCart.getState().discountCode,
+          discountCode: discountCode,
         }),
       });
       const data = await res.json();
