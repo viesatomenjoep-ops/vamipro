@@ -2,87 +2,124 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 export default function MobileMenu({ categories }: { categories: any[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  // Close menu when route changes
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
+  // Sluit bij navigatie
+  useEffect(() => { setIsOpen(false); }, [pathname]);
 
-  // Prevent scroll when open
+  // Geen scroll op de achtergrond wanneer open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
+  // Hoofditems in volgorde (voor de trapsgewijze animatie)
+  const primary: { href: string; label: string; big?: boolean }[] = [
+    { href: '/producten', label: 'Alle producten', big: true },
+    ...(categories ?? []).map((c: any) => ({ href: `/categorie/${c.slug}`, label: c.name })),
+    { href: '/contact', label: 'Contact', big: true },
+  ];
+  const info = [
+    { href: '/verzending', label: 'Verzending' },
+    { href: '/retourneren', label: 'Retourneren' },
+    { href: '/over-ons', label: 'Over ons' },
+    { href: '/voorwaarden', label: 'Voorwaarden' },
+  ];
+
+  // Klasse voor het trapsgewijs in-schuiven van een item
+  const item = (i: number) =>
+    `transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${
+      isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+    }`;
+
   return (
     <div className="lg:hidden">
-      <button 
+      <button
         onClick={() => setIsOpen(true)}
         className="flex h-14 w-14 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10"
         aria-label="Menu openen"
       >
-        <Menu size={36} strokeWidth={1.5} />
+        <Menu size={34} strokeWidth={1.5} />
       </button>
 
-      {/* Backdrop (niet meer echt nodig als het full-screen is, maar we houden de animatie) */}
-      <div 
-        className={`fixed inset-0 z-[100] bg-black transition-opacity duration-300 ${
-          isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
-        onClick={() => setIsOpen(false)}
-      />
-
-      {/* Slide-in / Fade-in full screen panel */}
-      <div 
-        className={`fixed inset-0 z-[101] w-screen h-[100dvh] bg-black p-6 sm:p-8 transition-all duration-300 flex flex-col ${
-          isOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 translate-y-4 invisible'
-        }`}
+      {/* Overlay-paneel */}
+      <div
+        className={`fixed inset-0 z-[120] ${isOpen ? 'visible' : 'invisible'}`}
+        aria-hidden={!isOpen}
       >
-        <div className="flex items-center justify-between mb-8 mt-2">
-          <img src="/images/logo.png" alt="VaMiPro Logo" className="h-12 w-auto" />
-          <button 
-            onClick={() => setIsOpen(false)}
-            className="flex h-14 w-14 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white -mr-2"
-            aria-label="Menu sluiten"
-          >
-            <X size={36} strokeWidth={1.5} />
-          </button>
+        {/* Achtergrond die invaagt */}
+        <div
+          className={`absolute inset-0 bg-black transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
+          onClick={() => setIsOpen(false)}
+        />
+        {/* Subtiele accent-gloed bovenaan */}
+        <div
+          className={`pointer-events-none absolute inset-x-0 top-0 h-1/2 transition-opacity duration-700 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
+          style={{ background: 'radial-gradient(120% 80% at 100% 0%, var(--accent-glow, rgba(59,107,255,.18)), transparent 60%)' }}
+        />
+
+        <div className="relative flex h-[100dvh] flex-col p-6 sm:p-8">
+          {/* Kop */}
+          <div className="flex items-center justify-between">
+            <img src="/images/logo.png" alt="VaMiPro" className="h-11 w-auto" />
+            <button
+              onClick={() => setIsOpen(false)}
+              className="flex h-14 w-14 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white -mr-2"
+              aria-label="Menu sluiten"
+            >
+              <X size={32} strokeWidth={1.5} />
+            </button>
+          </div>
+
+          {/* Navigatie */}
+          <nav className="mt-8 flex flex-1 flex-col overflow-y-auto">
+            <p
+              className={`mb-4 text-xs uppercase tracking-[0.28em] text-white/40 ${item(0)}`}
+              style={{ transitionDelay: `${isOpen ? 60 : 0}ms` }}
+            >
+              Menu
+            </p>
+
+            <div className="flex flex-col divide-y divide-white/10 border-y border-white/10">
+              {primary.map((it, i) => (
+                <Link
+                  key={it.href + i}
+                  prefetch
+                  href={it.href}
+                  onClick={() => setIsOpen(false)}
+                  className={`group flex items-center justify-between py-4 ${item(i)} ${it.big ? 'text-3xl font-semibold text-white' : 'text-2xl text-white/85'}`}
+                  style={{ transitionDelay: `${isOpen ? 110 + i * 45 : 0}ms` }}
+                >
+                  <span className="transition-colors group-hover:text-accent">{it.label}</span>
+                  <ArrowRight size={20} className="text-white/25 transition-all group-hover:translate-x-1 group-hover:text-accent" />
+                </Link>
+              ))}
+            </div>
+
+            {/* Info onderaan */}
+            <div className="mt-auto pt-8">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm text-white/50">
+                {info.map((it, i) => (
+                  <Link
+                    key={it.href}
+                    prefetch
+                    href={it.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`hover:text-white ${item(i)}`}
+                    style={{ transitionDelay: `${isOpen ? 110 + (primary.length + i) * 45 : 0}ms` }}
+                  >
+                    {it.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </nav>
         </div>
-
-        <nav className="flex flex-col gap-8 text-2xl font-medium overflow-y-auto pb-8 pt-4 px-2">
-          <Link prefetch={true} href="/producten" className="text-white hover:text-accent transition-colors">Shop Alle Producten</Link>
-          
-          <div className="flex flex-col gap-6">
-            <p className="text-sm uppercase tracking-[0.2em] text-white/50 mb-2">Categorieën</p>
-            {categories?.map(c => (
-              <Link prefetch={true} key={c.id} href={`/categorie/${c.slug}`} className="text-white hover:text-accent transition-colors">
-                {c.name}
-              </Link>
-            ))}
-          </div>
-
-          <div className="h-px w-full bg-white/10 my-2" />
-
-          {/* Service & Info section pushed further down */}
-          <div className="flex flex-col gap-6 mt-16 sm:mt-24">
-            <p className="text-sm uppercase tracking-[0.2em] text-white/50 mb-2">Service & Info</p>
-            <Link prefetch={true} href="/verzending" className="text-white hover:text-accent transition-colors">Verzending</Link>
-            <Link prefetch={true} href="/retourneren" className="text-white hover:text-accent transition-colors">Retourneren</Link>
-            <Link prefetch={true} href="/voorwaarden" className="text-white hover:text-accent transition-colors">Algemene voorwaarden</Link>
-            <Link prefetch={true} href="/over-ons" className="text-white hover:text-accent transition-colors">Over ons</Link>
-            <Link prefetch={true} href="/contact" className="text-white hover:text-accent transition-colors">Contact</Link>
-          </div>
-        </nav>
       </div>
     </div>
   );
