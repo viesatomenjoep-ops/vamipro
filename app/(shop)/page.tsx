@@ -28,8 +28,8 @@ export const revalidate = 60;
 
 // Echte foto's per categorie-slug (fallback: hero)
 const CAT_IMAGES: Record<string, string> = {
-  'exterieur': '/images/audi_q3_detailing.png',
-  'exterieur-wassen': '/images/audi_q3_detailing.png',
+  'exterieur': '/images/hero-audi.jpg',
+  'exterieur-wassen': '/images/hero-audi.jpg',
   'droogdoeken': '/images/drying_towel.jpg',
   'washandschoenen': '/images/wash_mitt_chenille.jpg',
   'interieur': 'https://res.cloudinary.com/dxcohla4k/image/upload/v1782070137/vamipro/products/oxbmsyomx1wa8ui9hlib.jpg',
