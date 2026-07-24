@@ -113,7 +113,7 @@ export default async function HomePage() {
         <div className="fade-up relative z-10 border-t border-white/10 bg-black/35 backdrop-blur-md" style={{ '--d': '2550ms' } as React.CSSProperties}>
           <div className="wrap flex flex-wrap items-center justify-between gap-x-10 gap-y-4 py-5">
             {[
-              { v: 1200, suf: ' GSM', label: t('stat_1_label', 'Dikste droogdoek') },
+              { v: 1600, suf: ' GSM', label: t('stat_1_label', 'Dikste droogdoek') },
               { v: 70, pre: '€ ', suf: '+', label: t('stat_2_label', 'Gratis verzending') },
               { v: 14, label: t('stat_3_label', 'Dagen bedenktijd') },
               { v: 16, suf: ':00', label: t('stat_4_label', 'Besteld = vandaag verzonden') },
