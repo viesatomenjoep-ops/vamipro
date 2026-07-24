@@ -77,6 +77,15 @@ export default async function HomePage() {
 
   const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
+  // Rendert tekst waarbij elke "&" in een net, normaal lettertype komt te staan
+  // (de display-font maakt er een wat vreemde ampersand van).
+  const amp = (text: string) =>
+    text.split('&').flatMap((part, i) =>
+      i === 0
+        ? [part]
+        : [<span key={i} className="amp">&amp;</span>, ' ' + part.replace(/^ /, '')]
+    );
+
   return (
     <>
       <CmsBridge />
@@ -101,9 +110,9 @@ export default async function HomePage() {
             <span className="eyebrow !text-accent-bright" data-cms-key="hero_eyebrow">{t('hero_eyebrow', 'Car detailing · NL & BE')}</span>
           </div>
           <h1 className="h-hero mt-6 text-white drop-shadow-lg">
-            <span className="mask-line"><span data-cms-key="hero_title_1" style={{ '--d': '1600ms' } as React.CSSProperties}>{t('hero_title_1', 'Ultieme glans')}</span></span>
-            <span className="mask-line"><span data-cms-key="hero_title_2" style={{ '--d': '1710ms' } as React.CSSProperties}>{t('hero_title_2', '& bescherming voor')}</span></span>
-            <span className="mask-line"><span className="gloss-text" data-cms-key="hero_title_3" style={{ '--d': '1820ms' } as React.CSSProperties}>{t('hero_title_3', 'de échte liefhebber.')}</span></span>
+            <span className="mask-line"><span data-cms-key="hero_title_1" style={{ '--d': '1600ms' } as React.CSSProperties}>{amp(t('hero_title_1', 'Ultieme glans'))}</span></span>
+            <span className="mask-line"><span data-cms-key="hero_title_2" style={{ '--d': '1710ms' } as React.CSSProperties}>{amp(t('hero_title_2', '& bescherming voor'))}</span></span>
+            <span className="mask-line"><span className="gloss-text" data-cms-key="hero_title_3" style={{ '--d': '1820ms' } as React.CSSProperties}>{amp(t('hero_title_3', 'de échte liefhebber.'))}</span></span>
           </h1>
           <p className="fade-up mt-7 max-w-xl text-lg text-zinc-300" data-cms-key="hero_subtitle" style={{ '--d': '2050ms' } as React.CSSProperties}>
             {t('hero_subtitle', 'Professionele detailingproducten — van veilig wassen tot showroomglans. Ontwikkeld voor liefhebbers en pro’s.')}

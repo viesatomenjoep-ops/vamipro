@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, Search, X } from 'lucide-react';
-import { saveContent, updateCategoryInline, setProductImages, setProductPrice } from '@/app/admin/actions';
+import { saveContent, updateCategoryInline, setProductImages, setProductPrice, setProductName } from '@/app/admin/actions';
 import { CONTENT_FIELDS } from '@/lib/content-fields';
 import { cldUrl } from '@/lib/cloudinary';
 import CloudinaryUpload from '@/components/admin/CloudinaryUpload';
@@ -136,6 +136,12 @@ export default function PreviewEditor({
     products.forEach((p) => { init[p.id] = centsToEuroInput(p.price_cents ?? 0); });
     return init;
   });
+  // Naam per product als bewerkbare tekst.
+  const [prodNames, setProdNames] = useState<Record<string, string>>(() => {
+    const init: Record<string, string> = {};
+    products.forEach((p) => { init[p.id] = p.name ?? ''; });
+    return init;
+  });
   const [prodSaved, setProdSaved] = useState<Record<string, boolean>>({});
 
   const heroUrl = (publicId: string) => (publicId ? cldUrl(publicId, { w: 1920, h: 1080 }) : '');
@@ -230,6 +236,17 @@ export default function PreviewEditor({
 
   const setProdPriceInput = (id: string, value: string) =>
     setProdPrices((prev) => ({ ...prev, [id]: value }));
+
+  const setProdNameInput = (id: string, value: string) =>
+    setProdNames((prev) => ({ ...prev, [id]: value }));
+
+  // Naam opslaan bij blur (lege naam wordt genegeerd door de server-actie).
+  const commitProdName = async (id: string) => {
+    const name = (prodNames[id] ?? '').trim();
+    if (!name) return;
+    await setProductName(id, name);
+    flashProdSaved(id);
+  };
 
   // Prijs opslaan bij blur: parse euro's → cents, live label bijwerken.
   const commitProdPrice = async (id: string) => {
@@ -524,9 +541,21 @@ export default function PreviewEditor({
               <div className="space-y-4 border-t hairline px-5 py-4">
                 {prodList.map((p) => (
                   <div key={p.id} id={'cms-product-' + p.id} className="rounded-lg border hairline p-4">
-                    <div className="mb-2 flex items-center justify-between">
-                      <label className="block text-sm font-medium">{p.name}</label>
+                    <div className="mb-3 flex items-center justify-between">
+                      <span className="text-xs font-medium uppercase tracking-wide text-fg-faint">Product</span>
                       {prodSaved[p.id] && <span className="text-xs text-accent">opgeslagen ✓</span>}
+                    </div>
+
+                    <div className="mb-4">
+                      <label className="mb-1 block text-sm font-medium">Naam</label>
+                      <input
+                        value={prodNames[p.id] ?? ''}
+                        onChange={(e) => setProdNameInput(p.id, e.target.value)}
+                        onBlur={() => commitProdName(p.id)}
+                        onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); }}
+                        className="input w-full"
+                      />
+                      <p className="mt-1 text-xs text-fg-faint">Opslaan gebeurt zodra je het veld verlaat.</p>
                     </div>
 
                     <div className="mb-4">

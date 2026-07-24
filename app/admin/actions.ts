@@ -129,6 +129,14 @@ export async function setProductPrice(productId: string, priceCents: number) {
   revalidatePath('/', 'layout');
 }
 
+export async function setProductName(productId: string, name: string) {
+  const supabase = createServiceClient();
+  const clean = (name ?? '').trim();
+  if (!clean) return; // lege naam negeren
+  await supabase.from('products').update({ name: clean }).eq('id', productId);
+  revalidatePath('/', 'layout');
+}
+
 export async function saveSettings(formData: FormData) {
   const supabase = createServiceClient();
   

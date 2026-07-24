@@ -1,13 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 export default function MobileMenu({ categories }: { categories: any[] }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+
+  // Portal pas op de client renderen (document bestaat niet tijdens SSR)
+  useEffect(() => { setMounted(true); }, []);
 
   // Sluit bij navigatie
   useEffect(() => { setIsOpen(false); }, [pathname]);
@@ -47,12 +52,15 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
         <Menu size={28} strokeWidth={1.5} />
       </button>
 
-      {/* Overlay-paneel — direct volledig zwarte achtergrond bij openen */}
-      <div
-        className={`fixed inset-0 z-[120] bg-black ${isOpen ? 'visible' : 'invisible pointer-events-none'}`}
-        aria-hidden={!isOpen}
-      >
-        <div className="relative flex h-[100dvh] flex-col px-5 pb-6 pt-4">
+      {/* Overlay-paneel — via portal in <body> zodat het niet in de header-context
+          (backdrop-blur maakt een containing block) blijft hangen. Zo vult het
+          hele scherm met een volledig zwarte achtergrond. */}
+      {mounted && createPortal(
+        <div
+          className={`fixed inset-0 z-[120] bg-black ${isOpen ? 'visible' : 'invisible pointer-events-none'}`}
+          aria-hidden={!isOpen}
+        >
+          <div className="relative flex h-[100dvh] flex-col px-5 pb-6 pt-4">
           {/* Kop */}
           <div className="flex items-center justify-between">
             <img src="/images/logo.png" alt="VaMiPro" className="h-8 w-auto" />
@@ -108,8 +116,10 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
               </div>
             </div>
           </nav>
-        </div>
-      </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   );
 }

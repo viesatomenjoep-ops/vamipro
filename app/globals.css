@@ -92,6 +92,13 @@ body {
 
 /* ---------- Typography ---------- */
 .font-display { font-family: var(--font-display); }
+/* Nette, normale ampersand — de display-font maakt er anders een vreemde van. */
+.amp {
+  font-family: Georgia, 'Times New Roman', 'Iowan Old Style', serif;
+  font-weight: 400;
+  font-style: normal;
+  padding: 0 0.03em;
+}
 .h-hero {
   font-family: var(--font-display);
   font-weight: 600;
