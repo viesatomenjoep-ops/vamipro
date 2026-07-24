@@ -3,7 +3,7 @@ import { useCart } from '@/lib/cart-store';
 import { cldUrl } from '@/lib/cloudinary';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Minus, Plus, X, ArrowLeft } from 'lucide-react';
+import { Minus, Plus, X, ArrowLeft, Check } from 'lucide-react';
 
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
@@ -113,29 +113,46 @@ export default function CartPage() {
           )}
 
           <div className="mt-5 border-t hairline pt-4">
-            {!discountCode && (
-              <div className="mb-4 rounded-md bg-accent/10 p-3 text-center text-sm border border-accent/20">
-                <p className="text-fg-muted mb-1.5">Profiteer direct van {cfg.discountPercent}% korting!</p>
-                <div className="flex items-center justify-center gap-2">
-                  <span className="select-all bg-bg border hairline px-3 py-1 rounded font-display tracking-widest text-accent font-semibold">{cfg.discountCode}</span>
+            {discountCode ? (
+              <div className="mb-4 flex items-center justify-between gap-3 rounded-md border border-accent/30 bg-accent/10 p-3">
+                <div className="flex min-w-0 items-center gap-2 text-sm">
+                  <Check size={16} className="shrink-0 text-accent" />
+                  <span className="text-fg-muted">Code toegepast:</span>
+                  <span className="truncate font-display font-semibold uppercase tracking-widest text-accent">{discountCode}</span>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => setDiscountCode(null)}
+                  className="shrink-0 text-xs font-medium text-fg-muted transition-colors hover:text-red-400"
+                >
+                  Verwijder
+                </button>
               </div>
+            ) : (
+              <>
+                <div className="mb-4 rounded-md bg-accent/10 p-3 text-center text-sm border border-accent/20">
+                  <p className="text-fg-muted mb-1.5">Profiteer direct van {cfg.discountPercent}% korting!</p>
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="select-all bg-bg border hairline px-3 py-1 rounded font-display tracking-widest text-accent font-semibold">{cfg.discountCode}</span>
+                  </div>
+                </div>
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  const code = (e.currentTarget.elements.namedItem('code') as HTMLInputElement).value;
+                  const c = code.toUpperCase();
+                  if (cfg.oneCentCode && c === cfg.oneCentCode) {
+                    setDiscountCode(cfg.oneCentCode);
+                  } else if (c === 'START10' || c === cfg.discountCode) {
+                    setDiscountCode(cfg.discountCode);
+                  } else {
+                    alert('Ongeldige of verlopen kortingscode');
+                  }
+                }} className="flex gap-2 mb-4">
+                  <input name="code" type="text" placeholder="Kortingscode" className="input flex-1 text-sm uppercase text-center placeholder:normal-case placeholder:text-center" />
+                  <button type="submit" className="btn bg-panel-2 hover:bg-raise text-sm">Toepassen</button>
+                </form>
+              </>
             )}
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              const code = (e.currentTarget.elements.namedItem('code') as HTMLInputElement).value;
-              const c = code.toUpperCase();
-              if (cfg.oneCentCode && c === cfg.oneCentCode) {
-                setDiscountCode(cfg.oneCentCode);
-              } else if (c === 'START10' || c === cfg.discountCode) {
-                setDiscountCode(cfg.discountCode);
-              } else {
-                alert('Ongeldige of verlopen kortingscode');
-              }
-            }} className="flex gap-2 mb-4">
-              <input name="code" type="text" placeholder="Kortingscode" className="input flex-1 text-sm uppercase text-center placeholder:normal-case placeholder:text-center" />
-              <button type="submit" className="btn bg-panel-2 hover:bg-raise text-sm">Toepassen</button>
-            </form>
             <div className="flex justify-between">
               <span className="font-display font-semibold">Totaal</span>
               <span className="font-display text-lg font-semibold">{euro(total)}</span>
