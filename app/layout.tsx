@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
 import { Archivo, Space_Mono } from 'next/font/google';
 import './globals.css';
+import { SITE_URL as siteUrl } from '@/lib/site-url';
 
 const display = Archivo({ subsets: ['latin'], axes: ['wdth'], variable: '--font-display-next' });
 const mono = Space_Mono({ subsets: ['latin'], weight: ['400','700'], variable: '--font-mono-next' });
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

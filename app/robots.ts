@@ -1,8 +1,7 @@
 import { MetadataRoute } from 'next';
+import { SITE_URL as baseUrl } from '@/lib/site-url';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
-
   return {
     rules: {
       userAgent: '*',

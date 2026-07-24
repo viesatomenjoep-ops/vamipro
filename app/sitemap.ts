@@ -1,8 +1,8 @@
 import { MetadataRoute } from 'next';
 import { createServiceClient } from '@/lib/supabase/server';
+import { SITE_URL as baseUrl } from '@/lib/site-url';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
   const supabase = createServiceClient();
 
   const { data: products } = await supabase.from('products').select('slug, updated_at').eq('is_active', true);
