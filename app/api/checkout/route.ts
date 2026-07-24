@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { mollie } from '@/lib/mollie';
 import { createServiceClient } from '@/lib/supabase/server';
+import { getShopConfig } from '@/lib/shop-config';
 import { z } from 'zod';
 
 const schema = z.object({
@@ -17,16 +18,11 @@ const schema = z.object({
   discountCode: z.string().nullish(),
 });
 
-// Simpele verzendkosten-logica (pas aan / koppel aan Sendcloud-tarieven)
-function shippingCost(subtotalCents: number, _country: 'NL' | 'BE') {
-  if (subtotalCents >= 7000) return 0;       // gratis vanaf 70 euro
-  return 695;                                // vast tarief 6,95 (NL en BE)
-}
-
 export async function POST(req: NextRequest) {
   try {
     const body = schema.parse(await req.json());
     const supabase = createServiceClient();
+    const cfg = await getShopConfig();
 
     const ids = body.items.map((i) => i.productId);
     const { data: products } = await supabase
@@ -43,11 +39,11 @@ export async function POST(req: NextRequest) {
       return { product: p, quantity: i.quantity, line };
     });
 
-    const shippingCents = shippingCost(subtotal, body.shipping.country);
-    
+    const shippingCents = subtotal >= cfg.freeShipCents ? 0 : cfg.shippingCents;
+
     let discountCents = 0;
-    if (body.discountCode === 'VAMIPRO10' || body.discountCode === 'START10') {
-      discountCents = Math.round(subtotal * 0.10);
+    if ((body.discountCode ?? '').toUpperCase() === cfg.discountCode) {
+      discountCents = Math.round(subtotal * cfg.discountPercent / 100);
     }
     
     const total = subtotal - discountCents + shippingCents;

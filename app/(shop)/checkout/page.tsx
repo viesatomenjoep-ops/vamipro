@@ -1,14 +1,30 @@
 'use client';
 import { useCart } from '@/lib/cart-store';
 import { cldUrl } from '@/lib/cloudinary';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Lock, ShieldCheck } from 'lucide-react';
 
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
+type ShopCfg = { shippingCents: number; freeShipCents: number; discountCode: string; discountPercent: number };
+const DEFAULT_CFG: ShopCfg = { shippingCents: 695, freeShipCents: 7000, discountCode: 'VAMIPRO10', discountPercent: 10 };
+
 export default function CheckoutPage() {
   const { items, subtotalCents } = useCart();
+  const [cfg, setCfg] = useState<ShopCfg>(DEFAULT_CFG);
+
+  useEffect(() => {
+    fetch('/api/shop-config')
+      .then((r) => r.json())
+      .then((d) => setCfg({
+        shippingCents: d.shippingCents ?? DEFAULT_CFG.shippingCents,
+        freeShipCents: d.freeShipCents ?? DEFAULT_CFG.freeShipCents,
+        discountCode: (d.discountCode ?? DEFAULT_CFG.discountCode).toUpperCase(),
+        discountPercent: d.discountPercent ?? DEFAULT_CFG.discountPercent,
+      }))
+      .catch(() => {});
+  }, []);
   const [f, setF] = useState({
     firstName: '', lastName: '', address: '', houseNumber: '', addition: '',
     postalCode: '', city: '', country: 'NL', email: '', phone: '', company: '', vatNumber: '',
@@ -23,8 +39,8 @@ export default function CheckoutPage() {
   };
 
   const sub = subtotalCents();
-  const disc = useCart().discountCode === 'VAMIPRO10' ? Math.round(sub * 0.1) : 0;
-  const shipping = (sub - disc) >= 7000 ? 0 : 695;
+  const disc = useCart().discountCode ? Math.round(sub * cfg.discountPercent / 100) : 0;
+  const shipping = sub >= cfg.freeShipCents ? 0 : cfg.shippingCents;
   const total = sub - disc + shipping;
 
   async function pay() {
@@ -149,7 +165,7 @@ export default function CheckoutPage() {
             <div className="mt-6 space-y-2 border-t hairline pt-4 text-sm w-full">
               <div className="flex justify-between items-center text-fg-muted w-full"><span className="truncate pr-2">Subtotaal</span><span className="text-fg shrink-0">{euro(sub)}</span></div>
               {disc > 0 && (
-                <div className="flex justify-between items-center text-accent font-medium w-full"><span className="truncate pr-2">Korting (10%)</span><span className="shrink-0">-{euro(disc)}</span></div>
+                <div className="flex justify-between items-center text-accent font-medium w-full"><span className="truncate pr-2">Korting ({cfg.discountPercent}%)</span><span className="shrink-0">-{euro(disc)}</span></div>
               )}
               <div className="flex justify-between items-center text-fg-muted w-full"><span className="truncate pr-2">Verzending</span><span className="text-fg shrink-0">{shipping === 0 ? 'Gratis' : euro(shipping)}</span></div>
             </div>
