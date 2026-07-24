@@ -8,7 +8,6 @@ import Preloader from '@/components/shop/Preloader';
 import FoamLayer from '@/components/shop/FoamLayer';
 import Tilt from '@/components/shop/Tilt';
 import Magnetic from '@/components/shop/Magnetic';
-import Cursor from '@/components/shop/Cursor';
 import ParallaxImg from '@/components/shop/ParallaxImg';
 import { cldUrl } from '@/lib/cloudinary';
 import { getContent } from '@/lib/content';
@@ -92,7 +91,6 @@ export default async function HomePage() {
     <>
       <CmsBridge />
       <Preloader />
-      <Cursor />
 
       {/* ===== HERO ===== */}
       <section className="relative -mt-[104px] flex min-h-[100svh] flex-col justify-end overflow-hidden bg-black pt-[104px] md:-mt-[108px]">
