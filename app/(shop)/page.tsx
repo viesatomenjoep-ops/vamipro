@@ -74,7 +74,7 @@ export default async function HomePage() {
       {/* ===== HERO ===== */}
       <section className="relative -mt-[104px] flex min-h-[100svh] flex-col justify-end overflow-hidden bg-black pt-[104px] md:-mt-[108px]">
         <div className="absolute inset-0 overflow-hidden">
-          <ParallaxImg strength={4} className="h-[104%]">
+          <ParallaxImg className="h-full">
             <img src="/images/hero-audi.jpg" alt="Audi gedetaild met VamiPro producten"
               className="h-full w-full object-cover object-[center_38%] opacity-85" />
           </ParallaxImg>
@@ -212,7 +212,7 @@ export default async function HomePage() {
                 <div className="img-sheen overflow-hidden rounded-3xl border hairline shadow-2xl">
                   {towel.cloudinary_images?.length
                     ? <ImageGallery images={towel.cloudinary_images} productName={towel.name} />
-                    : <ParallaxImg strength={5}><img src="/images/drying_towel.jpg" alt={towel.name} className="h-full w-full object-cover" /></ParallaxImg>}
+                    : <ParallaxImg className="h-full w-full"><img src="/images/drying_towel.jpg" alt={towel.name} className="h-full w-full object-cover" /></ParallaxImg>}
                 </div>
               </Reveal>
               <div>
@@ -322,7 +322,7 @@ export default async function HomePage() {
       {/* ===== BANNER ===== */}
       <section className="relative flex min-h-[64vh] items-end overflow-hidden border-t hairline">
         <div className="absolute inset-0">
-          <ParallaxImg strength={9} className="h-[118%]">
+          <ParallaxImg className="h-full">
             <img src="/images/washing_tools_detailing.png" alt="Professionele detailing tools" className="h-full w-full object-cover" />
           </ParallaxImg>
           <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/25 to-black/40" />
