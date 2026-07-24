@@ -94,10 +94,10 @@ body {
 .font-display { font-family: var(--font-display); }
 /* Nette, normale ampersand — de display-font maakt er anders een vreemde van. */
 .amp {
-  font-family: Georgia, 'Times New Roman', 'Iowan Old Style', serif;
-  font-weight: 400;
-  font-style: normal;
-  padding: 0 0.03em;
+  font-family: 'Baskerville', 'Palatino Linotype', 'Book Antiqua', 'Iowan Old Style', Georgia, serif;
+  font-weight: 500;
+  font-style: italic;
+  padding: 0 0.06em;
 }
 .h-hero {
   font-family: var(--font-display);

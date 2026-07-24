@@ -12,6 +12,7 @@ import ParallaxImg from '@/components/shop/ParallaxImg';
 import { cldUrl } from '@/lib/cloudinary';
 import { getContent } from '@/lib/content';
 import { getCustomSections } from '@/lib/custom-sections';
+import { FAQ_DEFAULTS } from '@/lib/content-fields';
 import GiantCounter from '@/components/shop/GiantCounter';
 import LiveSearchBar from '@/components/shop/LiveSearchBar';
 import ImageGallery from '@/components/shop/ImageGallery';
@@ -417,6 +418,32 @@ export default async function HomePage() {
               <span><b className="block text-sm" data-cms-key="testimonial_author">{t('testimonial_author', 'Mark V.')}</b><span className="text-xs text-fg-faint" data-cms-key="testimonial_detail">{t('testimonial_detail', 'BMW M4 · Antwerpen')}</span></span>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* ===== FAQ (zelfde stijl als de rest van de homepage) ===== */}
+      <section className="wrap py-20 md:py-32">
+        <div className="mb-10 md:mb-14">
+          <Reveal><p className="eyebrow" data-cms-key="home_faq_eyebrow">{t('home_faq_eyebrow', 'Hulp')}</p></Reveal>
+          <Reveal delay={100} variant="blur">
+            <h2 className="h-section mt-3" data-cms-key="home_faq_title">{t('home_faq_title', 'Veelgestelde vragen')}</h2>
+          </Reveal>
+        </div>
+        <Reveal delay={160}>
+          <div className="mx-auto max-w-3xl divide-y divide-[var(--line)] overflow-hidden rounded-xl border hairline">
+            {FAQ_DEFAULTS.slice(0, 6).map((d, i) => (
+              <details key={i} className="group bg-panel p-5 open:bg-panel-2">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display font-medium">
+                  <span data-cms-key={`faq_${i + 1}_q`}>{t(`faq_${i + 1}_q`, d.q)}</span>
+                  <span className="shrink-0 text-accent transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-fg-muted" data-cms-key={`faq_${i + 1}_a`}>{t(`faq_${i + 1}_a`, d.a)}</p>
+              </details>
+            ))}
+          </div>
+        </Reveal>
+        <div className="mt-8 text-center">
+          <Link href="/faq" className="btn btn-ghost">Bekijk alle vragen <ArrowRight size={16} /></Link>
         </div>
       </section>
 

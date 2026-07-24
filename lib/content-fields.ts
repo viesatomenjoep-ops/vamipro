@@ -150,6 +150,13 @@ export const CONTENT_FIELDS: { group: string; items: { key: string; label: strin
     ],
   },
   {
+    group: 'FAQ-sectie op homepage',
+    items: [
+      { key: 'home_faq_eyebrow', label: 'Klein label', def: 'Hulp' },
+      { key: 'home_faq_title', label: 'Titel', def: 'Veelgestelde vragen' },
+    ],
+  },
+  {
     group: 'SEO-tekst (onderaan homepage)',
     items: [
       { key: 'seo_block_title', label: 'Titel', def: 'Professionele autopoetsproducten & car detailing voor NL & BE' },
