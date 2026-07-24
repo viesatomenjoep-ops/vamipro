@@ -39,15 +39,25 @@ export async function POST(req: NextRequest) {
       return { product: p, quantity: i.quantity, line };
     });
 
+    const codeUpper = (body.discountCode ?? '').toUpperCase();
+    const isOneCent = !!cfg.oneCentCode && codeUpper === cfg.oneCentCode;
+
     const baseShipping = body.shipping.country === 'BE' ? cfg.shippingCentsBe : cfg.shippingCents;
-    const shippingCents = subtotal >= cfg.freeShipCents ? 0 : baseShipping;
+    let shippingCents = subtotal >= cfg.freeShipCents ? 0 : baseShipping;
 
     let discountCents = 0;
-    if ((body.discountCode ?? '').toUpperCase() === cfg.discountCode) {
+    if (codeUpper === cfg.discountCode) {
       discountCents = Math.round(subtotal * cfg.discountPercent / 100);
     }
-    
-    const total = subtotal - discountCents + shippingCents;
+
+    let total = subtotal - discountCents + shippingCents;
+
+    // Testcode: gratis verzending en totaal €0,01 (Mollie accepteert geen €0).
+    if (isOneCent) {
+      shippingCents = 0;
+      discountCents = Math.max(0, subtotal - 1);
+      total = 1;
+    }
 
     const { data: orderNum } = await supabase.rpc('next_counter', { counter_key: 'order' });
     const orderNumber = `VP-2026-${String(orderNum).padStart(5, '0')}`;

@@ -7,8 +7,8 @@ import { Lock, ShieldCheck } from 'lucide-react';
 
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
-type ShopCfg = { shippingCents: number; shippingCentsBe: number; freeShipCents: number; discountCode: string; discountPercent: number };
-const DEFAULT_CFG: ShopCfg = { shippingCents: 695, shippingCentsBe: 850, freeShipCents: 7000, discountCode: 'VAMIPRO10', discountPercent: 10 };
+type ShopCfg = { shippingCents: number; shippingCentsBe: number; freeShipCents: number; discountCode: string; discountPercent: number; oneCentCode: string };
+const DEFAULT_CFG: ShopCfg = { shippingCents: 695, shippingCentsBe: 850, freeShipCents: 7000, discountCode: 'VAMIPRO10', discountPercent: 10, oneCentCode: '' };
 
 export default function CheckoutPage() {
   const { items, subtotalCents } = useCart();
@@ -23,6 +23,7 @@ export default function CheckoutPage() {
         freeShipCents: d.freeShipCents ?? DEFAULT_CFG.freeShipCents,
         discountCode: (d.discountCode ?? DEFAULT_CFG.discountCode).toUpperCase(),
         discountPercent: d.discountPercent ?? DEFAULT_CFG.discountPercent,
+        oneCentCode: (d.oneCentCode ?? DEFAULT_CFG.oneCentCode).toUpperCase(),
       }))
       .catch(() => {});
   }, []);
@@ -75,9 +76,11 @@ export default function CheckoutPage() {
   }, [f.postalCode, f.houseNumber]);
 
   const sub = subtotalCents();
-  const disc = useCart().discountCode ? Math.round(sub * cfg.discountPercent / 100) : 0;
-  const shipping = sub >= cfg.freeShipCents ? 0 : (f.country === 'BE' ? cfg.shippingCentsBe : cfg.shippingCents);
-  const total = sub - disc + shipping;
+  const appliedCode = (useCart().discountCode ?? '').toUpperCase();
+  const isOneCent = !!cfg.oneCentCode && appliedCode === cfg.oneCentCode;
+  const shipping = isOneCent ? 0 : (sub >= cfg.freeShipCents ? 0 : (f.country === 'BE' ? cfg.shippingCentsBe : cfg.shippingCents));
+  const disc = isOneCent ? Math.max(0, sub - 1) : (useCart().discountCode ? Math.round(sub * cfg.discountPercent / 100) : 0);
+  const total = isOneCent ? 1 : (sub - disc + shipping);
 
   async function pay() {
     setErr(''); setLoading(true);

@@ -7,6 +7,7 @@ export type ShopConfig = {
   discountCode: string;
   discountPercent: number;
   heroImage: string;
+  oneCentCode: string;      // testcode: totaal €0,01 + gratis verzending (leeg = uit)
 };
 
 // Standaardwaarden = de huidige hardgecodeerde waarden. Zo verandert er niets
@@ -18,6 +19,7 @@ const DEFAULTS: ShopConfig = {
   discountCode: 'VAMIPRO10',
   discountPercent: 10,
   heroImage: '',
+  oneCentCode: '',
 };
 
 // Parse een euro-bedrag ("6,95" of "6.95" -> 695 cent; "70" -> 7000 cent).
@@ -48,5 +50,6 @@ export async function getShopConfig(): Promise<ShopConfig> {
     discountCode: (discountCodeRaw || DEFAULTS.discountCode).toUpperCase(),
     discountPercent: parsePercent(t('discount_percent', ''), DEFAULTS.discountPercent),
     heroImage: t('hero_image', ''),
+    oneCentCode: (t('one_cent_code', '').trim() || '').toUpperCase(),
   };
 }

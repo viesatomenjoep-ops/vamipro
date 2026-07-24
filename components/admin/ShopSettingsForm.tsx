@@ -56,6 +56,19 @@ export default function ShopSettingsForm({ content }: { content: Record<string, 
         </div>
       </div>
 
+      <div className="card space-y-4">
+        <h3 className="font-medium">Testcode (€ 0,01)</h3>
+        <p className="text-xs text-fg-faint">
+          Vul een code in om een testbestelling te doen: het totaal wordt <b>€ 0,01</b> met <b>gratis verzending</b>
+          (Mollie accepteert geen € 0). Zo test je de hele keten via Mollie voor 1 cent. Laat leeg om uit te schakelen —
+          en wis de code weer na het testen zodat klanten 'm niet kunnen gebruiken.
+        </p>
+        <div>
+          <label className="block text-sm font-medium mb-1">Testcode</label>
+          <input name="one_cent_code" defaultValue={content.one_cent_code ?? ''} placeholder="bijv. TEST1CENT" className="input w-full" />
+        </div>
+      </div>
+
       <div className="flex items-center gap-3">
         <button type="submit" disabled={loading} className="btn btn-primary">
           {loading ? 'Bezig met opslaan...' : 'Instellingen opslaan'}

@@ -7,8 +7,8 @@ import { Minus, Plus, X, ArrowLeft } from 'lucide-react';
 
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
-type ShopCfg = { shippingCents: number; shippingCentsBe: number; freeShipCents: number; discountCode: string; discountPercent: number };
-const DEFAULT_CFG: ShopCfg = { shippingCents: 695, shippingCentsBe: 850, freeShipCents: 7000, discountCode: 'VAMIPRO10', discountPercent: 10 };
+type ShopCfg = { shippingCents: number; shippingCentsBe: number; freeShipCents: number; discountCode: string; discountPercent: number; oneCentCode: string };
+const DEFAULT_CFG: ShopCfg = { shippingCents: 695, shippingCentsBe: 850, freeShipCents: 7000, discountCode: 'VAMIPRO10', discountPercent: 10, oneCentCode: '' };
 
 export default function CartPage() {
   const { items, setQty, remove, subtotalCents, discountCode, setDiscountCode } = useCart();
@@ -23,12 +23,15 @@ export default function CartPage() {
         freeShipCents: d.freeShipCents ?? DEFAULT_CFG.freeShipCents,
         discountCode: (d.discountCode ?? DEFAULT_CFG.discountCode).toUpperCase(),
         discountPercent: d.discountPercent ?? DEFAULT_CFG.discountPercent,
+        oneCentCode: (d.oneCentCode ?? DEFAULT_CFG.oneCentCode).toUpperCase(),
       }))
       .catch(() => {});
   }, []);
 
   const sub = subtotalCents();
   const freeShip = sub >= cfg.freeShipCents;
+  const isOneCent = !!cfg.oneCentCode && (discountCode ?? '').toUpperCase() === cfg.oneCentCode;
+  const total = isOneCent ? 1 : sub - (discountCode ? Math.round(sub * cfg.discountPercent / 100) : 0);
 
   if (!items.length) return (
     <div className="wrap py-28 text-center">
@@ -91,11 +94,14 @@ export default function CartPage() {
           <h2 className="font-display text-lg font-semibold">Overzicht</h2>
           <div className="mt-4 space-y-2 text-sm">
             <div className="flex justify-between text-fg-muted"><span>Subtotaal</span><span className="text-fg">{euro(sub)}</span></div>
-            {discountCode && (
+            {discountCode && !isOneCent && (
               <div className="flex justify-between text-accent font-medium"><span>Korting ({cfg.discountPercent}%)</span><span>-{euro(Math.round(sub * cfg.discountPercent / 100))}</span></div>
             )}
-            <div className="flex justify-between text-fg-muted"><span>Verzending (NL)</span><span className="text-fg">{freeShip ? 'Gratis' : euro(cfg.shippingCents)}</span></div>
-            {!freeShip && <div className="flex justify-between text-fg-faint text-xs"><span>België</span><span>{euro(cfg.shippingCentsBe)}</span></div>}
+            {isOneCent && (
+              <div className="flex justify-between text-accent font-medium"><span>Testcode</span><span>-{euro(Math.max(0, sub - 1))}</span></div>
+            )}
+            <div className="flex justify-between text-fg-muted"><span>Verzending (NL)</span><span className="text-fg">{(freeShip || isOneCent) ? 'Gratis' : euro(cfg.shippingCents)}</span></div>
+            {!freeShip && !isOneCent && <div className="flex justify-between text-fg-faint text-xs"><span>België</span><span>{euro(cfg.shippingCentsBe)}</span></div>}
           </div>
           {!freeShip && (
             <div className="mt-4 rounded-sm border hairline bg-panel-2 p-3 text-xs text-fg-muted">
@@ -118,7 +124,10 @@ export default function CartPage() {
             <form onSubmit={(e) => {
               e.preventDefault();
               const code = (e.currentTarget.elements.namedItem('code') as HTMLInputElement).value;
-              if (code.toUpperCase() === 'START10' || code.toUpperCase() === cfg.discountCode) {
+              const c = code.toUpperCase();
+              if (cfg.oneCentCode && c === cfg.oneCentCode) {
+                setDiscountCode(cfg.oneCentCode);
+              } else if (c === 'START10' || c === cfg.discountCode) {
                 setDiscountCode(cfg.discountCode);
               } else {
                 alert('Ongeldige of verlopen kortingscode');
@@ -129,7 +138,7 @@ export default function CartPage() {
             </form>
             <div className="flex justify-between">
               <span className="font-display font-semibold">Totaal</span>
-              <span className="font-display text-lg font-semibold">{euro(sub - (discountCode ? Math.round(sub * cfg.discountPercent / 100) : 0))}</span>
+              <span className="font-display text-lg font-semibold">{euro(total)}</span>
             </div>
           </div>
           <Link href="/checkout" className="btn btn-primary mt-5 w-full justify-center">Naar de kassa</Link>
