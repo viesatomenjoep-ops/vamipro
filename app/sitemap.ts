@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next';
 import { createServiceClient } from '@/lib/supabase/server';
 import { SITE_URL as baseUrl } from '@/lib/site-url';
+import { LANDING_PAGES } from '@/lib/landing-pages';
+import { TIPS } from '@/lib/tips';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = createServiceClient();
@@ -34,5 +36,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/verzending`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.4 },
   ];
 
-  return [...staticUrls, ...categoryUrls, ...productUrls];
+  const landingUrls = LANDING_PAGES.map((p) => ({
+    url: `${baseUrl}/${p.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
+  const tipUrls = [
+    { url: `${baseUrl}/tips`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.6 },
+    ...TIPS.map((tp) => ({
+      url: `${baseUrl}/tips/${tp.slug}`,
+      lastModified: new Date(tp.date),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
+  ];
+
+  return [...staticUrls, ...landingUrls, ...tipUrls, ...categoryUrls, ...productUrls];
 }

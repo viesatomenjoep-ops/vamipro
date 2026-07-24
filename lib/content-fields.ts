@@ -1,5 +1,7 @@
 // Bewerkbare teksten, gegroepeerd per sectie. Nieuwe teksten toevoegen = hier een
 // regel bijzetten en op de betreffende pagina `t('<key>', '<standaard>')` gebruiken.
+import { LANDING_PAGES } from './landing-pages';
+import { TIPS } from './tips';
 
 // SEO-rijke standaard-FAQ's (bewerkbaar via de admin). Wordt gebruikt op /faq en
 // levert FAQ-structured-data (rich results) aan Google. Leeg = wordt overgeslagen.
@@ -16,6 +18,16 @@ export const FAQ_DEFAULTS: { q: string; a: string }[] = [
   { q: 'Leveren jullie ook in België?', a: 'Ja, we verzenden naar zowel Nederland als België. Boven de € 70 is de verzending gratis; daaronder zie je het exacte tarief in de checkout.' },
   { q: 'Kan ik mijn bestelling retourneren?', a: 'Je hebt 14 dagen bedenktijd. Ongeopende producten kun je retourneren volgens ons retourbeleid. Neem bij vragen contact op via info@vamipro.nl.' },
   { q: 'Kan ik advies krijgen over de juiste producten?', a: 'Zeker. Stel je vraag via de chat op de site of mail naar info@vamipro.nl — we helpen je graag met de juiste keuze voor jouw auto en lak.' },
+  { q: 'Hoe vaak moet ik mijn auto wassen en detailen?', a: 'Voor een goed onderhouden auto is elke 1 tot 2 weken wassen ideaal. Detaileren (velgen, interieur, quick detailer) doe je afhankelijk van gebruik maandelijks tot per kwartaal. Regelmatig onderhoud voorkomt inbrandende vervuiling en houdt de lak langer mooi.' },
+  { q: 'Wat is het verschil tussen wax en een keramische coating?', a: 'Wax geeft een warme glans en bescherming voor enkele weken tot maanden. Een keramische coating vormt een hardere, langdurige beschermlaag (maanden tot jaren) met sterke waterafstoting. Beide zijn te combineren met onze pH-neutrale onderhoudsproducten.' },
+  { q: 'Hoe verwijder ik insecten, teer en boomhars van de lak?', a: 'Gebruik een speciale insecten- of teerverwijderaar, laat kort inwerken en veeg zacht af met een microvezeldoek. Nooit droog wrijven — dat veroorzaakt krassen. Was daarna de zone na en bescherm met wax of quick detailer.' },
+  { q: 'Welke microvezeldoek gebruik ik waarvoor?', a: 'Gebruik een dikke, pluizende doek voor het uitnemen van wax/quick detailer, een korte-vezel doek voor ruiten (streeploos) en een aparte doek voor velgen en vuile zones. Houd doeken per taak gescheiden om krassen en kruisbesmetting te voorkomen.' },
+  { q: 'Kan ik jullie producten ook voor een motor, camper of boot gebruiken?', a: 'Ja. Onze shampoos, snow foam, microvezeldoeken en reinigers werken op elke gelakte of gecoate ondergrond — auto, motor, camper, caravan of boot.' },
+  { q: 'Hoe onderhoud ik mijn microvezeldoeken en droogdoek?', a: 'Was microvezel op maximaal 40°C zonder wasverzachter (dat verstopt de vezels) en droog op lage temperatuur of aan de lucht. Zo blijven ze honderden wasbeurten zacht en absorberend.' },
+  { q: 'Wat is clay bar / reinigingsklei en heb ik het nodig?', a: 'Reinigingsklei haalt ingebedde vervuiling (remstof, industrieel neerslag) uit de lak die wassen niet verwijdert. Ideaal 1-2x per jaar vóór het waxen of coaten, voor een gladde, schone ondergrond.' },
+  { q: 'Hoe krijg ik streeploze ruiten?', a: 'Gebruik een glasreiniger met een schone, korte-vezel microvezeldoek en poets na met een droge doek. Werk uit de zon en vermijd te veel product — dat voorkomt strepen.' },
+  { q: 'Zijn de verpakkingen en producten milieubewust?', a: 'We kiezen waar mogelijk voor geconcentreerde formules (minder verpakking en transport) en pH-neutrale, lak-veilige samenstellingen. Concentraten meng je zelf met water, wat verspilling beperkt.' },
+  { q: 'Hebben jullie pakketten of kortingen voor beginners?', a: 'Ja. Ons Showroom pakket XXL bevat alles voor de perfecte wasbeurt in één doos — voordeliger dan los kopen en ideaal om mee te starten. Houd ook de kortingscode in je winkelwagen in de gaten.' },
 ];
 
 export const CONTENT_FIELDS: { group: string; items: { key: string; label: string; type?: 'text' | 'textarea'; def: string }[] }[] = [
@@ -151,4 +163,36 @@ export const CONTENT_FIELDS: { group: string; items: { key: string; label: strin
       { key: `faq_${i + 1}_a`, label: `Antwoord ${i + 1}`, type: 'textarea', def: d.a },
     ])) as { key: string; label: string; type?: 'text' | 'textarea'; def: string }[],
   },
+  {
+    group: 'SEO: pagina-titels & beschrijvingen',
+    items: [
+      { key: 'meta_home_title', label: 'Homepage — SEO-titel', def: 'Vami Pro — Professionele detailingproducten' },
+      { key: 'meta_home_desc', label: 'Homepage — SEO-beschrijving', type: 'textarea', def: 'Showroomresultaat voor elke auto. Professionele car-detailingproducten voor liefhebbers en pro’s. Veilig betalen met iDEAL en Bancontact. Gratis verzending vanaf € 70 in NL & BE.' },
+      { key: 'meta_producten_title', label: 'Producten — SEO-titel', def: 'Alle detailingproducten' },
+      { key: 'meta_producten_desc', label: 'Producten — SEO-beschrijving', type: 'textarea', def: 'Bekijk alle car-detailingproducten van Vami Pro: autoshampoo, snow foam, droogdoeken, velgenreinigers en meer. Gratis verzending vanaf € 70 in NL & BE.' },
+    ],
+  },
+  ...(LANDING_PAGES.map((p) => ({
+    group: `Landingspagina: /${p.slug}`,
+    items: [
+      { key: `landing_${p.slug}_metatitle`, label: 'SEO-titel (Google-tabblad)', def: p.metaTitle },
+      { key: `landing_${p.slug}_metadesc`, label: 'SEO-beschrijving (Google)', type: 'textarea', def: p.metaDesc },
+      { key: `landing_${p.slug}_eyebrow`, label: 'Klein label', def: p.eyebrow },
+      { key: `landing_${p.slug}_h1`, label: 'Titel (H1)', def: p.h1 },
+      { key: `landing_${p.slug}_intro`, label: 'Introtekst', type: 'textarea', def: p.intro },
+      { key: `landing_${p.slug}_body`, label: 'SEO-tekst (lege regel = nieuwe alinea; 1e regel per blok = tussenkop)', type: 'textarea', def: p.body },
+      { key: `landing_${p.slug}_ctatext`, label: 'Knop-tekst', def: p.ctaText },
+      { key: `landing_${p.slug}_ctalink`, label: 'Knop-link', def: p.ctaLink },
+    ],
+  })) as { group: string; items: { key: string; label: string; type?: 'text' | 'textarea'; def: string }[] }[]),
+  ...(TIPS.map((tp) => ({
+    group: `Tip/blog: /tips/${tp.slug}`,
+    items: [
+      { key: `tip_${tp.slug}_metatitle`, label: 'SEO-titel', def: tp.metaTitle },
+      { key: `tip_${tp.slug}_metadesc`, label: 'SEO-beschrijving', type: 'textarea', def: tp.metaDesc },
+      { key: `tip_${tp.slug}_title`, label: 'Titel', def: tp.title },
+      { key: `tip_${tp.slug}_excerpt`, label: 'Samenvatting (overzicht)', type: 'textarea', def: tp.excerpt },
+      { key: `tip_${tp.slug}_body`, label: 'Artikel (lege regel = nieuwe alinea; 1e regel per blok = tussenkop)', type: 'textarea', def: tp.body },
+    ],
+  })) as { group: string; items: { key: string; label: string; type?: 'text' | 'textarea'; def: string }[] }[]),
 ];

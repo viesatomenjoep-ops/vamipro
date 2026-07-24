@@ -20,9 +20,17 @@ import { isMock, getMockProducts } from '@/lib/mock-data';
 import CmsBridge from '@/components/shop/CmsBridge';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  alternates: { canonical: '/' },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getContent();
+  const title = t('meta_home_title', 'Vami Pro — Professionele detailingproducten');
+  const description = t('meta_home_desc', 'Showroomresultaat voor elke auto. Professionele car-detailingproducten voor liefhebbers en pro’s. Veilig betalen met iDEAL en Bancontact. Gratis verzending vanaf € 70 in NL & BE.');
+  return {
+    title: { absolute: title },
+    description,
+    alternates: { canonical: '/' },
+    openGraph: { title, description },
+  };
+}
 
 export const revalidate = 60;
 
