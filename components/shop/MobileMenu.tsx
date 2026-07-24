@@ -41,40 +41,34 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
     <div className="lg:hidden">
       <button
         onClick={() => setIsOpen(true)}
-        className="flex h-14 w-14 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10"
+        className="flex h-12 w-12 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10"
         aria-label="Menu openen"
       >
-        <Menu size={34} strokeWidth={1.5} />
+        <Menu size={28} strokeWidth={1.5} />
       </button>
 
-      {/* Overlay-paneel */}
+      {/* Overlay-paneel — direct volledig zwarte achtergrond bij openen */}
       <div
-        className={`fixed inset-0 z-[120] ${isOpen ? 'visible' : 'invisible'}`}
+        className={`fixed inset-0 z-[120] bg-black ${isOpen ? 'visible' : 'invisible pointer-events-none'}`}
         aria-hidden={!isOpen}
       >
-        {/* Volledig zwarte achtergrond die invaagt */}
-        <div
-          className={`absolute inset-0 bg-black transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
-          onClick={() => setIsOpen(false)}
-        />
-
-        <div className="relative flex h-[100dvh] flex-col p-6 sm:p-8">
+        <div className="relative flex h-[100dvh] flex-col px-5 pb-6 pt-4">
           {/* Kop */}
           <div className="flex items-center justify-between">
-            <img src="/images/logo.png" alt="VaMiPro" className="h-11 w-auto" />
+            <img src="/images/logo.png" alt="VaMiPro" className="h-8 w-auto" />
             <button
               onClick={() => setIsOpen(false)}
-              className="flex h-14 w-14 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white -mr-2"
+              className="flex h-11 w-11 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white -mr-1"
               aria-label="Menu sluiten"
             >
-              <X size={32} strokeWidth={1.5} />
+              <X size={26} strokeWidth={1.5} />
             </button>
           </div>
 
           {/* Navigatie */}
-          <nav className="mt-8 flex flex-1 flex-col overflow-y-auto">
+          <nav className="mt-5 flex flex-1 flex-col overflow-y-auto">
             <p
-              className={`mb-4 text-xs uppercase tracking-[0.28em] text-white/40 ${item(0)}`}
+              className={`mb-2.5 text-[11px] uppercase tracking-[0.28em] text-white/40 ${item(0)}`}
               style={{ transitionDelay: `${isOpen ? 60 : 0}ms` }}
             >
               Menu
@@ -87,18 +81,18 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
                   prefetch
                   href={it.href}
                   onClick={() => setIsOpen(false)}
-                  className={`group flex items-center justify-between py-4 ${item(i)} ${it.big ? 'text-3xl font-semibold text-white' : 'text-2xl text-white/85'}`}
-                  style={{ transitionDelay: `${isOpen ? 110 + i * 45 : 0}ms` }}
+                  className={`group flex items-center justify-between py-3 ${item(i)} ${it.big ? 'text-xl font-semibold text-white' : 'text-lg text-white/85'}`}
+                  style={{ transitionDelay: `${isOpen ? 110 + i * 40 : 0}ms` }}
                 >
                   <span className="transition-colors group-hover:text-accent">{it.label}</span>
-                  <ArrowRight size={20} className="text-white/25 transition-all group-hover:translate-x-1 group-hover:text-accent" />
+                  <ArrowRight size={18} className="text-white/25 transition-all group-hover:translate-x-1 group-hover:text-accent" />
                 </Link>
               ))}
             </div>
 
             {/* Info onderaan */}
-            <div className="mt-auto pt-8">
-              <div className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm text-white/50">
+            <div className="mt-auto pt-6">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-2.5 text-[13px] text-white/50">
                 {info.map((it, i) => (
                   <Link
                     key={it.href}
@@ -106,7 +100,7 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
                     href={it.href}
                     onClick={() => setIsOpen(false)}
                     className={`hover:text-white ${item(i)}`}
-                    style={{ transitionDelay: `${isOpen ? 110 + (primary.length + i) * 45 : 0}ms` }}
+                    style={{ transitionDelay: `${isOpen ? 110 + (primary.length + i) * 40 : 0}ms` }}
                   >
                     {it.label}
                   </Link>
