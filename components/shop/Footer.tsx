@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { createServiceClient } from '@/lib/supabase/server';
 import { getContent } from '@/lib/content';
+import { LANDING_PAGES } from '@/lib/landing-pages';
 
 export default async function Footer() {
   const supabase = createServiceClient();
@@ -14,7 +15,7 @@ export default async function Footer() {
       <div className="wrap pt-14 pb-2 md:pt-20">
         <p aria-hidden className="footer-wordmark">VAMIPRO</p>
       </div>
-      <div className="wrap grid gap-10 py-14 md:grid-cols-4">
+      <div className="wrap grid gap-10 py-14 md:grid-cols-4 lg:grid-cols-5">
         <div className="md:col-span-1">
           <span className="logo-chip inline-flex mb-2"><img src="/images/logo.png" alt="VamiPro" className="h-14 w-auto" /></span>
           <p className="mt-3 max-w-xs text-sm text-fg-muted">
@@ -27,6 +28,15 @@ export default async function Footer() {
             <li><Link href="/producten" className="hover:text-accent">Alle producten</Link></li>
             {categories?.map(c => (
               <li key={c.id}><Link href={`/categorie/${c.slug}`} className="hover:text-accent">{c.name}</Link></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p className="eyebrow mb-4">Gidsen &amp; tips</p>
+          <ul className="space-y-2 text-sm text-fg-muted">
+            <li><Link href="/tips" className="hover:text-accent">Detailing tips</Link></li>
+            {LANDING_PAGES.map((p) => (
+              <li key={p.slug}><Link href={`/${p.slug}`} className="hover:text-accent">{p.eyebrow}</Link></li>
             ))}
           </ul>
         </div>

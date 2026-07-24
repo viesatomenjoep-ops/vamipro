@@ -137,6 +137,12 @@ export async function setProductName(productId: string, name: string) {
   revalidatePath('/', 'layout');
 }
 
+export async function setProductDescription(productId: string, description: string) {
+  const supabase = createServiceClient();
+  await supabase.from('products').update({ description: description ?? '' }).eq('id', productId);
+  revalidatePath('/', 'layout');
+}
+
 // ── Eigen (custom) secties: titel + tekst + knop ─────────────────────────────
 export async function createCustomSection() {
   const supabase = createServiceClient();

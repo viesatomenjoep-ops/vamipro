@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, Search, X } from 'lucide-react';
-import { saveContent, updateCategoryInline, setProductImages, setProductPrice, setProductName, createCustomSection, updateCustomSection, deleteCustomSection } from '@/app/admin/actions';
+import { saveContent, updateCategoryInline, setProductImages, setProductPrice, setProductName, setProductDescription, createCustomSection, updateCustomSection, deleteCustomSection } from '@/app/admin/actions';
 import { CONTENT_FIELDS } from '@/lib/content-fields';
 import { cldUrl } from '@/lib/cloudinary';
 import CloudinaryUpload from '@/components/admin/CloudinaryUpload';
@@ -174,6 +174,12 @@ export default function PreviewEditor({
     products.forEach((p) => { init[p.id] = p.name ?? ''; });
     return init;
   });
+  // Omschrijving per product (voor de productpagina + Google) als bewerkbare tekst.
+  const [prodDescs, setProdDescs] = useState<Record<string, string>>(() => {
+    const init: Record<string, string> = {};
+    products.forEach((p) => { init[p.id] = p.description ?? ''; });
+    return init;
+  });
   const [prodSaved, setProdSaved] = useState<Record<string, boolean>>({});
 
   const heroUrl = (publicId: string) => (publicId ? cldUrl(publicId, { w: 1920, h: 1080 }) : '');
@@ -277,6 +283,13 @@ export default function PreviewEditor({
     const name = (prodNames[id] ?? '').trim();
     if (!name) return;
     await setProductName(id, name);
+    flashProdSaved(id);
+  };
+
+  const setProdDescInput = (id: string, value: string) =>
+    setProdDescs((prev) => ({ ...prev, [id]: value }));
+  const commitProdDesc = async (id: string) => {
+    await setProductDescription(id, prodDescs[id] ?? '');
     flashProdSaved(id);
   };
 
@@ -601,6 +614,20 @@ export default function PreviewEditor({
                         className="input w-40"
                       />
                       <p className="mt-1 text-xs text-fg-faint">Opslaan gebeurt zodra je het veld verlaat.</p>
+                    </div>
+
+                    <div className="mb-4">
+                      <label className="mb-1 block text-sm font-medium">Omschrijving (productpagina + Google)</label>
+                      <textarea
+                        value={prodDescs[p.id] ?? ''}
+                        onChange={(e) => setProdDescInput(p.id, e.target.value)}
+                        onBlur={() => commitProdDesc(p.id)}
+                        rows={4}
+                        className="input w-full"
+                      />
+                      <p className="mt-1 text-xs text-fg-faint">
+                        SEO-tip: verwerk zoekwoorden natuurlijk in de tekst, bijv. &quot;microvezel droogdoek 1600 GSM&quot;, &quot;pH-neutrale autoshampoo&quot;, &quot;snow foam&quot; of &quot;velgenreiniger&quot;. Schrijf 2–5 zinnen. Opslaan gebeurt zodra je het veld verlaat.
+                      </p>
                     </div>
 
                     <label className="mb-1 block text-sm font-medium">Afbeeldingen</label>

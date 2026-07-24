@@ -15,6 +15,7 @@ export type PreviewProduct = {
   name: string;
   price_cents: number;
   cloudinary_images: string[] | null;
+  description: string | null;
 };
 
 export default async function PreviewPage() {
@@ -32,23 +33,23 @@ export default async function PreviewPage() {
 
   // Producten die op de homepage voorkomen: featured + droogdoek + pakket.
   const { data: featured } = await supabase.from('products')
-    .select('id, name, price_cents, cloudinary_images')
+    .select('id, name, price_cents, cloudinary_images, description')
     .eq('is_active', true).eq('is_featured', true).limit(8);
 
-  let { data: towel } = await supabase.from('products').select('id, name, price_cents, cloudinary_images')
+  let { data: towel } = await supabase.from('products').select('id, name, price_cents, cloudinary_images, description')
     .eq('slug', 'vami-drying-towel-xl').maybeSingle();
   if (!towel) {
-    const { data: alt } = await supabase.from('products').select('id, name, price_cents, cloudinary_images')
+    const { data: alt } = await supabase.from('products').select('id, name, price_cents, cloudinary_images, description')
       .eq('slug', 'drooghandoek-xxl-1200-gsm').maybeSingle();
     towel = alt;
   }
-  const { data: pakket } = await supabase.from('products').select('id, name, price_cents, cloudinary_images')
+  const { data: pakket } = await supabase.from('products').select('id, name, price_cents, cloudinary_images, description')
     .eq('slug', 'volledig-pakket-xxl').maybeSingle();
 
   const byId = new Map<string, PreviewProduct>();
   [...(featured ?? []), towel, pakket].forEach((p: any) => {
     if (p && p.id && !byId.has(p.id)) {
-      byId.set(p.id, { id: p.id, name: p.name, price_cents: p.price_cents ?? 0, cloudinary_images: p.cloudinary_images ?? null });
+      byId.set(p.id, { id: p.id, name: p.name, price_cents: p.price_cents ?? 0, cloudinary_images: p.cloudinary_images ?? null, description: p.description ?? null });
     }
   });
   const products: PreviewProduct[] = Array.from(byId.values());
