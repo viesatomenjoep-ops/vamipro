@@ -1,5 +1,7 @@
 import { createServiceClient } from '@/lib/supabase/server';
 import { isMock, getMockOrders } from '@/lib/mock-data';
+import DeleteButton from '@/components/admin/DeleteButton';
+import { deleteInvoice } from '@/app/admin/actions';
 
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
@@ -21,7 +23,12 @@ export default async function InvoicesPage() {
                 <td className="text-fg-muted">{o.order_number}</td>
                 <td>{euro(o.total_cents)}</td>
                 <td className="text-fg-muted">{o.paid_at ? new Date(o.paid_at).toLocaleDateString('nl-NL') : '—'}</td>
-                <td>{o.invoice_pdf_url && <a href={o.invoice_pdf_url} target="_blank" className="text-accent hover:underline">Download</a>}</td>
+                <td>
+                  <div className="flex items-center gap-4 pr-4">
+                    {o.invoice_pdf_url && <a href={o.invoice_pdf_url} target="_blank" className="text-accent hover:underline">Download</a>}
+                    <DeleteButton action={deleteInvoice.bind(null, o.id, o.invoice_number)} confirmText={`Weet je zeker dat je factuur ${o.invoice_number} wilt verwijderen?\n\nDe bestelling zelf blijft bestaan.`} />
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>

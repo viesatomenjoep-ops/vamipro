@@ -107,6 +107,12 @@ const CONTENT_FIELDS: { group: string; items: { key: string; label: string; type
 export default function ContentForm({ content }: { content: Record<string, string> }) {
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [values, setValues] = useState<Record<string, string>>(() => {
+    const init: Record<string, string> = {};
+    CONTENT_FIELDS.forEach((g) => g.items.forEach((f) => { init[f.key] = content[f.key] ?? ''; }));
+    return init;
+  });
+  const setVal = (k: string, v: string) => setValues((prev) => ({ ...prev, [k]: v }));
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -124,11 +130,16 @@ export default function ContentForm({ content }: { content: Record<string, strin
           <h3 className="font-medium">{group.group}</h3>
           {group.items.map((f) => (
             <div key={f.key}>
-              <label className="block text-sm font-medium mb-1">{f.label}</label>
+              <div className="mb-1 flex items-center justify-between">
+                <label className="block text-sm font-medium">{f.label}</label>
+                {values[f.key] ? (
+                  <button type="button" onClick={() => setVal(f.key, '')} className="text-xs text-red-400 hover:underline">Wis</button>
+                ) : null}
+              </div>
               {f.type === 'textarea' ? (
-                <textarea name={f.key} defaultValue={content[f.key] ?? ''} placeholder={f.def} rows={3} className="input w-full" />
+                <textarea name={f.key} value={values[f.key]} onChange={(e) => setVal(f.key, e.target.value)} placeholder={f.def} rows={3} className="input w-full" />
               ) : (
-                <input name={f.key} defaultValue={content[f.key] ?? ''} placeholder={f.def} className="input w-full" />
+                <input name={f.key} value={values[f.key]} onChange={(e) => setVal(f.key, e.target.value)} placeholder={f.def} className="input w-full" />
               )}
             </div>
           ))}
@@ -141,7 +152,7 @@ export default function ContentForm({ content }: { content: Record<string, strin
         </button>
         {saved && <span className="text-sm text-accent">Opgeslagen ✓ — de website is direct bijgewerkt.</span>}
       </div>
-      <p className="text-xs text-fg-faint">Laat een veld leeg om de standaardtekst (grijs getoond) te gebruiken.</p>
+      <p className="text-xs text-fg-faint">Klik "Wis" om een tekst te verwijderen — dan wordt automatisch de standaardtekst gebruikt.</p>
     </form>
   );
 }

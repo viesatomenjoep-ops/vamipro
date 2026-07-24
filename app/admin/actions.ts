@@ -25,6 +25,26 @@ export async function saveContent(formData: FormData) {
   revalidatePath('/', 'layout');
 }
 
+export async function deleteCategory(categoryId: string) {
+  const supabase = createServiceClient();
+  // Producten worden automatisch losgekoppeld (on delete set null); subcategorieën
+  // worden mee verwijderd (on delete cascade) — dat regelt de database.
+  await supabase.from('categories').delete().eq('id', categoryId);
+  revalidatePath('/', 'layout');
+  revalidatePath('/admin/categorieen');
+}
+
+export async function deleteInvoice(orderId: string, invoiceNumber: string) {
+  const supabase = createServiceClient();
+  // Verwijder de PDF uit opslag en haal het factuurnummer van de bestelling af,
+  // zodat 'ie uit de facturenlijst verdwijnt. De bestelling zelf blijft bestaan.
+  if (invoiceNumber) {
+    try { await supabase.storage.from('invoices').remove([`${invoiceNumber}.pdf`]); } catch { /* negeer */ }
+  }
+  await supabase.from('orders').update({ invoice_number: null, invoice_pdf_url: null }).eq('id', orderId);
+  revalidatePath('/admin/facturen');
+}
+
 export async function deleteProduct(productId: string) {
   const supabase = createServiceClient();
   // Ontkoppel het product van bestaande bestellingen (die houden een snapshot van

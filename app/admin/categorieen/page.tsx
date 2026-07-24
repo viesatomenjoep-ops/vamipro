@@ -1,5 +1,7 @@
 import { createServiceClient } from '@/lib/supabase/server';
 import Link from 'next/link';
+import DeleteButton from '@/components/admin/DeleteButton';
+import { deleteCategory } from '@/app/admin/actions';
 
 export default async function AdminCategories() {
   const supabase = createServiceClient();
@@ -32,7 +34,12 @@ export default async function AdminCategories() {
                   <td className="p-4 font-medium">{p.name}</td>
                   <td className="text-fg-muted">{p.slug}</td>
                   <td className="text-fg-faint">Hoofdcategorie</td>
-                  <td><Link href={`/admin/categorieen/${p.id}`} className="text-accent hover:underline">Bewerk</Link></td>
+                  <td>
+                    <div className="flex items-center gap-4 pr-4">
+                      <Link href={`/admin/categorieen/${p.id}`} className="text-accent hover:underline">Bewerk</Link>
+                      <DeleteButton action={deleteCategory.bind(null, p.id)} confirmText={`Weet je zeker dat je "${p.name}" wilt verwijderen?\n\nEventuele subcategorieën worden ook verwijderd. Producten blijven bestaan maar raken losgekoppeld.`} />
+                    </div>
+                  </td>
                 </tr>
                 {/* Children */}
                 {getChildren(p.id).map((child: any) => (
@@ -43,7 +50,12 @@ export default async function AdminCategories() {
                     </td>
                     <td className="text-fg-muted">{child.slug}</td>
                     <td className="text-fg-faint">Subcategorie</td>
-                    <td><Link href={`/admin/categorieen/${child.id}`} className="text-accent hover:underline">Bewerk</Link></td>
+                    <td>
+                      <div className="flex items-center gap-4 pr-4">
+                        <Link href={`/admin/categorieen/${child.id}`} className="text-accent hover:underline">Bewerk</Link>
+                        <DeleteButton action={deleteCategory.bind(null, child.id)} confirmText={`Weet je zeker dat je "${child.name}" wilt verwijderen?`} />
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </React.Fragment>
