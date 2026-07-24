@@ -1,7 +1,7 @@
 'use client';
 import { useCart } from '@/lib/cart-store';
 import { cldUrl } from '@/lib/cloudinary';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Lock, ShieldCheck } from 'lucide-react';
 
@@ -41,6 +41,26 @@ export default function CheckoutPage() {
     setF((prev) => ({ ...prev, [k]: value }));
   };
 
+  // ── Adres onthouden ─────────────────────────────────────────────────────
+  // Bij terugkeer op de checkout (bv. je ging even terug naar je winkelwagen)
+  // wordt het eerder ingevulde adres hersteld uit de browser-opslag.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('vami-checkout');
+      if (raw) {
+        const p = JSON.parse(raw);
+        if (p && typeof p === 'object') setF((prev) => ({ ...prev, ...p }));
+      }
+    } catch { /* geen opgeslagen adres */ }
+  }, []);
+  // De allereerste keer NIET opslaan (dan staat f nog leeg en zou het geladen
+  // adres overschreven worden); daarna elke wijziging bewaren.
+  const firstSave = useRef(true);
+  useEffect(() => {
+    if (firstSave.current) { firstSave.current = false; return; }
+    try { localStorage.setItem('vami-checkout', JSON.stringify(f)); } catch { /* opslag vol/geblokkeerd */ }
+  }, [f]);
+
   // Land automatisch herkennen aan de postcode: NL = 1234 AB, BE = 4 cijfers.
   useEffect(() => {
     const pc = f.postalCode.replace(/\s/g, '').toUpperCase();
@@ -52,25 +72,34 @@ export default function CheckoutPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [f.postalCode]);
 
-  // Nederlands adres (straat + plaats) automatisch invullen op basis van postcode + huisnummer.
+  // Adres automatisch aanvullen op basis van postcode (+ straat/huisnummer):
+  //  - NL (1234 AB): straat + plaats invullen op postcode + huisnummer.
+  //  - BE (4 cijfers): plaats invullen op postcode; straat verfijnt de zoekopdracht.
   useEffect(() => {
     const pc = f.postalCode.replace(/\s/g, '').toUpperCase();
     const hn = f.houseNumber.trim();
-    if (!/^\d{4}[A-Z]{2}$/.test(pc) || !hn) { setAddrStatus(''); return; }
+    const isNL = /^\d{4}[A-Z]{2}$/.test(pc);
+    const isBE = /^\d{4}$/.test(pc);
+    if (isNL && !hn) { setAddrStatus(''); return; }
+    if (!isNL && !isBE) { setAddrStatus(''); return; }
     const ctrl = new AbortController();
     setAddrStatus('searching');
     const timer = setTimeout(async () => {
       try {
-        const res = await fetch(`/api/postcode?pc=${encodeURIComponent(pc)}&hn=${encodeURIComponent(hn)}`, { signal: ctrl.signal });
+        const qs = new URLSearchParams({ country: isNL ? 'NL' : 'BE', pc, hn, street: f.address.trim() });
+        const res = await fetch(`/api/postcode?${qs.toString()}`, { signal: ctrl.signal });
         const d = await res.json();
         if (d.found) {
-          setF((p) => ({ ...p, address: d.street || p.address, city: d.city || p.city }));
+          // NL: straat + plaats overschrijven. BE: alleen plaats (straat typ je zelf).
+          setF((p) => isNL
+            ? { ...p, address: d.street || p.address, city: d.city || p.city }
+            : { ...p, city: d.city || p.city });
           setAddrStatus('found');
         } else {
           setAddrStatus('notfound');
         }
       } catch { /* geannuleerd of fout: negeer */ }
-    }, 500);
+    }, 600);
     return () => { clearTimeout(timer); ctrl.abort(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [f.postalCode, f.houseNumber]);
@@ -148,9 +177,10 @@ export default function CheckoutPage() {
               </select>
             </div>
             {addrStatus === 'searching' && <p className="mt-2 text-xs text-fg-faint">Adres opzoeken…</p>}
-            {addrStatus === 'found' && <p className="mt-2 text-xs text-accent">✓ Straat en plaats automatisch ingevuld op basis van je postcode.</p>}
+            {addrStatus === 'found' && f.country === 'NL' && <p className="mt-2 text-xs text-accent">✓ Straat en plaats automatisch ingevuld op basis van je postcode.</p>}
+            {addrStatus === 'found' && f.country === 'BE' && <p className="mt-2 text-xs text-accent">✓ Belgisch adres herkend — plaats ingevuld op basis van je postcode.</p>}
             {addrStatus === 'notfound' && f.country === 'NL' && <p className="mt-2 text-xs text-fg-faint">Geen adres gevonden — vul straat en plaats handmatig in.</p>}
-            {f.country === 'BE' && <p className="mt-2 text-xs text-fg-faint">Belgisch adres herkend — vul straat en plaats zelf in.</p>}
+            {addrStatus === 'notfound' && f.country === 'BE' && <p className="mt-2 text-xs text-fg-faint">Vul je straat, huisnummer en plaats zelf in.</p>}
             <label className="mt-4 flex items-center gap-2 text-sm text-fg-muted">
               <input type="checkbox" checked={biz} onChange={(e) => setBiz(e.target.checked)} className="accent-[var(--accent)] shrink-0" />
               <span>Ik bestel zakelijk (factuur op bedrijfsnaam)</span>
