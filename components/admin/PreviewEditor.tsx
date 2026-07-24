@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { saveContent, updateCategoryInline, setProductImage } from '@/app/admin/actions';
+import { saveContent, updateCategoryInline, setProductImages, setProductPrice } from '@/app/admin/actions';
 import { CONTENT_FIELDS } from '@/lib/content-fields';
 import { cldUrl } from '@/lib/cloudinary';
 import CloudinaryUpload from '@/components/admin/CloudinaryUpload';
@@ -23,7 +23,26 @@ import type { PreviewCategory, PreviewProduct } from '@/app/admin/preview/page';
  *   - { type: 'cms-cat-text', id, field, value }        → live categorie-tekst tonen
  *   - { type: 'cms-cat-image', id, url }                → live categorie-afbeelding tonen (leeg → standaard)
  *   - { type: 'cms-product-image', id, url }            → live productfoto tonen (leeg → standaard)
+ *   - { type: 'cms-product-price', id, value }           → live productprijs tonen
  */
+// Cents → invoerveld-tekst met komma (bv. 1250 → "12,50").
+function centsToEuroInput(cents: number): string {
+  return (Math.max(0, Math.round(cents)) / 100).toFixed(2).replace('.', ',');
+}
+
+// Invoerveld-tekst (euro's, komma of punt) → cents (>= 0).
+function euroInputToCents(input: string): number {
+  const normalized = (input || '').replace(/[^\d,.-]/g, '').replace(',', '.');
+  const euros = parseFloat(normalized);
+  if (!isFinite(euros)) return 0;
+  return Math.max(0, Math.round(euros * 100));
+}
+
+// Cents → getoonde prijs op de site (bv. 1250 → "€ 12,50").
+function centsToEuroLabel(cents: number): string {
+  return `€ ${(Math.max(0, Math.round(cents)) / 100).toFixed(2).replace('.', ',')}`;
+}
+
 export default function PreviewEditor({
   content,
   categories = [],
@@ -83,11 +102,18 @@ export default function PreviewEditor({
   const [catsSaved, setCatsSaved] = useState(false);
 
   // ── Producten ───────────────────────────────────────────────────────────
+  // Volledige afbeeldingenset per product (Cloudinary public ids).
   const [prods, setProds] = useState<Record<string, string[]>>(() => {
     const init: Record<string, string[]> = {};
     products.forEach((p) => {
-      init[p.id] = p.cloudinary_images?.[0] ? [p.cloudinary_images[0]] : [];
+      init[p.id] = Array.isArray(p.cloudinary_images) ? [...p.cloudinary_images] : [];
     });
+    return init;
+  });
+  // Prijs per product als bewerkbare euro-tekst (bv. "12,50").
+  const [prodPrices, setProdPrices] = useState<Record<string, string>>(() => {
+    const init: Record<string, string> = {};
+    products.forEach((p) => { init[p.id] = centsToEuroInput(p.price_cents ?? 0); });
     return init;
   });
   const [prodSaved, setProdSaved] = useState<Record<string, boolean>>({});
@@ -112,6 +138,9 @@ export default function PreviewEditor({
 
   const postProductImage = (id: string, url: string) =>
     post({ type: 'cms-product-image', id, url });
+
+  const postProductPrice = (id: string, value: string) =>
+    post({ type: 'cms-product-price', id, value });
 
   const setVal = (key: string, value: string) => {
     setValues((prev) => ({ ...prev, [key]: value }));
@@ -165,14 +194,30 @@ export default function PreviewEditor({
   };
 
   // ── Product handlers ──────────────────────────────────────────────────────
-  const setProdImage = async (id: string, ids: string[]) => {
-    const publicId = ids[0] || '';
-    setProds((prev) => ({ ...prev, [id]: publicId ? [publicId] : [] }));
-    if (!publicId) return;
-    postProductImage(id, cldUrl(publicId, { w: 800, h: 800 }));
-    await setProductImage(id, publicId);
+  const flashProdSaved = (id: string) => {
     setProdSaved((prev) => ({ ...prev, [id]: true }));
     window.setTimeout(() => setProdSaved((prev) => ({ ...prev, [id]: false })), 2500);
+  };
+
+  // Volledige afbeeldingenset opslaan; eerste foto live tonen (of leeg → standaard).
+  const setProdImages = async (id: string, ids: string[]) => {
+    const next = ids.filter(Boolean);
+    setProds((prev) => ({ ...prev, [id]: next }));
+    postProductImage(id, next[0] ? cldUrl(next[0], { w: 800, h: 800 }) : '');
+    await setProductImages(id, next);
+    flashProdSaved(id);
+  };
+
+  const setProdPriceInput = (id: string, value: string) =>
+    setProdPrices((prev) => ({ ...prev, [id]: value }));
+
+  // Prijs opslaan bij blur: parse euro's → cents, live label bijwerken.
+  const commitProdPrice = async (id: string) => {
+    const cents = euroInputToCents(prodPrices[id] ?? '');
+    setProdPrices((prev) => ({ ...prev, [id]: centsToEuroInput(cents) }));
+    postProductPrice(id, centsToEuroLabel(cents));
+    await setProductPrice(id, cents);
+    flashProdSaved(id);
   };
 
   // ── Highlight helpers ─────────────────────────────────────────────────────
@@ -276,7 +321,7 @@ export default function PreviewEditor({
           className="w-full h-[80vh] rounded border hairline bg-white"
           title="Live voorvertoning"
         />
-        <p className="mt-2 text-xs text-fg-faint">Klik in de voorvertoning op een tekst, categorie-tegel of productfoto om die te bewerken.</p>
+        <p className="mt-2 text-xs text-fg-faint">Klik in de voorvertoning op een tekst, categorie-tegel, productfoto of prijs om die te bewerken.</p>
       </div>
 
       <div className="space-y-4">
@@ -368,14 +413,14 @@ export default function PreviewEditor({
           </details>
         )}
 
-        {/* Productfoto's */}
+        {/* Producten */}
         {prodList.length > 0 && (
           <details open={openGroups.__products} className="card !p-0 overflow-hidden">
             <summary
               onClick={(e) => { e.preventDefault(); toggleGroup('__products'); }}
               className="flex cursor-pointer list-none items-center justify-between px-5 py-4 font-medium select-none"
             >
-              <span>Productfoto's</span>
+              <span>Producten</span>
               <ChevronDown size={18} className={`text-fg-faint transition-transform ${openGroups.__products ? 'rotate-180' : ''}`} />
             </summary>
             {openGroups.__products && (
@@ -386,8 +431,23 @@ export default function PreviewEditor({
                       <label className="block text-sm font-medium">{p.name}</label>
                       {prodSaved[p.id] && <span className="text-xs text-accent">opgeslagen ✓</span>}
                     </div>
-                    <p className="mb-3 text-xs text-fg-faint">Wijzig de eerste (uitgelichte) foto. Opslaan gebeurt direct.</p>
-                    <CloudinaryUpload value={prods[p.id] ?? []} onChange={(ids) => setProdImage(p.id, ids)} multiple={false} />
+
+                    <div className="mb-4">
+                      <label className="mb-1 block text-sm font-medium">Prijs (€)</label>
+                      <input
+                        value={prodPrices[p.id] ?? ''}
+                        onChange={(e) => setProdPriceInput(p.id, e.target.value)}
+                        onBlur={() => commitProdPrice(p.id)}
+                        onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); }}
+                        inputMode="decimal"
+                        className="input w-40"
+                      />
+                      <p className="mt-1 text-xs text-fg-faint">Opslaan gebeurt zodra je het veld verlaat.</p>
+                    </div>
+
+                    <label className="mb-1 block text-sm font-medium">Afbeeldingen</label>
+                    <p className="mb-3 text-xs text-fg-faint">Voeg foto's toe of verwijder ze. De eerste foto is de uitgelichte foto. Opslaan gebeurt direct.</p>
+                    <CloudinaryUpload value={prods[p.id] ?? []} onChange={(ids) => setProdImages(p.id, ids)} multiple />
                   </div>
                 ))}
               </div>

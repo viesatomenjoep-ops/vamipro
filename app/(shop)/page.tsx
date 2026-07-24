@@ -39,7 +39,7 @@ const CAT_IMAGES: Record<string, string> = {
 };
 const CAT_DESC: Record<string, string> = {
   'exterieur': 'Wassen, reinigen en beschermen — alles voor lak, velgen en glas.',
-  'droogdoeken': 'Van 500 tot 1200 GSM — streeploos en krasvrij drogen.',
+  'droogdoeken': 'Van 500 tot 1600 GSM — streeploos en krasvrij drogen.',
   'washandschoenen': 'Coral fleece & chenille — houdt vuil vast, niet op je lak.',
   'interieur': 'Microvezel en verzorging voor dashboard, leer en stof.',
   'accessoires': 'Emmers, borstels, sponzen — de tools van de pro.',
@@ -213,7 +213,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ===== DROOGDOEK 1200 GSM ===== */}
+      {/* ===== DROOGDOEK 1600 GSM ===== */}
       {towel && (
         <section className="relative overflow-hidden border-y hairline bg-[color:var(--panel)]/40">
           <div className="relative flex min-h-[92svh] items-center py-20">
@@ -233,7 +233,7 @@ export default async function HomePage() {
                   <p className="eyebrow" data-cms-key="towel_badge">{t('towel_badge', 'Bestseller')}</p>
                   <h2 className="h-section mt-4"><span data-cms-key="towel_title_1">{t('towel_title_1', 'De dikste droogdoek')}</span><br /><span data-cms-key="towel_title_2">{t('towel_title_2', 'die we verkopen.')}</span></h2>
                   <p className="mt-5 max-w-xl text-lg text-fg-muted" data-cms-key="towel_intro">
-                    {t('towel_intro', '1200 gram per vierkante meter twisted-loop microvezel. Eén doek, één auto, nul strepen — zonder ooit de lak te raken.')}
+                    {t('towel_intro', '1600 gram per vierkante meter twisted-loop microvezel. Eén doek, één auto, nul strepen — zonder ooit de lak te raken.')}
                   </p>
                 </Reveal>
                 <ul className="mt-7 space-y-3">
@@ -257,7 +257,7 @@ export default async function HomePage() {
                         <span data-cms-key="towel_button">{t('towel_button', 'Shop de droogdoek')}</span> <ArrowRight size={16} />
                       </Link>
                     </Magnetic>
-                    <span className="disp text-2xl">{euro(towel.price_cents)}</span>
+                    <span className="disp text-2xl" data-cms-product-price={towel.id}>{euro(towel.price_cents)}</span>
                   </div>
                 </Reveal>
               </div>
@@ -281,7 +281,7 @@ export default async function HomePage() {
                 {t('xxl_intro', 'Alles wat je nodig hebt voor de perfecte wasbeurt en detailing — in één doos. Inclusief droogdoek, washandschoen, emmer met grit guard en meer.')}
               </p>
               <div className="relative flex items-baseline gap-4">
-                <span className="disp text-4xl md:text-5xl">{pakket ? euro(pakket.price_cents) : '€ 189,95'}</span>
+                <span className="disp text-4xl md:text-5xl" {...(pakket ? { 'data-cms-product-price': pakket.id } : {})}>{pakket ? euro(pakket.price_cents) : '€ 189,95'}</span>
                 <span className="text-fg-faint line-through decoration-bad/70">€ 207,20</span>
               </div>
               <div className="relative mt-2">
@@ -315,7 +315,7 @@ export default async function HomePage() {
         <div className="grid gap-3.5 md:grid-cols-3">
           {[
             [t('ritual_1_title', 'Wassen'), t('ritual_1_text', 'Snow foam weekt het vuil los, de grit guard houdt je washandschoen schoon. Contactloos waar het kan, veilig waar het moet.'), 'ritual_1_title', 'ritual_1_text'],
-            [t('ritual_2_title', 'Drogen'), t('ritual_2_text', 'De 1200 GSM droogdoek neemt alles in één beweging op. Geen strepen, geen swirls — de lak blijft onaangeraakt.'), 'ritual_2_title', 'ritual_2_text'],
+            [t('ritual_2_title', 'Drogen'), t('ritual_2_text', 'De 1600 GSM droogdoek neemt alles in één beweging op. Geen strepen, geen swirls — de lak blijft onaangeraakt.'), 'ritual_2_title', 'ritual_2_text'],
             [t('ritual_3_title', 'Detailen'), t('ritual_3_text', 'Borstels, sponzen en microvezel voor velgen, naden en interieur. De details maken het verschil tussen schoon en showroom.'), 'ritual_3_title', 'ritual_3_text'],
           ].map(([title, d, titleKey, textKey], i) => (
             <Reveal key={i} delay={i * 110}>

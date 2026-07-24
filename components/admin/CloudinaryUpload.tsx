@@ -61,6 +61,7 @@ export default function CloudinaryUpload({
   };
 
   const removeImage = (idToRemove: string) => {
+    if (typeof window !== 'undefined' && !window.confirm('Weet je zeker dat je deze afbeelding wilt verwijderen?')) return;
     onChange(value.filter(id => id !== idToRemove));
   };
 

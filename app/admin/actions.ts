@@ -115,6 +115,20 @@ export async function setProductImage(productId: string, publicId: string) {
   revalidatePath('/', 'layout');
 }
 
+export async function setProductImages(productId: string, publicIds: string[]) {
+  const supabase = createServiceClient();
+  const next = Array.isArray(publicIds) ? publicIds.filter(Boolean) : [];
+  await supabase.from('products').update({ cloudinary_images: next }).eq('id', productId);
+  revalidatePath('/', 'layout');
+}
+
+export async function setProductPrice(productId: string, priceCents: number) {
+  const supabase = createServiceClient();
+  const cents = Math.max(0, Math.round(Number(priceCents) || 0));
+  await supabase.from('products').update({ price_cents: cents }).eq('id', productId);
+  revalidatePath('/', 'layout');
+}
+
 export async function saveSettings(formData: FormData) {
   const supabase = createServiceClient();
   

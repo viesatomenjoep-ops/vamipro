@@ -40,7 +40,7 @@ export default function ProductCard({ p }: { p: any }) {
         <p className="mt-1.5 line-clamp-2 text-xs text-fg-muted sm:text-[13px]">{p.short_description}</p>
         <div className="mt-auto flex items-center justify-between pt-4">
           <div className="flex flex-wrap items-baseline gap-2.5">
-            <span className="disp text-base text-fg sm:text-[17px]">{euro(p.price_cents)}</span>
+            <span className="disp text-base text-fg sm:text-[17px]" data-cms-product-price={p.id}>{euro(p.price_cents)}</span>
             {oldPrice && (
               <span className="text-xs text-fg-faint line-through decoration-bad/70 sm:text-sm">
                 {euro(oldPrice)}

@@ -19,6 +19,7 @@ import { useEffect } from 'react';
  *   - { type: 'cms-cat-text', id, field, value }        (categorie 'name' of 'desc' bijwerken)
  *   - { type: 'cms-cat-image', id, url }                (categorie-afbeelding; leeg → origineel)
  *   - { type: 'cms-product-image', id, url }            (productfoto; leeg → origineel)
+ *   - { type: 'cms-product-price', id, value }           (productprijs live bijwerken)
  */
 export default function CmsBridge() {
   useEffect(() => {
@@ -30,9 +31,9 @@ export default function CmsBridge() {
     const style = document.createElement('style');
     style.setAttribute('data-cms-style', '1');
     style.textContent = `
-      [data-cms-key],[data-cms-image],[data-cms-cat],[data-cms-product]{cursor:pointer;transition:outline-color .12s ease;}
-      [data-cms-key]:hover,[data-cms-image]:hover,[data-cms-cat]:hover,[data-cms-product]:hover{outline:2px dashed #3b82f6 !important;outline-offset:2px;}
-      [data-cms-key].cms-selected,[data-cms-image].cms-selected,[data-cms-cat].cms-selected,[data-cms-product].cms-selected{outline:2px solid #2563eb !important;outline-offset:2px;}
+      [data-cms-key],[data-cms-image],[data-cms-cat],[data-cms-product],[data-cms-product-price]{cursor:pointer;transition:outline-color .12s ease;}
+      [data-cms-key]:hover,[data-cms-image]:hover,[data-cms-cat]:hover,[data-cms-product]:hover,[data-cms-product-price]:hover{outline:2px dashed #3b82f6 !important;outline-offset:2px;}
+      [data-cms-key].cms-selected,[data-cms-image].cms-selected,[data-cms-cat].cms-selected,[data-cms-product].cms-selected,[data-cms-product-price].cms-selected{outline:2px solid #2563eb !important;outline-offset:2px;}
     `;
     document.head.appendChild(style);
 
@@ -45,7 +46,7 @@ export default function CmsBridge() {
 
     const findEl = (target: EventTarget | null): HTMLElement | null => {
       if (!(target instanceof Element)) return null;
-      return target.closest('[data-cms-key],[data-cms-image],[data-cms-cat],[data-cms-product]');
+      return target.closest('[data-cms-key],[data-cms-image],[data-cms-cat],[data-cms-product],[data-cms-product-price]');
     };
 
     const select = (el: HTMLElement) => {
@@ -60,7 +61,12 @@ export default function CmsBridge() {
       e.stopPropagation();
       select(el);
 
-      // Volgorde: product > categorie > afbeelding (hero) > tekst.
+      // Volgorde: prijs > product > categorie > afbeelding (hero) > tekst.
+      const priceId = el.getAttribute('data-cms-product-price');
+      if (priceId) {
+        window.parent?.postMessage({ type: 'cms-product-click', id: priceId }, '*');
+        return;
+      }
       const productId = el.getAttribute('data-cms-product');
       if (productId) {
         window.parent?.postMessage({ type: 'cms-product-click', id: productId }, '*');
@@ -127,6 +133,14 @@ export default function CmsBridge() {
         document
           .querySelectorAll<HTMLImageElement>(`[data-cms-product="${data.id}"]`)
           .forEach((img) => { img.src = url || (img.dataset.cmsOriginalSrc ?? ''); });
+        return;
+      }
+
+      if (data.type === 'cms-product-price' && typeof data.id === 'string') {
+        const value = String(data.value ?? '');
+        document
+          .querySelectorAll<HTMLElement>(`[data-cms-product-price="${data.id}"]`)
+          .forEach((el) => { el.textContent = value; });
         return;
       }
     };
