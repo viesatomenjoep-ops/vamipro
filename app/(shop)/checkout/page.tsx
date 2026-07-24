@@ -7,8 +7,8 @@ import { Lock, ShieldCheck } from 'lucide-react';
 
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
-type ShopCfg = { shippingCents: number; freeShipCents: number; discountCode: string; discountPercent: number };
-const DEFAULT_CFG: ShopCfg = { shippingCents: 695, freeShipCents: 7000, discountCode: 'VAMIPRO10', discountPercent: 10 };
+type ShopCfg = { shippingCents: number; shippingCentsBe: number; freeShipCents: number; discountCode: string; discountPercent: number };
+const DEFAULT_CFG: ShopCfg = { shippingCents: 695, shippingCentsBe: 850, freeShipCents: 7000, discountCode: 'VAMIPRO10', discountPercent: 10 };
 
 export default function CheckoutPage() {
   const { items, subtotalCents } = useCart();
@@ -19,6 +19,7 @@ export default function CheckoutPage() {
       .then((r) => r.json())
       .then((d) => setCfg({
         shippingCents: d.shippingCents ?? DEFAULT_CFG.shippingCents,
+        shippingCentsBe: d.shippingCentsBe ?? DEFAULT_CFG.shippingCentsBe,
         freeShipCents: d.freeShipCents ?? DEFAULT_CFG.freeShipCents,
         discountCode: (d.discountCode ?? DEFAULT_CFG.discountCode).toUpperCase(),
         discountPercent: d.discountPercent ?? DEFAULT_CFG.discountPercent,
@@ -40,7 +41,7 @@ export default function CheckoutPage() {
 
   const sub = subtotalCents();
   const disc = useCart().discountCode ? Math.round(sub * cfg.discountPercent / 100) : 0;
-  const shipping = sub >= cfg.freeShipCents ? 0 : cfg.shippingCents;
+  const shipping = sub >= cfg.freeShipCents ? 0 : (f.country === 'BE' ? cfg.shippingCentsBe : cfg.shippingCents);
   const total = sub - disc + shipping;
 
   async function pay() {

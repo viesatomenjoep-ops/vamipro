@@ -39,7 +39,8 @@ export async function POST(req: NextRequest) {
       return { product: p, quantity: i.quantity, line };
     });
 
-    const shippingCents = subtotal >= cfg.freeShipCents ? 0 : cfg.shippingCents;
+    const baseShipping = body.shipping.country === 'BE' ? cfg.shippingCentsBe : cfg.shippingCents;
+    const shippingCents = subtotal >= cfg.freeShipCents ? 0 : baseShipping;
 
     let discountCents = 0;
     if ((body.discountCode ?? '').toUpperCase() === cfg.discountCode) {

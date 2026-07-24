@@ -1,7 +1,8 @@
 import { getContent } from '@/lib/content';
 
 export type ShopConfig = {
-  shippingCents: number;
+  shippingCents: number;    // Nederland
+  shippingCentsBe: number;  // België
   freeShipCents: number;
   discountCode: string;
   discountPercent: number;
@@ -12,6 +13,7 @@ export type ShopConfig = {
 // aan het gedrag zolang de winkelier niets instelt.
 const DEFAULTS: ShopConfig = {
   shippingCents: 695,
+  shippingCentsBe: 850,
   freeShipCents: 7000,
   discountCode: 'VAMIPRO10',
   discountPercent: 10,
@@ -41,6 +43,7 @@ export async function getShopConfig(): Promise<ShopConfig> {
 
   return {
     shippingCents: eurosToCents(t('shipping_cost_eur', ''), DEFAULTS.shippingCents),
+    shippingCentsBe: eurosToCents(t('shipping_cost_be_eur', ''), DEFAULTS.shippingCentsBe),
     freeShipCents: eurosToCents(t('free_shipping_eur', ''), DEFAULTS.freeShipCents),
     discountCode: (discountCodeRaw || DEFAULTS.discountCode).toUpperCase(),
     discountPercent: parsePercent(t('discount_percent', ''), DEFAULTS.discountPercent),

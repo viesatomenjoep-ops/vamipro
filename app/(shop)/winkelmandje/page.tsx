@@ -7,8 +7,8 @@ import { Minus, Plus, X, ArrowLeft } from 'lucide-react';
 
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
-type ShopCfg = { shippingCents: number; freeShipCents: number; discountCode: string; discountPercent: number };
-const DEFAULT_CFG: ShopCfg = { shippingCents: 695, freeShipCents: 7000, discountCode: 'VAMIPRO10', discountPercent: 10 };
+type ShopCfg = { shippingCents: number; shippingCentsBe: number; freeShipCents: number; discountCode: string; discountPercent: number };
+const DEFAULT_CFG: ShopCfg = { shippingCents: 695, shippingCentsBe: 850, freeShipCents: 7000, discountCode: 'VAMIPRO10', discountPercent: 10 };
 
 export default function CartPage() {
   const { items, setQty, remove, subtotalCents, discountCode, setDiscountCode } = useCart();
@@ -19,6 +19,7 @@ export default function CartPage() {
       .then((r) => r.json())
       .then((d) => setCfg({
         shippingCents: d.shippingCents ?? DEFAULT_CFG.shippingCents,
+        shippingCentsBe: d.shippingCentsBe ?? DEFAULT_CFG.shippingCentsBe,
         freeShipCents: d.freeShipCents ?? DEFAULT_CFG.freeShipCents,
         discountCode: (d.discountCode ?? DEFAULT_CFG.discountCode).toUpperCase(),
         discountPercent: d.discountPercent ?? DEFAULT_CFG.discountPercent,
@@ -93,7 +94,8 @@ export default function CartPage() {
             {discountCode && (
               <div className="flex justify-between text-accent font-medium"><span>Korting ({cfg.discountPercent}%)</span><span>-{euro(Math.round(sub * cfg.discountPercent / 100))}</span></div>
             )}
-            <div className="flex justify-between text-fg-muted"><span>Verzending</span><span className="text-fg">{freeShip ? 'Gratis' : euro(cfg.shippingCents)}</span></div>
+            <div className="flex justify-between text-fg-muted"><span>Verzending (NL)</span><span className="text-fg">{freeShip ? 'Gratis' : euro(cfg.shippingCents)}</span></div>
+            {!freeShip && <div className="flex justify-between text-fg-faint text-xs"><span>België</span><span>{euro(cfg.shippingCentsBe)}</span></div>}
           </div>
           {!freeShip && (
             <div className="mt-4 rounded-sm border hairline bg-panel-2 p-3 text-xs text-fg-muted">

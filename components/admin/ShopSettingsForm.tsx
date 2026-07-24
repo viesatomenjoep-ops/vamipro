@@ -31,8 +31,12 @@ export default function ShopSettingsForm({ content }: { content: Record<string, 
       <div className="card space-y-4">
         <h3 className="font-medium">Verzending</h3>
         <div>
-          <label className="block text-sm font-medium mb-1">Verzendkosten (€)</label>
+          <label className="block text-sm font-medium mb-1">Verzendkosten Nederland (€)</label>
           <input name="shipping_cost_eur" defaultValue={content.shipping_cost_eur ?? ''} placeholder="6,95" className="input w-full" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">Verzendkosten België (€)</label>
+          <input name="shipping_cost_be_eur" defaultValue={content.shipping_cost_be_eur ?? ''} placeholder="8,50" className="input w-full" />
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Gratis verzending vanaf (€)</label>
@@ -58,7 +62,7 @@ export default function ShopSettingsForm({ content }: { content: Record<string, 
         </button>
         {saved && <span className="text-sm text-accent">Opgeslagen ✓ — de website is direct bijgewerkt.</span>}
       </div>
-      <p className="text-xs text-fg-faint">Laat een veld leeg om de standaardwaarde te gebruiken (verzending € 6,95, gratis vanaf € 70, code VAMIPRO10, 10%).</p>
+      <p className="text-xs text-fg-faint">Laat een veld leeg om de standaardwaarde te gebruiken (verzending NL € 6,95 / BE € 8,50, gratis vanaf € 70, code VAMIPRO10, 10%).</p>
     </form>
   );
 }
