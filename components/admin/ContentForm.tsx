@@ -35,7 +35,7 @@ export default function ContentForm({ content }: { content: Record<string, strin
               <div className="mb-1 flex items-center justify-between">
                 <label className="block text-sm font-medium">{f.label}</label>
                 {values[f.key] ? (
-                  <button type="button" onClick={() => setVal(f.key, '')} className="text-xs text-red-400 hover:underline">Wis</button>
+                  <button type="button" onClick={() => { if (confirm('Weet je zeker dat je deze tekst wilt wissen? De standaardtekst wordt dan weer gebruikt.')) setVal(f.key, ''); }} className="text-xs text-red-400 hover:underline">Wis</button>
                 ) : null}
               </div>
               {f.type === 'textarea' ? (
