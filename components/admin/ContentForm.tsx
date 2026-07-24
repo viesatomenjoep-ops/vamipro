@@ -109,7 +109,9 @@ export default function ContentForm({ content }: { content: Record<string, strin
   const [saved, setSaved] = useState(false);
   const [values, setValues] = useState<Record<string, string>>(() => {
     const init: Record<string, string> = {};
-    CONTENT_FIELDS.forEach((g) => g.items.forEach((f) => { init[f.key] = content[f.key] ?? ''; }));
+    // Vul elk veld voor met de opgeslagen tekst, of anders de huidige standaardtekst,
+    // zodat de winkelier de bestaande tekst ziet staan en direct kan aanpassen.
+    CONTENT_FIELDS.forEach((g) => g.items.forEach((f) => { init[f.key] = content[f.key] ?? f.def; }));
     return init;
   });
   const setVal = (k: string, v: string) => setValues((prev) => ({ ...prev, [k]: v }));
