@@ -52,15 +52,10 @@ export default function MobileMenu({ categories }: { categories: any[] }) {
         className={`fixed inset-0 z-[120] ${isOpen ? 'visible' : 'invisible'}`}
         aria-hidden={!isOpen}
       >
-        {/* Achtergrond die invaagt */}
+        {/* Volledig zwarte achtergrond die invaagt */}
         <div
           className={`absolute inset-0 bg-black transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
           onClick={() => setIsOpen(false)}
-        />
-        {/* Subtiele accent-gloed bovenaan */}
-        <div
-          className={`pointer-events-none absolute inset-x-0 top-0 h-1/2 transition-opacity duration-700 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
-          style={{ background: 'radial-gradient(120% 80% at 100% 0%, var(--accent-glow, rgba(59,107,255,.18)), transparent 60%)' }}
         />
 
         <div className="relative flex h-[100dvh] flex-col p-6 sm:p-8">
