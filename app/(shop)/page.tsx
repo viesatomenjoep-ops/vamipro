@@ -130,7 +130,7 @@ export default async function HomePage() {
       </section>
 
       {/* ===== MARQUEE ===== */}
-      <Marquee items={['Showroomglans', 'Swirl-vrij wassen', '1200 GSM', 'Krasvrij drogen', 'Voor 16:00 = vandaag verzonden']} />
+      <Marquee items={['Showroomglans', 'Swirl-vrij wassen', '1600 GSM', 'Krasvrij drogen', 'Voor 16:00 = vandaag verzonden']} />
 
       {/* ===== COLLECTIE — alle categorieën ===== */}
       <section id="collectie" className="wrap py-20 md:py-32">
