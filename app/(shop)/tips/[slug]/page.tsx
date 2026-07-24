@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const title = t(`tip_${slug}_metatitle`, tp.metaTitle);
   const description = t(`tip_${slug}_metadesc`, tp.metaDesc);
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: { canonical: `/tips/${slug}` },
     openGraph: { title, description, url: `/tips/${slug}`, type: 'article' },
