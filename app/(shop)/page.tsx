@@ -115,10 +115,10 @@ export default async function HomePage() {
         <div className="fade-up relative z-10 border-t border-white/10 bg-black/35 backdrop-blur-md" style={{ '--d': '2550ms' } as React.CSSProperties}>
           <div className="wrap flex flex-wrap items-center justify-between gap-x-10 gap-y-4 py-5">
             {[
-              { v: 1600, suf: ' GSM', label: t('stat_1_label', 'Dikste droogdoek'), cmsKey: 'stat_1_label' },
-              { v: 70, pre: '€ ', suf: '+', label: t('stat_2_label', 'Gratis verzending'), cmsKey: 'stat_2_label' },
-              { v: 14, label: t('stat_3_label', 'Dagen bedenktijd'), cmsKey: 'stat_3_label' },
-              { v: 16, suf: ':00', label: t('stat_4_label', 'Besteld = vandaag verzonden'), cmsKey: 'stat_4_label' },
+              { v: parseInt(t('stat_1_value', '1600'), 10) || 1600, suf: t('stat_1_suffix', ' GSM'), label: t('stat_1_label', 'Dikste droogdoek'), cmsKey: 'stat_1_label' },
+              { v: parseInt(t('stat_2_value', '70'), 10) || 70, pre: t('stat_2_prefix', '€ '), suf: t('stat_2_suffix', '+'), label: t('stat_2_label', 'Gratis verzending'), cmsKey: 'stat_2_label' },
+              { v: parseInt(t('stat_3_value', '14'), 10) || 14, suf: t('stat_3_suffix', ''), label: t('stat_3_label', 'Dagen bedenktijd'), cmsKey: 'stat_3_label' },
+              { v: parseInt(t('stat_4_value', '16'), 10) || 16, suf: t('stat_4_suffix', ':00'), label: t('stat_4_label', 'Besteld = vandaag verzonden'), cmsKey: 'stat_4_label' },
             ].map((s, i) => (
               <div key={i}>
                 <div className="disp text-xl text-white md:text-2xl">
@@ -132,7 +132,7 @@ export default async function HomePage() {
       </section>
 
       {/* ===== MARQUEE ===== */}
-      <Marquee items={['Showroomglans', 'Swirl-vrij wassen', '1600 GSM', 'Krasvrij drogen', 'Voor 16:00 = vandaag verzonden']} />
+      <Marquee items={t('marquee_items', 'Showroomglans, Swirl-vrij wassen, 1600 GSM, Krasvrij drogen, Voor 16:00 = vandaag verzonden').split(',').map((x) => x.trim()).filter(Boolean)} />
 
       {/* ===== COLLECTIE — alle categorieën ===== */}
       <section id="collectie" className="wrap py-20 md:py-32">

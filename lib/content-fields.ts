@@ -16,10 +16,25 @@ export const CONTENT_FIELDS: { group: string; items: { key: string; label: strin
   {
     group: 'Statistiek-balk (onder de hero)',
     items: [
+      { key: 'stat_1_value', label: 'Statistiek 1 — getal', def: '1600' },
+      { key: 'stat_1_suffix', label: 'Statistiek 1 — achtervoegsel', def: ' GSM' },
       { key: 'stat_1_label', label: 'Statistiek 1 — label', def: 'Dikste droogdoek' },
+      { key: 'stat_2_prefix', label: 'Statistiek 2 — voorvoegsel', def: '€ ' },
+      { key: 'stat_2_value', label: 'Statistiek 2 — getal', def: '70' },
+      { key: 'stat_2_suffix', label: 'Statistiek 2 — achtervoegsel', def: '+' },
       { key: 'stat_2_label', label: 'Statistiek 2 — label', def: 'Gratis verzending' },
+      { key: 'stat_3_value', label: 'Statistiek 3 — getal', def: '14' },
+      { key: 'stat_3_suffix', label: 'Statistiek 3 — achtervoegsel', def: '' },
       { key: 'stat_3_label', label: 'Statistiek 3 — label', def: 'Dagen bedenktijd' },
+      { key: 'stat_4_value', label: 'Statistiek 4 — getal', def: '16' },
+      { key: 'stat_4_suffix', label: 'Statistiek 4 — achtervoegsel', def: ':00' },
       { key: 'stat_4_label', label: 'Statistiek 4 — label', def: 'Besteld = vandaag verzonden' },
+    ],
+  },
+  {
+    group: 'Marquee (lopende balk)',
+    items: [
+      { key: 'marquee_items', label: 'Teksten (gescheiden door komma’s)', type: 'textarea', def: 'Showroomglans, Swirl-vrij wassen, 1600 GSM, Krasvrij drogen, Voor 16:00 = vandaag verzonden' },
     ],
   },
   {
