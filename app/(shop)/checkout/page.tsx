@@ -143,9 +143,9 @@ export default function CheckoutPage() {
 
   return (
     <div className="wrap pt-0 pb-8 md:pt-0 md:pb-12">
-      <h1 className="h-section flex items-center gap-3">
+      <h1 className="h-section flex flex-wrap items-center gap-x-3 gap-y-1">
         Afrekenen
-        <span className="text-sm font-body font-normal text-fg-faint flex items-center gap-1.5 mt-1">
+        <span className="text-sm font-body font-normal text-fg-faint flex items-center gap-1.5">
           <Lock size={12} className="text-accent" /> Beveiligde kassa
         </span>
       </h1>
@@ -164,14 +164,17 @@ export default function CheckoutPage() {
           <section>
             <p className="eyebrow">02 · Bezorgadres</p>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <input value={f.firstName} className="field text-base w-full" placeholder="Voornaam" autoComplete="given-name" onChange={set('firstName')} />
-              <input value={f.lastName} className="field text-base w-full" placeholder="Achternaam" autoComplete="family-name" onChange={set('lastName')} />
-              <input value={f.postalCode} className="field text-base w-full" placeholder="Postcode" autoComplete="postal-code" onChange={set('postalCode')} />
-              <input value={f.houseNumber} className="field text-base w-full" placeholder="Huisnummer" autoComplete="address-line2" onChange={set('houseNumber')} />
-              <input value={f.address} className="field sm:col-span-2 text-base w-full" placeholder="Straatnaam" autoComplete="address-line1" onChange={set('address')} />
-              <input value={f.city} className="field text-base w-full" placeholder="Plaats" autoComplete="address-level2" onChange={set('city')} />
-              <input value={f.addition} className="field text-base w-full" placeholder="Toevoeging (optioneel)" autoComplete="address-line3" onChange={set('addition')} />
-              <select className="field sm:col-span-2 text-base w-full" value={f.country} autoComplete="country" onChange={set('country')}>
+              <input value={f.firstName} className="field text-base w-full min-w-0" placeholder="Voornaam" autoComplete="given-name" onChange={set('firstName')} />
+              <input value={f.lastName} className="field text-base w-full min-w-0" placeholder="Achternaam" autoComplete="family-name" onChange={set('lastName')} />
+              <input value={f.postalCode} className="field text-base w-full min-w-0" placeholder="Postcode" autoComplete="postal-code" onChange={set('postalCode')} />
+              {/* Huisnummer + toevoeging altijd naast elkaar */}
+              <div className="grid grid-cols-2 gap-3 min-w-0">
+                <input value={f.houseNumber} className="field text-base w-full min-w-0" placeholder="Huisnr." autoComplete="address-line2" onChange={set('houseNumber')} />
+                <input value={f.addition} className="field text-base w-full min-w-0" placeholder="Toev." autoComplete="address-line3" onChange={set('addition')} />
+              </div>
+              <input value={f.address} className="field sm:col-span-2 text-base w-full min-w-0" placeholder="Straatnaam" autoComplete="address-line1" onChange={set('address')} />
+              <input value={f.city} className="field sm:col-span-2 text-base w-full min-w-0" placeholder="Plaats" autoComplete="address-level2" onChange={set('city')} />
+              <select className="field sm:col-span-2 text-base w-full min-w-0" value={f.country} autoComplete="country" onChange={set('country')}>
                 <option value="NL">Nederland</option>
                 <option value="BE">België</option>
               </select>
