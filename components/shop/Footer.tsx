@@ -32,7 +32,7 @@ export default async function Footer() {
           </ul>
         </div>
         <div>
-          <p className="eyebrow mb-4">Gidsen &amp; tips</p>
+          <p className="eyebrow mb-4">Gidsen <span className="amp">&amp;</span> tips</p>
           <ul className="space-y-2 text-sm text-fg-muted">
             <li><Link href="/tips" className="hover:text-accent">Detailing tips</Link></li>
             {LANDING_PAGES.map((p) => (

@@ -23,7 +23,7 @@ export default async function TipsPage() {
     <div className="wrap py-16 md:py-24">
       <div className="max-w-3xl">
         <p className="eyebrow">Kennisbank</p>
-        <h1 className="h-section mt-3">Detailing tips &amp; gidsen</h1>
+        <h1 className="h-section mt-3">Detailing tips <span className="amp">&amp;</span> gidsen</h1>
         <p className="mt-4 text-lg text-fg-muted">
           Praktische uitleg om je auto krasvrij te wassen, streeploos te drogen en langer mooi te houden —
           geschreven voor liefhebbers én professionals.
