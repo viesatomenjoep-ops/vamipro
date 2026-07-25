@@ -11,60 +11,84 @@ const transporter = nodemailer.createTransport({
 
 const euro = (c: number) => `€ ${(c / 100).toFixed(2).replace('.', ',')}`;
 
-function confirmationHtml(order: any, invoiceUrl: string) {
+const BRAND = '#141414';
+const ACCENT = '#b8863b';
+
+// E-mailveilige opmaak (tabellen i.p.v. flexbox — flex werkt niet in Gmail/Outlook).
+// Vaste, nette breedte van 600px die op mobiel de volledige breedte gebruikt.
+function emailShell(inner: string) {
   return `
-  <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#141414">
-    <div style="background:#141414;padding:24px 28px">
-      <span style="color:#fff;font-size:22px;font-weight:bold;letter-spacing:2px">VAMIPRO</span>
-    </div>
-    <div style="padding:28px">
-      <h2 style="margin:0 0 8px">Bedankt voor je bestelling!</h2>
-      <p style="color:#555;margin:0 0 20px">
-        Je bestelling <b>${order.order_number}</b> is betaald en wordt verwerkt.
-      </p>
-      <div style="border:1px solid #eee;border-radius:6px;padding:16px 18px;margin-bottom:20px">
-        <div style="display:flex;justify-content:space-between;font-size:15px">
-          <span style="color:#666">Totaalbedrag</span>
-          <b>${euro(order.total_cents)}</b>
-        </div>
-      </div>
-      <a href="${invoiceUrl}" style="display:inline-block;background:#b8863b;color:#fff;text-decoration:none;padding:11px 22px;border-radius:6px;font-weight:bold">
-        Download je factuur
-      </a>
-      <p style="color:#888;font-size:13px;margin-top:14px">Je factuur zit ook als bijlage bij deze e-mail.</p>
-      <p style="color:#555;margin-top:24px">Je ontvangt een track &amp; trace-link zodra je pakket is verzonden.</p>
-      <p style="color:#141414;margin-top:24px">— Vami Pro</p>
-    </div>
-    <div style="border-top:1px solid #eee;padding:16px 28px;color:#999;font-size:12px">
-      Vami Pro · Kroonstraat 33, 4879 AV Etten-Leur · KVK 86797840 · BTW NL004313236B58
-    </div>
-  </div>`;
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f3f4f6;margin:0;padding:24px 12px;font-family:Arial,Helvetica,sans-serif">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:100%;background:#ffffff;border-radius:10px;overflow:hidden;border:1px solid #ececec">
+          <tr>
+            <td style="background:${BRAND};padding:22px 32px">
+              <span style="color:#ffffff;font-size:22px;font-weight:bold;letter-spacing:2px">VAMIPRO</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:32px">
+              ${inner}
+            </td>
+          </tr>
+          <tr>
+            <td style="border-top:1px solid #eeeeee;padding:18px 32px;color:#999999;font-size:12px;line-height:1.5">
+              Vami Pro &middot; Kroonstraat 33, 4879 AV Etten-Leur &middot; KVK 86797840 &middot; BTW NL004313236B58
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>`;
+}
+
+// Knop die betrouwbaar rendert in e-mailclients (achtergrond op de <td>).
+function emailButton(href: string, label: string) {
+  return `
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:4px 0">
+    <tr>
+      <td align="center" style="background:${ACCENT};border-radius:8px">
+        <a href="${href}" style="display:inline-block;padding:13px 28px;color:#ffffff;text-decoration:none;font-weight:bold;font-size:15px">${label}</a>
+      </td>
+    </tr>
+  </table>`;
+}
+
+function confirmationHtml(order: any, invoiceUrl: string) {
+  const inner = `
+    <h1 style="margin:0 0 10px;font-size:23px;color:${BRAND}">Bedankt voor je bestelling!</h1>
+    <p style="margin:0 0 24px;color:#555555;font-size:15px;line-height:1.6">
+      Je bestelling <b style="color:${BRAND}">${order.order_number}</b> is betaald en wordt verwerkt.
+    </p>
+
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #eeeeee;border-radius:8px;margin:0 0 26px">
+      <tr>
+        <td align="left" style="padding:16px 20px;font-size:15px;color:#666666">Totaalbedrag</td>
+        <td align="right" style="padding:16px 20px;font-size:17px;color:${BRAND};font-weight:bold;white-space:nowrap">${euro(order.total_cents)}</td>
+      </tr>
+    </table>
+
+    ${emailButton(invoiceUrl, 'Download je factuur')}
+    <p style="color:#888888;font-size:13px;margin:14px 0 0">Je factuur zit ook als bijlage (PDF) bij deze e-mail.</p>
+    <p style="color:#555555;font-size:15px;line-height:1.6;margin:26px 0 0">Je ontvangt een track &amp; trace-link zodra je pakket is verzonden.</p>
+    <p style="color:${BRAND};font-size:15px;margin:26px 0 0">— Vami Pro</p>`;
+  return emailShell(inner);
 }
 
 function shippingHtml(order: any) {
   const tracking = order.tracking_url
-    ? `<a href="${order.tracking_url}" style="display:inline-block;background:#b8863b;color:#fff;text-decoration:none;padding:11px 22px;border-radius:6px;font-weight:bold">
-         Volg je pakket
-       </a>
-       <p style="color:#888;font-size:13px;margin-top:14px">Trackingnummer: <b>${order.tracking_number ?? ''}</b></p>`
-    : `<p style="color:#555">Je pakket is onderweg.</p>`;
-  return `
-  <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#141414">
-    <div style="background:#141414;padding:24px 28px">
-      <span style="color:#fff;font-size:22px;font-weight:bold;letter-spacing:2px">VAMIPRO</span>
-    </div>
-    <div style="padding:28px">
-      <h2 style="margin:0 0 8px">Je pakket is onderweg! 📦</h2>
-      <p style="color:#555;margin:0 0 20px">
-        Goed nieuws — je bestelling <b>${order.order_number}</b> is verzonden.
-      </p>
-      ${tracking}
-      <p style="color:#141414;margin-top:24px">— Vami Pro</p>
-    </div>
-    <div style="border-top:1px solid #eee;padding:16px 28px;color:#999;font-size:12px">
-      Vami Pro · Kroonstraat 33, 4879 AV Etten-Leur · KVK 86797840 · BTW NL004313236B58
-    </div>
-  </div>`;
+    ? `${emailButton(order.tracking_url, 'Volg je pakket')}
+       <p style="color:#888888;font-size:13px;margin:14px 0 0">Trackingnummer: <b style="color:${BRAND}">${order.tracking_number ?? ''}</b></p>`
+    : `<p style="color:#555555;font-size:15px">Je pakket is onderweg.</p>`;
+  const inner = `
+    <h1 style="margin:0 0 10px;font-size:23px;color:${BRAND}">Je pakket is onderweg! 📦</h1>
+    <p style="margin:0 0 24px;color:#555555;font-size:15px;line-height:1.6">
+      Goed nieuws — je bestelling <b style="color:${BRAND}">${order.order_number}</b> is verzonden.
+    </p>
+    ${tracking}
+    <p style="color:${BRAND};font-size:15px;margin:26px 0 0">— Vami Pro</p>`;
+  return emailShell(inner);
 }
 
 export async function sendShippingNotification(order: any) {
