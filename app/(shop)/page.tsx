@@ -12,6 +12,7 @@ import ParallaxImg from '@/components/shop/ParallaxImg';
 import { cldUrl } from '@/lib/cloudinary';
 import { getContent } from '@/lib/content';
 import { getCustomSections } from '@/lib/custom-sections';
+import { getGoogleReviews } from '@/lib/google-reviews';
 import { FAQ_DEFAULTS } from '@/lib/content-fields';
 import GiantCounter from '@/components/shop/GiantCounter';
 import LiveSearchBar from '@/components/shop/LiveSearchBar';
@@ -80,7 +81,14 @@ export default async function HomePage() {
   // Supabase { data: null, error } terug (het gooit geen error) — dan tonen we niets.
   const { data: reviewsData } = await supabase.from('reviews')
     .select('*').eq('is_active', true).order('sort_order');
-  const reviews: any[] = reviewsData ?? [];
+  const adminReviews: any[] = reviewsData ?? [];
+
+  // Echte Google-reviews (indien Places API + Place-ID zijn ingesteld); anders
+  // vallen we terug op de zelf-beheerde reviews.
+  const google = await getGoogleReviews();
+  const reviews: any[] = (google && google.reviews.length)
+    ? google.reviews.map((g, i) => ({ id: `g${i}`, author: g.author, rating: g.rating, body: g.text, source: 'Google', location: g.time }))
+    : adminReviews;
 
   const t = await getContent();
   const customSections = await getCustomSections();
@@ -374,6 +382,12 @@ export default async function HomePage() {
             <Reveal>
               <p className="eyebrow" data-cms-key="reviews_eyebrow">{t('reviews_eyebrow', 'Reviews')}</p>
               <h2 className="h-section mt-4" data-cms-key="reviews_title">{t('reviews_title', 'Wat klanten over ons zeggen.')}</h2>
+              {google && google.total > 0 && (
+                <div className="mt-4 flex flex-wrap items-center gap-2.5 text-sm text-fg-muted">
+                  <span className="text-lg leading-none tracking-[0.15em] text-accent-bright">{'★'.repeat(Math.round(google.rating))}</span>
+                  <span><b className="text-fg">{google.rating.toFixed(1).replace('.', ',')}</b> gemiddeld · {google.total} reviews op Google</span>
+                </div>
+              )}
             </Reveal>
           </div>
           <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
