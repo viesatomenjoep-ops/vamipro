@@ -69,6 +69,19 @@ export default function ShopSettingsForm({ content }: { content: Record<string, 
         </div>
       </div>
 
+      <div className="card space-y-4">
+        <h3 className="font-medium">Google reviews</h3>
+        <p className="text-xs text-fg-faint">
+          Plak hier je <b>Google review-link</b> (in je Google Bedrijfsprofiel → "Meer reviews krijgen" → link kopiëren).
+          Klanten krijgen dan automatisch een knop "Laat een review achter" in de bevestigings- én verzendmail.
+          Laat leeg om het review-verzoek uit te schakelen.
+        </p>
+        <div>
+          <label className="block text-sm font-medium mb-1">Google review-link</label>
+          <input name="google_review_url" defaultValue={content.google_review_url ?? ''} placeholder="https://g.page/r/…  of  https://search.google.com/local/writereview?placeid=…" className="input w-full" />
+        </div>
+      </div>
+
       <div className="flex items-center gap-3">
         <button type="submit" disabled={loading} className="btn btn-primary">
           {loading ? 'Bezig met opslaan...' : 'Instellingen opslaan'}

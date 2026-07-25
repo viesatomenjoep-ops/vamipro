@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import { SITE_URL } from './site-url';
+import { getContent } from './content';
 
 // Mails worden verstuurd vanaf je Gmail-account (Vamipro2@gmail.com).
 // GMAIL_USER = het volledige gmail-adres, GMAIL_APP_PASSWORD = een Google "app-wachtwoord" (niet je gewone wachtwoord).
@@ -92,7 +93,29 @@ function orderSummaryHtml(order: any, items: any[]) {
   </table>`;
 }
 
-function confirmationHtml(order: any, invoiceUrl: string, items: any[] = []) {
+// Review-verzoek — alleen tonen als er een Google-review-link is ingesteld
+// (Instellingen → google_review_url). Zo vraag je klanten automatisch om een review.
+function reviewBlock(reviewUrl: string) {
+  if (!reviewUrl) return '';
+  return `
+    <div style="margin:26px 0 0;border-top:1px solid #eeeeee;padding-top:24px">
+      <p style="margin:0 0 8px;color:${BRAND};font-size:15px;font-weight:bold">Blij met je aankoop? &#11088;</p>
+      <p style="margin:0 0 14px;color:#555555;font-size:14px;line-height:1.6">Een review op Google helpt ons enorm en kost je maar 30 seconden. Alvast bedankt!</p>
+      ${emailButton(reviewUrl, 'Laat een review achter')}
+    </div>`;
+}
+
+// Haalt de ingestelde Google-review-link op (leeg = geen review-blok tonen).
+async function getReviewUrl(): Promise<string> {
+  try {
+    const t = await getContent();
+    return (t('google_review_url', '') || '').trim();
+  } catch {
+    return '';
+  }
+}
+
+function confirmationHtml(order: any, invoiceUrl: string, items: any[] = [], reviewUrl = '') {
   const inner = `
     <h1 style="margin:0 0 10px;font-size:23px;color:${BRAND}">Bedankt voor je bestelling!</h1>
     <p style="margin:0 0 24px;color:#555555;font-size:15px;line-height:1.6">
@@ -104,11 +127,12 @@ function confirmationHtml(order: any, invoiceUrl: string, items: any[] = []) {
     ${emailButton(invoiceUrl, 'Download je factuur')}
     <p style="color:#888888;font-size:13px;margin:14px 0 0">Je factuur zit ook als bijlage (PDF) bij deze e-mail.</p>
     <p style="color:#555555;font-size:15px;line-height:1.6;margin:26px 0 0">Je ontvangt een track &amp; trace-link zodra je pakket is verzonden.</p>
+    ${reviewBlock(reviewUrl)}
     <p style="color:${BRAND};font-size:15px;margin:26px 0 0">— Vami Pro</p>`;
   return emailShell(inner);
 }
 
-function shippingHtml(order: any) {
+function shippingHtml(order: any, reviewUrl = '') {
   const tracking = order.tracking_url
     ? `${emailButton(order.tracking_url, 'Volg je pakket')}
        <p style="color:#888888;font-size:13px;margin:14px 0 0">Trackingnummer: <b style="color:${BRAND}">${order.tracking_number ?? ''}</b></p>`
@@ -119,18 +143,20 @@ function shippingHtml(order: any) {
       Goed nieuws — je bestelling <b style="color:${BRAND}">${order.order_number}</b> is verzonden.
     </p>
     ${tracking}
+    ${reviewBlock(reviewUrl)}
     <p style="color:${BRAND};font-size:15px;margin:26px 0 0">— Vami Pro</p>`;
   return emailShell(inner);
 }
 
 export async function sendShippingNotification(order: any) {
+  const reviewUrl = await getReviewUrl();
   await transporter.sendMail({
     from: `"Vami Pro" <${GMAIL_USER}>`,
     to: order.ship_email,
     bcc: GMAIL_USER,
     replyTo: 'info@vamipro.nl',
     subject: `Je bestelling ${order.order_number} is verzonden`,
-    html: shippingHtml(order),
+    html: shippingHtml(order, reviewUrl),
   });
 }
 
@@ -144,6 +170,7 @@ export async function sendOrderConfirmation(
   const attachments = pdfBuffer
     ? [{ filename: `factuur-${invoiceNumber ?? order.order_number}.pdf`, content: pdfBuffer }]
     : undefined;
+  const reviewUrl = await getReviewUrl();
 
   await transporter.sendMail({
     from: `"Vami Pro" <${GMAIL_USER}>`,
@@ -151,7 +178,7 @@ export async function sendOrderConfirmation(
     bcc: GMAIL_USER, // kopie van elke bestelling + factuur naar jezelf
     replyTo: 'info@vamipro.nl',
     subject: `Bevestiging bestelling ${order.order_number}`,
-    html: confirmationHtml(order, invoiceUrl, items),
+    html: confirmationHtml(order, invoiceUrl, items, reviewUrl),
     attachments,
   });
 }
