@@ -59,21 +59,31 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Store',
+  '@id': `${siteUrl}/#store`,
   name: 'Vami Pro',
+  alternateName: ['VamiPro', 'Vami Pro Car Care'],
   url: siteUrl,
   email: 'info@vamipro.nl',
   image: `${siteUrl}/images/logo.png`,
+  logo: `${siteUrl}/icon.png`,
   description: 'Professionele car-detailingproducten voor een showroomresultaat. Geleverd in NL en BE.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Kroonstraat 33',
     postalCode: '4879 AV',
     addressLocality: 'Etten-Leur',
+    addressRegion: 'Noord-Brabant',
     addressCountry: 'NL',
   },
+  geo: { '@type': 'GeoCoordinates', latitude: 51.5719, longitude: 4.6376 },
   vatID: 'NL004313236B58',
   taxID: '86797840',
   areaServed: ['NL', 'BE'],
+  priceRange: '€€',
+  // sameAs koppelt je site aan je andere officiële profielen (Google Bedrijfsprofiel,
+  // Instagram, Facebook). Vul hier de exacte URL's in — dan herkent Google dat het
+  // om hetzelfde bedrijf gaat en verschijnt de site sneller bij je merknaam.
+  sameAs: [] as string[],
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
