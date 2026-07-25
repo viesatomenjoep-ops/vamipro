@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
         tracking_url: label.trackingUrl, label_pdf_url: label.labelUrl,
       }).eq('id', orderId);
 
-      try { await sendOrderConfirmation(order, invoiceUrl, invoiceBuffer, invoiceNumber); } catch (e) { console.error('Email', e); }
+      try { await sendOrderConfirmation(order, invoiceUrl, invoiceBuffer, invoiceNumber, items ?? []); } catch (e) { console.error('Email', e); }
     }
 
     if (['expired', 'canceled', 'failed'].includes(payment.status)) {

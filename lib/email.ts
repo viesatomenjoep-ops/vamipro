@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { SITE_URL } from './site-url';
 
 // Mails worden verstuurd vanaf je Gmail-account (Vamipro2@gmail.com).
 // GMAIL_USER = het volledige gmail-adres, GMAIL_APP_PASSWORD = een Google "app-wachtwoord" (niet je gewone wachtwoord).
@@ -23,8 +24,8 @@ function emailShell(inner: string) {
       <td align="center">
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:100%;background:#ffffff;border-radius:10px;overflow:hidden;border:1px solid #ececec">
           <tr>
-            <td style="background:${BRAND};padding:22px 32px">
-              <span style="color:#ffffff;font-size:22px;font-weight:bold;letter-spacing:2px">VAMIPRO</span>
+            <td style="background:${BRAND};padding:20px 32px">
+              <img src="${SITE_URL}/images/logo.png" alt="Vami Pro" height="46" style="height:46px;width:auto;display:block;border:0;outline:none;text-decoration:none" />
             </td>
           </tr>
           <tr>
@@ -55,19 +56,50 @@ function emailButton(href: string, label: string) {
   </table>`;
 }
 
-function confirmationHtml(order: any, invoiceUrl: string) {
+// Bestelde producten + samenvatting (subtotaal, korting, verzending, totaal).
+function orderSummaryHtml(order: any, items: any[]) {
+  const rows = (items ?? []).map((it) => `
+    <tr>
+      <td style="padding:7px 0;font-size:14px;color:#333333;line-height:1.4">${it.quantity}&times; ${it.product_name}</td>
+      <td align="right" style="padding:7px 0;font-size:14px;color:#333333;white-space:nowrap">${euro(it.line_total_cents)}</td>
+    </tr>`).join('');
+
+  const subtotal = order.subtotal_cents ?? 0;
+  const shipping = order.shipping_cents ?? 0;
+  const total = order.total_cents ?? 0;
+  const discount = Math.max(0, subtotal + shipping - total);
+
+  const sumLine = (label: string, value: string, o: { bold?: boolean; accent?: boolean } = {}) => `
+    <tr>
+      <td style="padding:5px 0;font-size:${o.bold ? '15px' : '14px'};color:${o.bold ? BRAND : '#666666'}${o.bold ? ';font-weight:bold' : ''}">${label}</td>
+      <td align="right" style="padding:5px 0;font-size:${o.bold ? '17px' : '14px'};font-weight:${o.bold ? 'bold' : 'normal'};color:${o.accent ? ACCENT : o.bold ? BRAND : '#333333'};white-space:nowrap">${value}</td>
+    </tr>`;
+
+  return `
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #eeeeee;border-radius:8px;margin:0 0 26px">
+    ${rows ? `<tr><td style="padding:14px 20px 6px">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">${rows}</table>
+    </td></tr>
+    <tr><td style="padding:0 20px"><div style="border-top:1px solid #eeeeee;font-size:0;line-height:0">&nbsp;</div></td></tr>` : ''}
+    <tr><td style="padding:8px 20px 14px">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        ${sumLine('Subtotaal', euro(subtotal))}
+        ${discount > 0 ? sumLine('Korting', '-' + euro(discount), { accent: true }) : ''}
+        ${sumLine('Verzending', shipping === 0 ? 'Gratis' : euro(shipping))}
+        ${sumLine('Totaalbedrag', euro(total), { bold: true })}
+      </table>
+    </td></tr>
+  </table>`;
+}
+
+function confirmationHtml(order: any, invoiceUrl: string, items: any[] = []) {
   const inner = `
     <h1 style="margin:0 0 10px;font-size:23px;color:${BRAND}">Bedankt voor je bestelling!</h1>
     <p style="margin:0 0 24px;color:#555555;font-size:15px;line-height:1.6">
       Je bestelling <b style="color:${BRAND}">${order.order_number}</b> is betaald en wordt verwerkt.
     </p>
 
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #eeeeee;border-radius:8px;margin:0 0 26px">
-      <tr>
-        <td align="left" style="padding:16px 20px;font-size:15px;color:#666666">Totaalbedrag</td>
-        <td align="right" style="padding:16px 20px;font-size:17px;color:${BRAND};font-weight:bold;white-space:nowrap">${euro(order.total_cents)}</td>
-      </tr>
-    </table>
+    ${orderSummaryHtml(order, items)}
 
     ${emailButton(invoiceUrl, 'Download je factuur')}
     <p style="color:#888888;font-size:13px;margin:14px 0 0">Je factuur zit ook als bijlage (PDF) bij deze e-mail.</p>
@@ -107,6 +139,7 @@ export async function sendOrderConfirmation(
   invoiceUrl: string,
   pdfBuffer?: Buffer,
   invoiceNumber?: string,
+  items: any[] = [],
 ) {
   const attachments = pdfBuffer
     ? [{ filename: `factuur-${invoiceNumber ?? order.order_number}.pdf`, content: pdfBuffer }]
@@ -118,7 +151,7 @@ export async function sendOrderConfirmation(
     bcc: GMAIL_USER, // kopie van elke bestelling + factuur naar jezelf
     replyTo: 'info@vamipro.nl',
     subject: `Bevestiging bestelling ${order.order_number}`,
-    html: confirmationHtml(order, invoiceUrl),
+    html: confirmationHtml(order, invoiceUrl, items),
     attachments,
   });
 }
