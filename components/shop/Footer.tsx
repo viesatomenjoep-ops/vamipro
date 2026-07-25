@@ -21,6 +21,20 @@ export default async function Footer() {
           <p className="mt-3 max-w-xs text-sm text-fg-muted">
             {t('footer_tagline', 'Professionele detailingproducten voor een showroomresultaat. Geleverd in NL en BE.')}
           </p>
+          <div className="mt-5 flex items-center gap-3">
+            <a
+              href="https://www.tiktok.com/@vamipro"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Vami Pro op TikTok"
+              className="group flex h-11 w-11 items-center justify-center rounded-full border hairline text-fg-muted transition-colors hover:border-accent hover:text-accent"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5">
+                <path d="M16.5 0h-3.2v13.6a2.7 2.7 0 1 1-2-2.6V7.7a6.2 6.2 0 1 0 5.2 6.1V6.9a7.5 7.5 0 0 0 4.4 1.4V5.1a4.4 4.4 0 0 1-3-1.4A4.4 4.4 0 0 1 16.5 0Z" />
+              </svg>
+            </a>
+            <span className="text-sm text-fg-muted">Volg ons op TikTok</span>
+          </div>
         </div>
         <div>
           <p className="eyebrow mb-4">Shop</p>

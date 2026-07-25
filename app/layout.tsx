@@ -80,10 +80,11 @@ const organizationJsonLd = {
   taxID: '86797840',
   areaServed: ['NL', 'BE'],
   priceRange: '€€',
-  // sameAs koppelt je site aan je andere officiële profielen (Google Bedrijfsprofiel,
-  // Instagram, Facebook). Vul hier de exacte URL's in — dan herkent Google dat het
-  // om hetzelfde bedrijf gaat en verschijnt de site sneller bij je merknaam.
-  sameAs: [] as string[],
+  // sameAs koppelt je site aan je andere officiële profielen (TikTok, Instagram,
+  // Google Bedrijfsprofiel). Zo herkent Google dat het om hetzelfde bedrijf gaat.
+  sameAs: [
+    'https://www.tiktok.com/@vamipro',
+  ],
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
