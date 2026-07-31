@@ -48,8 +48,9 @@ export default function CategoryForm({ category, parents }: { category?: any, pa
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">Korte omschrijving</label>
-          <textarea name="description" defaultValue={category?.description} rows={3} className="input w-full" />
+          <label className="block text-sm font-medium mb-1">Omschrijving / SEO-tekst</label>
+          <p className="text-xs text-fg-faint mb-2">Verschijnt als introtekst bovenaan de categoriepagina én als omschrijving in Google-zoekresultaten. Schrijf 1–3 zinnen met relevante zoekwoorden.</p>
+          <textarea name="description" defaultValue={category?.description} rows={4} className="input w-full" />
         </div>
 
         <div>

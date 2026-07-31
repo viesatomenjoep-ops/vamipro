@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { createServiceClient } from '@/lib/supabase/server';
+import { cldUrl } from '@/lib/cloudinary';
 import ProductCard from '@/components/shop/ProductCard';
 import { notFound } from 'next/navigation';
 
@@ -14,29 +15,33 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const supabase = createServiceClient();
-  const { data: cat } = await supabase.from('categories').select('name, description, slug').eq('slug', slug).single();
-  
+  const { data: cat } = await supabase.from('categories').select('name, description, slug, cloudinary_image').eq('slug', slug).single();
+
   if (!cat) return { title: 'Categorie niet gevonden' };
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
   const url = `${siteUrl}/categorie/${cat.slug}`;
+  const desc = cat.description || `Bekijk onze professionele producten in de categorie ${cat.name}.`;
+  const image = cat.cloudinary_image ? cldUrl(cat.cloudinary_image, { w: 1200, h: 630 }) : `${siteUrl}/images/hero-audi.jpg`;
 
-  return { 
-    title: `${cat.name} | VaMiPro`, 
-    description: cat.description || `Bekijk onze professionele producten in de categorie ${cat.name}.`,
+  return {
+    title: `${cat.name} | VaMiPro`,
+    description: desc,
     alternates: {
       canonical: url,
     },
     openGraph: {
       title: `${cat.name} | VaMiPro`,
-      description: cat.description || `Bekijk onze professionele producten in de categorie ${cat.name}.`,
+      description: desc,
       url,
       type: 'website',
+      images: [{ url: image, width: 1200, height: 630, alt: cat.name }],
     },
     twitter: {
-      card: 'summary',
+      card: 'summary_large_image',
       title: `${cat.name} | VaMiPro`,
-      description: cat.description || `Bekijk onze professionele producten in de categorie ${cat.name}.`,
+      description: desc,
+      images: [image],
     },
   };
 }
@@ -75,11 +80,34 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
     ],
   };
 
+  // Collectie-structuur: laat Google de producten in deze categorie als lijst zien
+  // (versterkt interne links + geeft context aan de categoriepagina).
+  const itemListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${cat.name} | Vami Pro`,
+    url: `${siteUrl}/categorie/${cat.slug}`,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: products?.length ?? 0,
+      itemListElement: (products ?? []).map((p: any, i: number) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: p.name,
+        url: `${siteUrl}/producten/${p.slug}`,
+      })),
+    },
+  };
+
   return (
     <div className="wrap pt-0 pb-16 lg:pt-0">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
       />
       <div className="flex items-center gap-3 text-sm text-fg-faint">
         <Link href="/producten" className="hover:text-accent">Producten</Link>
@@ -88,7 +116,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       <div className="mt-2 flex items-baseline gap-4">
         <h1 className="h-section">{cat.name}</h1>
       </div>
-      {cat.description && <p className="mt-2 max-w-lg text-fg-muted">{cat.description}</p>}
+      {cat.description && <p className="mt-3 max-w-2xl text-fg-muted leading-relaxed">{cat.description}</p>}
 
       {subcats && subcats.length > 0 && (
         <nav className="mt-4 flex gap-2 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>

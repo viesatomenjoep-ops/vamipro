@@ -99,6 +99,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     ],
   };
 
+  // Prijs blijft standaard een jaar geldig (voorkomt "priceValidUntil"-waarschuwing in Search Console).
+  const priceValidUntil = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -106,6 +108,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     image: imgs.length > 0 ? imgs.map(img => cldUrl(img, { w: 800 })) : [`${siteUrl}/images/hero-audi.jpg`],
     description: p.description || p.short_description || '',
     sku: p.sku || p.slug,
+    mpn: p.sku || p.slug,
     brand: {
       '@type': 'Brand',
       name: p.brand || 'VaMiPro',
@@ -115,8 +118,30 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       url: `${siteUrl}/producten/${p.slug}`,
       priceCurrency: 'EUR',
       price: (p.price_cents / 100).toFixed(2),
+      priceValidUntil,
       itemCondition: 'https://schema.org/NewCondition',
       availability: p.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      seller: { '@type': 'Organization', name: 'Vami Pro' },
+      // Verzendkosten (NL € 7,95) — vult het "shipping"-veld voor Google-productresultaten.
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: { '@type': 'MonetaryAmount', value: '7.95', currency: 'EUR' },
+        shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'NL' },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 1, unitCode: 'DAY' },
+          transitTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 2, unitCode: 'DAY' },
+        },
+      },
+      // 14 dagen bedenktijd — matcht de retourinfo op de pagina.
+      hasMerchantReturnPolicy: {
+        '@type': 'MerchantReturnPolicy',
+        applicableCountry: 'NL',
+        returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+        merchantReturnDays: 14,
+        returnMethod: 'https://schema.org/ReturnByMail',
+        returnFees: 'https://schema.org/FreeReturn',
+      },
     },
   };
 
