@@ -9,7 +9,7 @@ export default async function Header() {
   const { data: categories } = await supabase.from('categories').select('*').is('parent_id', null).order('sort_order');
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/75 backdrop-blur-xl supports-[backdrop-filter]:bg-black/60">
+    <header className="sticky top-0 z-50 border-b border-black/10 bg-white/85 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70 dark:border-white/10 dark:bg-black/75 dark:supports-[backdrop-filter]:bg-black/60">
       <div className="wrap flex h-24 md:h-28 items-center justify-between">
         <Link href="/" className="flex items-center shrink-0">
           <img
@@ -28,7 +28,7 @@ export default async function Header() {
               key={l.href}
               prefetch
               href={l.href}
-              className="relative py-1 text-white/70 transition-colors duration-200 hover:text-white after:absolute after:-bottom-0.5 after:left-0 after:h-[1.5px] after:w-full after:origin-left after:scale-x-0 after:bg-accent-bright after:transition-transform after:duration-300 hover:after:scale-x-100 whitespace-nowrap"
+              className="relative py-1 text-black/65 transition-colors duration-200 hover:text-black dark:text-white/70 dark:hover:text-white after:absolute after:-bottom-0.5 after:left-0 after:h-[1.5px] after:w-full after:origin-left after:scale-x-0 after:bg-accent-bright after:transition-transform after:duration-300 hover:after:scale-x-100 whitespace-nowrap"
             >
               {l.label}
             </Link>

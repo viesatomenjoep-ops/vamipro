@@ -138,6 +138,10 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
 }
+/* In light mode geen blauwe gloed — een neutrale, subtiele lijn. */
+:root:not(.dark) .gloss-line {
+  background: var(--line);
+}
 
 /* Light-sweep over media (de "polijst"-beweging — signature) */
 .img-sheen { position: relative; overflow: hidden; }
@@ -282,7 +286,8 @@ body {
 /* ---------- Logo chip (houdt het witte logo leesbaar op lichte achtergrond) ---------- */
 .logo-chip { align-items: center; }
 :root:not(.dark) .logo-chip {
-  background: rgba(10, 11, 15, 0.62);
+  background: #FFFFFF;
+  border: 1px solid var(--line);
   border-radius: 12px;
   padding: 12px 20px;
 }
