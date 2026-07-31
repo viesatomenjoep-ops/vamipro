@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { mollie } from '@/lib/mollie';
 import { createServiceClient } from '@/lib/supabase/server';
 import { getShopConfig } from '@/lib/shop-config';
+import { getDiscountUsedCount } from '@/lib/discount';
 import { z } from 'zod';
 
 const schema = z.object({
@@ -46,8 +47,16 @@ export async function POST(req: NextRequest) {
     let shippingCents = subtotal >= cfg.freeShipCents ? 0 : baseShipping;
 
     let discountCents = 0;
-    if (codeUpper === cfg.discountCode) {
-      discountCents = Math.round(subtotal * cfg.discountPercent / 100);
+    let appliedDiscountCode: string | null = null;
+    if (codeUpper && codeUpper === cfg.discountCode) {
+      // "Eerste X klanten"-limiet: als de actie vol is, geen korting toepassen.
+      const capReached =
+        cfg.discountMaxUses > 0 &&
+        (await getDiscountUsedCount(cfg.discountCode)) >= cfg.discountMaxUses;
+      if (!capReached) {
+        discountCents = Math.round(subtotal * cfg.discountPercent / 100);
+        appliedDiscountCode = cfg.discountCode;
+      }
     }
 
     let total = subtotal - discountCents + shippingCents;
@@ -74,6 +83,17 @@ export async function POST(req: NextRequest) {
       payment_method: body.paymentMethod,
     }).select().single();
     if (error || !order) return NextResponse.json({ error: 'Order aanmaken mislukt' }, { status: 500 });
+
+    // Registreer de gebruikte actiecode (best-effort): pas actief zodra de
+    // migratie discount_cap.sql is uitgevoerd. Faalt 'ie (kolom bestaat nog niet),
+    // dan blijft de bestelling gewoon doorgaan.
+    if (appliedDiscountCode) {
+      try {
+        await supabase.from('orders')
+          .update({ discount_code: appliedDiscountCode, discount_cents: discountCents })
+          .eq('id', order.id);
+      } catch { /* kolommen bestaan nog niet — negeren */ }
+    }
 
     await supabase.from('order_items').insert(items.map((it) => ({
       order_id: order.id, product_id: it.product.id, product_name: it.product.name,

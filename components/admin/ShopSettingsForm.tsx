@@ -45,14 +45,26 @@ export default function ShopSettingsForm({ content }: { content: Record<string, 
       </div>
 
       <div className="card space-y-4">
-        <h3 className="font-medium">Kortingscode</h3>
+        <h3 className="font-medium">Kortingscode / actie</h3>
+        <p className="text-xs text-fg-faint">
+          Deze code verschijnt automatisch in de pop-up én in het winkelmandje. Klanten kunnen 'm daar toepassen.
+          Nu actief: <b>VAMIPRO50</b> — 50% korting voor de eerste 100 klanten.
+        </p>
         <div>
           <label className="block text-sm font-medium mb-1">Kortingscode</label>
-          <input name="discount_code" defaultValue={content.discount_code ?? ''} placeholder="VAMIPRO10" className="input w-full" />
+          <input name="discount_code" defaultValue={content.discount_code ?? ''} placeholder="VAMIPRO50" className="input w-full" />
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Kortingspercentage (%)</label>
-          <input name="discount_percent" defaultValue={content.discount_percent ?? ''} placeholder="10" className="input w-full" />
+          <input name="discount_percent" defaultValue={content.discount_percent ?? ''} placeholder="50" className="input w-full" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">Aantal klanten dat de code mag gebruiken</label>
+          <p className="text-xs text-fg-faint mb-2">
+            Bijv. <b>100</b> voor "de eerste 100 klanten". Zodra dat aantal bestellingen de code heeft gebruikt,
+            stopt de korting automatisch en verdwijnt de pop-up. Laat leeg of vul <b>0</b> in voor onbeperkt.
+          </p>
+          <input name="discount_max_uses" type="number" min={0} defaultValue={content.discount_max_uses ?? ''} placeholder="100" className="input w-40" />
         </div>
       </div>
 
@@ -105,7 +117,7 @@ export default function ShopSettingsForm({ content }: { content: Record<string, 
         </button>
         {saved && <span className="text-sm text-accent">Opgeslagen ✓ — de website is direct bijgewerkt.</span>}
       </div>
-      <p className="text-xs text-fg-faint">Laat een veld leeg om de standaardwaarde te gebruiken (verzending NL € 7,95 / BE € 11,95, gratis vanaf € 70, code VAMIPRO10, 10%).</p>
+      <p className="text-xs text-fg-faint">Laat een veld leeg om de standaardwaarde te gebruiken (verzending NL € 7,95 / BE € 11,95, gratis vanaf € 70, code VAMIPRO50, 50% voor de eerste 100 klanten).</p>
     </form>
   );
 }

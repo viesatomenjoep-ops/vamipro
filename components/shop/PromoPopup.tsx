@@ -5,8 +5,12 @@ import { X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useCart } from '@/lib/cart-store';
 
+type PromoCfg = { discountCode: string; discountPercent: number; discountMaxUses: number; discountRemaining: number | null };
+const DEFAULT_PROMO: PromoCfg = { discountCode: 'VAMIPRO50', discountPercent: 50, discountMaxUses: 100, discountRemaining: null };
+
 export default function PromoPopup() {
   const [isOpen, setIsOpen] = useState(false);
+  const [promo, setPromo] = useState<PromoCfg>(DEFAULT_PROMO);
   const { setDiscountCode } = useCart();
   const pathname = usePathname();
 
@@ -14,8 +18,24 @@ export default function PromoPopup() {
   // hele scherm af en zou hij het invullen van adres/betaling blokkeren.
   const suppressed = !!pathname && (pathname.startsWith('/checkout') || pathname.startsWith('/winkelmandje'));
 
+  // Actuele actie ophalen (percentage, code, resterende plekken).
   useEffect(() => {
-    if (suppressed) { setIsOpen(false); return; }
+    fetch('/api/shop-config')
+      .then((r) => r.json())
+      .then((d) => setPromo({
+        discountCode: (d.discountCode ?? DEFAULT_PROMO.discountCode).toUpperCase(),
+        discountPercent: d.discountPercent ?? DEFAULT_PROMO.discountPercent,
+        discountMaxUses: d.discountMaxUses ?? DEFAULT_PROMO.discountMaxUses,
+        discountRemaining: d.discountRemaining ?? null,
+      }))
+      .catch(() => {});
+  }, []);
+
+  // Actie is vol (gelimiteerd én geen plekken meer) → geen pop-up tonen.
+  const promoFull = promo.discountRemaining !== null && promo.discountRemaining <= 0;
+
+  useEffect(() => {
+    if (suppressed || promoFull) { setIsOpen(false); return; }
     // Check if the user has already seen the popup in this session
     const seen = sessionStorage.getItem('vami-promo-seen');
     if (!seen) {
@@ -25,7 +45,7 @@ export default function PromoPopup() {
       }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [suppressed]);
+  }, [suppressed, promoFull]);
 
   const close = () => {
     setIsOpen(false);
@@ -33,11 +53,14 @@ export default function PromoPopup() {
   };
 
   const applyAndClose = () => {
-    setDiscountCode('VAMIPRO10');
+    setDiscountCode(promo.discountCode);
     close();
   };
 
-  if (!isOpen || suppressed) return null;
+  if (!isOpen || suppressed || promoFull) return null;
+
+  const limited = promo.discountMaxUses > 0;
+  const spotsLeft = promo.discountRemaining;
 
   return (
     <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6">
@@ -67,18 +90,26 @@ export default function PromoPopup() {
         {/* Content */}
         <div className="p-6 text-center sm:p-8">
           <span className="inline-block rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold uppercase tracking-widest text-accent">
-            Tijdelijke Actie
+            {limited ? `Alleen de eerste ${promo.discountMaxUses} klanten` : 'Tijdelijke Actie'}
           </span>
           <h2 className="mt-4 font-display text-2xl font-semibold leading-tight text-fg">
-            10% Korting op je bestelling
+            {promo.discountPercent}% Korting op je bestelling
           </h2>
           <p className="mt-3 text-fg-muted">
-            Krijg nu direct 10% korting op al onze professionele detailingproducten, zolang de voorraad strekt!
+            {limited
+              ? `Wees er snel bij! De eerste ${promo.discountMaxUses} klanten krijgen ${promo.discountPercent}% korting op al onze professionele detailingproducten.`
+              : `Krijg nu direct ${promo.discountPercent}% korting op al onze professionele detailingproducten, zolang de voorraad strekt!`}
           </p>
+
+          {limited && typeof spotsLeft === 'number' && (
+            <p className="mt-3 text-sm font-semibold text-accent">
+              Nog maar {spotsLeft} {spotsLeft === 1 ? 'plek' : 'plekken'} beschikbaar!
+            </p>
+          )}
 
           <div className="mt-6 rounded border hairline bg-panel-2 p-4 border-dashed border-line-strong">
             <p className="text-xs uppercase tracking-widest text-fg-faint mb-1">Jouw kortingscode:</p>
-            <p className="font-display text-2xl font-bold text-fg tracking-wider">VAMIPRO10</p>
+            <p className="font-display text-2xl font-bold text-fg tracking-wider">{promo.discountCode}</p>
           </div>
 
           <div className="mt-8 flex flex-col gap-3">

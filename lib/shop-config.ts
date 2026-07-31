@@ -6,18 +6,20 @@ export type ShopConfig = {
   freeShipCents: number;
   discountCode: string;
   discountPercent: number;
+  discountMaxUses: number;  // "eerste X klanten" — 0 = onbeperkt
   heroImage: string;
   oneCentCode: string;      // testcode: totaal €0,01 + gratis verzending (leeg = uit)
 };
 
-// Standaardwaarden = de huidige hardgecodeerde waarden. Zo verandert er niets
-// aan het gedrag zolang de winkelier niets instelt.
+// Standaardwaarden. De actieve lancering: eerste 100 klanten 50% met code VAMIPRO50.
+// Zodra de winkelier iets in de admin instelt, overrulet dat deze waarden.
 const DEFAULTS: ShopConfig = {
   shippingCents: 795,
   shippingCentsBe: 1195,
   freeShipCents: 7000,
-  discountCode: 'VAMIPRO10',
-  discountPercent: 10,
+  discountCode: 'VAMIPRO50',
+  discountPercent: 50,
+  discountMaxUses: 100,
   heroImage: '',
   oneCentCode: '',
 };
@@ -38,6 +40,15 @@ function parsePercent(raw: string | undefined, fallback: number): number {
   return value;
 }
 
+// Aantal keer dat een code gebruikt mag worden (bv. "eerste 100 klanten").
+// Leeg of 0 = onbeperkt.
+function parseMaxUses(raw: string | undefined, fallback: number): number {
+  if (raw === undefined || !raw.trim()) return fallback;
+  const value = parseInt(raw.trim().replace(/[^0-9]/g, ''), 10);
+  if (!Number.isFinite(value) || value < 0) return fallback;
+  return value;
+}
+
 export async function getShopConfig(): Promise<ShopConfig> {
   const t = await getContent();
 
@@ -49,6 +60,7 @@ export async function getShopConfig(): Promise<ShopConfig> {
     freeShipCents: eurosToCents(t('free_shipping_eur', ''), DEFAULTS.freeShipCents),
     discountCode: (discountCodeRaw || DEFAULTS.discountCode).toUpperCase(),
     discountPercent: parsePercent(t('discount_percent', ''), DEFAULTS.discountPercent),
+    discountMaxUses: parseMaxUses(t('discount_max_uses', ''), DEFAULTS.discountMaxUses),
     heroImage: t('hero_image', ''),
     oneCentCode: (t('one_cent_code', '').trim() || '').toUpperCase(),
   };

@@ -7,8 +7,8 @@ import { Minus, Plus, X, ArrowLeft, Check } from 'lucide-react';
 
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
-type ShopCfg = { shippingCents: number; shippingCentsBe: number; freeShipCents: number; discountCode: string; discountPercent: number; oneCentCode: string };
-const DEFAULT_CFG: ShopCfg = { shippingCents: 795, shippingCentsBe: 1195, freeShipCents: 7000, discountCode: 'VAMIPRO10', discountPercent: 10, oneCentCode: '' };
+type ShopCfg = { shippingCents: number; shippingCentsBe: number; freeShipCents: number; discountCode: string; discountPercent: number; oneCentCode: string; discountRemaining: number | null };
+const DEFAULT_CFG: ShopCfg = { shippingCents: 795, shippingCentsBe: 1195, freeShipCents: 7000, discountCode: 'VAMIPRO50', discountPercent: 50, oneCentCode: '', discountRemaining: null };
 
 export default function CartPage() {
   const { items, setQty, remove, subtotalCents, discountCode, setDiscountCode } = useCart();
@@ -24,6 +24,7 @@ export default function CartPage() {
         discountCode: (d.discountCode ?? DEFAULT_CFG.discountCode).toUpperCase(),
         discountPercent: d.discountPercent ?? DEFAULT_CFG.discountPercent,
         oneCentCode: (d.oneCentCode ?? DEFAULT_CFG.oneCentCode).toUpperCase(),
+        discountRemaining: d.discountRemaining ?? null,
       }))
       .catch(() => {});
   }, []);
@@ -32,6 +33,8 @@ export default function CartPage() {
   const freeShip = sub >= cfg.freeShipCents;
   const isOneCent = !!cfg.oneCentCode && (discountCode ?? '').toUpperCase() === cfg.oneCentCode;
   const total = isOneCent ? 1 : sub - (discountCode ? Math.round(sub * cfg.discountPercent / 100) : 0);
+  // Gelimiteerde actie ("eerste X klanten") is vol → code niet meer aanbieden/toepassen.
+  const promoFull = cfg.discountRemaining !== null && cfg.discountRemaining <= 0;
 
   if (!items.length) return (
     <div className="wrap py-28 text-center">
@@ -130,20 +133,29 @@ export default function CartPage() {
               </div>
             ) : (
               <>
-                <div className="mb-4 rounded-md bg-accent/10 p-3 text-center text-sm border border-accent/20">
-                  <p className="text-fg-muted mb-1.5">Profiteer direct van {cfg.discountPercent}% korting!</p>
-                  <div className="flex items-center justify-center gap-2">
-                    <span className="select-all bg-bg border hairline px-3 py-1 rounded font-display tracking-widest text-accent font-semibold">{cfg.discountCode}</span>
+                {!promoFull && (
+                  <div className="mb-4 rounded-md bg-accent/10 p-3 text-center text-sm border border-accent/20">
+                    <p className="text-fg-muted mb-1.5">Profiteer direct van {cfg.discountPercent}% korting!</p>
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="select-all bg-bg border hairline px-3 py-1 rounded font-display tracking-widest text-accent font-semibold">{cfg.discountCode}</span>
+                    </div>
+                    {typeof cfg.discountRemaining === 'number' && (
+                      <p className="mt-2 text-xs font-medium text-accent">Nog {cfg.discountRemaining} {cfg.discountRemaining === 1 ? 'plek' : 'plekken'} beschikbaar</p>
+                    )}
                   </div>
-                </div>
+                )}
                 <form onSubmit={(e) => {
                   e.preventDefault();
                   const code = (e.currentTarget.elements.namedItem('code') as HTMLInputElement).value;
                   const c = code.toUpperCase();
                   if (cfg.oneCentCode && c === cfg.oneCentCode) {
                     setDiscountCode(cfg.oneCentCode);
-                  } else if (c === 'START10' || c === cfg.discountCode) {
-                    setDiscountCode(cfg.discountCode);
+                  } else if (c === cfg.discountCode) {
+                    if (promoFull) {
+                      alert('Deze actie is helaas al vol — de korting kan niet meer worden toegepast.');
+                    } else {
+                      setDiscountCode(cfg.discountCode);
+                    }
                   } else {
                     alert('Ongeldige of verlopen kortingscode');
                   }
