@@ -72,6 +72,8 @@ export async function createSendcloudLabel(order: any, items: any[]) {
       },
       from_address: { sender_address_id: senderId },
       ship_with: { type: 'shipping_option_code', properties: { shipping_option_code: opt.code } },
+      // order_number hoort op shipment-niveau (zo verschijnt het bij de parcel in Sendcloud).
+      order_number: order.order_number,
       parcels: [{ weight: { value: weightKg, unit: 'kg' }, order_number: order.order_number }],
     }),
   });
@@ -82,10 +84,11 @@ export async function createSendcloudLabel(order: any, items: any[]) {
   }
 
   const parcel = Array.isArray(data.parcels) ? data.parcels[0] : null;
+  const labelDoc = (parcel?.documents ?? []).find((d: any) => d.type === 'label' || d.document_type === 'label');
   return {
-    parcelId: String(data.id),
+    parcelId: String(parcel?.id ?? data.id), // numerieke parcel-id (zoals in het Sendcloud-dashboard)
     trackingNumber: parcel?.tracking_number ?? data.tracking_number ?? null,
     trackingUrl: parcel?.tracking_url ?? data.tracking_url ?? null,
-    labelUrl: null, // label wordt in Sendcloud aangemaakt/geprint
+    labelUrl: labelDoc?.link ?? null,
   };
 }
