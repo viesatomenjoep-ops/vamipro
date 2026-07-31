@@ -81,6 +81,14 @@ export default function ShopSettingsForm({ content }: { content: Record<string, 
           <input name="google_review_url" defaultValue={content.google_review_url ?? ''} placeholder="https://g.page/r/…  of  https://search.google.com/local/writereview?placeid=…" className="input w-full" />
         </div>
         <div className="border-t hairline pt-4">
+          <label className="block text-sm font-medium mb-1">Automatische opvolg-review-mail — na hoeveel dagen?</label>
+          <p className="text-xs text-fg-faint mb-2">
+            Elke klant krijgt <b>één keer</b> automatisch een extra mailtje met het verzoek om een 5-sterren Google-review,
+            een aantal dagen ná de bestelling (als het pakket binnen is). Standaard <b>4 dagen</b>. Werkt alleen als hierboven een review-link staat.
+          </p>
+          <input name="review_request_delay_days" type="number" min={0} defaultValue={content.review_request_delay_days ?? ''} placeholder="4" className="input w-40" />
+        </div>
+        <div className="border-t hairline pt-4">
           <label className="block text-sm font-medium mb-1">Google-reviews op de site tonen — Place ID</label>
           <p className="text-xs text-fg-faint mb-2">
             Vul je <b>Google Place ID</b> in om je échte Google-reviews automatisch op de homepage te tonen.

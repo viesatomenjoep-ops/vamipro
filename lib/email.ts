@@ -183,6 +183,49 @@ export async function sendOrderConfirmation(
   });
 }
 
+// Losse opvolg-mail, een paar dagen ná de bestelling: puur gericht op een
+// 5-sterren Google-review. Pakkende, vriendelijke toon. Wordt door de cron
+// (/api/cron/review-requests) verstuurd zodra de klant het product heeft kunnen
+// gebruiken. Alleen versturen als er een Google-review-link is ingesteld.
+function reviewRequestHtml(order: any, reviewUrl: string) {
+  const naam = (order.ship_first_name || '').trim();
+  const hallo = naam ? `Hoi ${naam},` : 'Hoi,';
+  const inner = `
+    <h1 style="margin:0 0 6px;font-size:23px;color:${BRAND}">Al kunnen genieten van je aankoop? ✨</h1>
+    <p style="margin:0 0 20px;color:#999999;font-size:14px">${hallo}</p>
+    <p style="margin:0 0 18px;color:#555555;font-size:15px;line-height:1.65">
+      Je bestelling <b style="color:${BRAND}">${order.order_number}</b> is inmiddels bij je binnen — we hopen dat je auto weer straalt als nooit tevoren. 🚗💨
+    </p>
+    <p style="margin:0 0 22px;color:#555555;font-size:15px;line-height:1.65">
+      Zou je ons <b style="color:${BRAND}">30 seconden</b> willen geven? Een <b style="color:${ACCENT}">5-sterren review</b> op Google helpt ons enorm om te blijven groeien — en andere autoliefhebbers om ons te vinden. Je hulp betekent echt de wereld voor ons. 🙏
+    </p>
+    <div style="text-align:center;margin:6px 0 4px">
+      <p style="margin:0 0 14px;font-size:26px;letter-spacing:3px;line-height:1">⭐️ ⭐️ ⭐️ ⭐️ ⭐️</p>
+      ${emailButton(reviewUrl, 'Laat een review achter →')}
+    </div>
+    <p style="margin:24px 0 0;color:#888888;font-size:13px;line-height:1.6">
+      Niet helemaal tevreden? Mail ons dan even op <a href="mailto:info@vamipro.nl" style="color:${ACCENT}">info@vamipro.nl</a> — dan lossen we het samen op. 💪
+    </p>
+    <p style="color:${BRAND};font-size:15px;margin:24px 0 0">Bedankt en tot de volgende keer!<br/>— Team Vami Pro</p>`;
+  return emailShell(inner);
+}
+
+// Verstuurt de opvolg-review-mail naar de klant. Retourneert false als er geen
+// review-link is ingesteld (dan slaat de cron deze order over).
+export async function sendReviewRequest(order: any): Promise<boolean> {
+  const reviewUrl = await getReviewUrl();
+  if (!reviewUrl) return false;
+
+  await transporter.sendMail({
+    from: `"Vami Pro" <${GMAIL_USER}>`,
+    to: order.ship_email,
+    replyTo: 'info@vamipro.nl',
+    subject: `${order.ship_first_name ? order.ship_first_name + ', b' : 'B'}lij met je Vami Pro-aankoop? ⭐️`,
+    html: reviewRequestHtml(order, reviewUrl),
+  });
+  return true;
+}
+
 // Interne mail naar Donny bij elke betaalde bestelling: pakbon (met checklist)
 // + factuur als bijlage, klaar om te printen.
 export async function sendOwnerPackingSlip(
