@@ -89,7 +89,17 @@ export async function createSendcloudLabel(order: any, items: any[]) {
       ship_with: { type: 'shipping_option_code', properties: { shipping_option_code: opt.code } },
       // order_number hoort op shipment-niveau (zo verschijnt het bij de parcel in Sendcloud).
       order_number: order.order_number,
-      parcels: [{ weight: { value: weightKg, unit: 'kg' }, order_number: order.order_number }],
+      parcels: [{
+        weight: { value: weightKg, unit: 'kg' },
+        order_number: order.order_number,
+        // Productregels — zodat Sendcloud een pakbon met de producten kan printen.
+        parcel_items: (items ?? []).map((it: any) => ({
+          description: it.product_name,
+          quantity: it.quantity || 1,
+          sku: it.sku || undefined,
+          weight: { value: (((weights[it.product_id] ?? it.weight_grams ?? 500)) / 1000).toFixed(3), unit: 'kg' },
+        })),
+      }],
     }),
   });
   const body = await res.json();

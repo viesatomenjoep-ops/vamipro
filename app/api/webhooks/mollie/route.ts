@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { mollie } from '@/lib/mollie';
 import { createServiceClient } from '@/lib/supabase/server';
 import { generateInvoice } from '@/lib/invoice';
+import { generatePackingSlip } from '@/lib/packing-slip';
 import { createSendcloudLabel } from '@/lib/sendcloud';
-import { sendOrderConfirmation } from '@/lib/email';
+import { sendOrderConfirmation, sendOwnerPackingSlip } from '@/lib/email';
 
 export const runtime = 'nodejs';
 
@@ -41,6 +42,12 @@ export async function POST(req: NextRequest) {
       }).eq('id', orderId);
 
       try { await sendOrderConfirmation(order, invoiceUrl, invoiceBuffer, invoiceNumber, items ?? []); } catch (e) { console.error('Email', e); }
+
+      // Pakbon (met checklist) + factuur intern naar Donny mailen — klaar om te printen.
+      try {
+        const packingBuffer = await generatePackingSlip(order, items ?? []);
+        await sendOwnerPackingSlip(order, items ?? [], packingBuffer, invoiceBuffer, invoiceNumber);
+      } catch (e) { console.error('Pakbon', e); }
     }
 
     if (['expired', 'canceled', 'failed'].includes(payment.status)) {

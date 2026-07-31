@@ -182,3 +182,40 @@ export async function sendOrderConfirmation(
     attachments,
   });
 }
+
+// Interne mail naar Donny bij elke betaalde bestelling: pakbon (met checklist)
+// + factuur als bijlage, klaar om te printen.
+export async function sendOwnerPackingSlip(
+  order: any,
+  items: any[],
+  packingBuffer: Buffer,
+  invoiceBuffer?: Buffer,
+  invoiceNumber?: string,
+) {
+  const to = process.env.ADMIN_EMAIL || GMAIL_USER;
+  const attachments: any[] = [
+    { filename: `pakbon-${order.order_number}.pdf`, content: packingBuffer },
+  ];
+  if (invoiceBuffer) attachments.push({ filename: `factuur-${invoiceNumber ?? order.order_number}.pdf`, content: invoiceBuffer });
+
+  const inner = `
+    <h1 style="margin:0 0 10px;font-size:23px;color:${BRAND}">Nieuwe bestelling — ${order.order_number}</h1>
+    <p style="margin:0 0 22px;color:#555555;font-size:15px;line-height:1.6">
+      Er is een nieuwe betaalde bestelling. De <b>pakbon met checklist</b> en de <b>factuur</b> zitten als PDF-bijlage — klaar om te printen.
+    </p>
+    ${orderSummaryHtml(order, items)}
+    <p style="margin:0;color:#555555;font-size:14px;line-height:1.6">
+      <b style="color:${BRAND}">Verzenden naar:</b><br/>
+      ${order.ship_first_name} ${order.ship_last_name}<br/>
+      ${order.ship_address} ${order.ship_house_number}${order.ship_addition ? ' ' + order.ship_addition : ''}<br/>
+      ${order.ship_postal_code} ${order.ship_city}, ${order.ship_country === 'BE' ? 'België' : 'Nederland'}
+    </p>`;
+
+  await transporter.sendMail({
+    from: `"Vami Pro" <${GMAIL_USER}>`,
+    to,
+    subject: `Nieuwe bestelling ${order.order_number} — pakbon`,
+    html: emailShell(inner),
+    attachments,
+  });
+}
