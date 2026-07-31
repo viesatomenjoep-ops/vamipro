@@ -13,8 +13,8 @@ export type ShopConfig = {
 // Standaardwaarden = de huidige hardgecodeerde waarden. Zo verandert er niets
 // aan het gedrag zolang de winkelier niets instelt.
 const DEFAULTS: ShopConfig = {
-  shippingCents: 695,
-  shippingCentsBe: 850,
+  shippingCents: 795,
+  shippingCentsBe: 1195,
   freeShipCents: 7000,
   discountCode: 'VAMIPRO10',
   discountPercent: 10,

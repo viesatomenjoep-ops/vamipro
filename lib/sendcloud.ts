@@ -1,3 +1,5 @@
+import { createServiceClient } from '@/lib/supabase/server';
+
 const AUTH = 'Basic ' + Buffer.from(
   `${process.env.SENDCLOUD_PUBLIC_KEY}:${process.env.SENDCLOUD_SECRET_KEY}`
 ).toString('base64');
@@ -41,7 +43,20 @@ export async function createSendcloudLabel(order: any, items: any[]) {
   const senderId = await getSenderAddressId();
   if (!senderId) throw new Error('Geen Sendcloud-afzenderadres gevonden');
 
-  const totalGrams = (items ?? []).reduce((s, it) => s + (it.weight_grams ?? 500) * it.quantity, 0);
+  // Nauwkeurig pakketgewicht: haal het echte gewicht (weight_grams) per product op.
+  const productIds = (items ?? []).map((it: any) => it.product_id).filter(Boolean);
+  const weights: Record<string, number> = {};
+  if (productIds.length) {
+    try {
+      const supabase = createServiceClient();
+      const { data } = await supabase.from('products').select('id, weight_grams').in('id', productIds);
+      (data ?? []).forEach((p: any) => { if (p.weight_grams != null) weights[p.id] = Number(p.weight_grams); });
+    } catch { /* val terug op standaardgewicht */ }
+  }
+  const totalGrams = (items ?? []).reduce(
+    (s: number, it: any) => s + (weights[it.product_id] ?? it.weight_grams ?? 500) * (it.quantity || 1),
+    0,
+  );
   const weightKg = Math.max(0.1, totalGrams / 1000).toFixed(3);
   const toCountry = order.ship_country === 'BE' ? 'BE' : 'NL';
 

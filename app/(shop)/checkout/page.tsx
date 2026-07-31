@@ -8,7 +8,7 @@ import { Lock, ShieldCheck } from 'lucide-react';
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
 type ShopCfg = { shippingCents: number; shippingCentsBe: number; freeShipCents: number; discountCode: string; discountPercent: number; oneCentCode: string };
-const DEFAULT_CFG: ShopCfg = { shippingCents: 695, shippingCentsBe: 850, freeShipCents: 7000, discountCode: 'VAMIPRO10', discountPercent: 10, oneCentCode: '' };
+const DEFAULT_CFG: ShopCfg = { shippingCents: 795, shippingCentsBe: 1195, freeShipCents: 7000, discountCode: 'VAMIPRO10', discountPercent: 10, oneCentCode: '' };
 
 export default function CheckoutPage() {
   const { items, subtotalCents, discountCode } = useCart();
