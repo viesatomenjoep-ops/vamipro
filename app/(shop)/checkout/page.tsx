@@ -8,7 +8,7 @@ import { Lock, ShieldCheck } from 'lucide-react';
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
 type ShopCfg = { shippingCents: number; shippingCentsBe: number; freeShipCents: number; discountCode: string; discountPercent: number; oneCentCode: string; discountRemaining: number | null };
-const DEFAULT_CFG: ShopCfg = { shippingCents: 795, shippingCentsBe: 1195, freeShipCents: 7000, discountCode: 'VAMIPRO50', discountPercent: 50, oneCentCode: '', discountRemaining: null };
+const DEFAULT_CFG: ShopCfg = { shippingCents: 795, shippingCentsBe: 1195, freeShipCents: 0, discountCode: 'VAMIPRO50', discountPercent: 50, oneCentCode: '', discountRemaining: null };
 
 export default function CheckoutPage() {
   const { items, subtotalCents, discountCode } = useCart();
@@ -112,7 +112,7 @@ export default function CheckoutPage() {
   // een korting toont die bij het afrekenen niet wordt verrekend.
   const promoFull = cfg.discountRemaining !== null && cfg.discountRemaining <= 0;
   const discountActive = !!discountCode && !isOneCent && !promoFull;
-  const shipping = isOneCent ? 0 : (sub >= cfg.freeShipCents ? 0 : (f.country === 'BE' ? cfg.shippingCentsBe : cfg.shippingCents));
+  const shipping = isOneCent ? 0 : ((cfg.freeShipCents > 0 && sub >= cfg.freeShipCents) ? 0 : (f.country === 'BE' ? cfg.shippingCentsBe : cfg.shippingCents));
   const disc = isOneCent ? Math.max(0, sub - 1) : (discountActive ? Math.round(sub * cfg.discountPercent / 100) : 0);
   const total = isOneCent ? 1 : (sub - disc + shipping);
 

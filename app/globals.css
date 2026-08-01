@@ -92,13 +92,13 @@ body {
 
 /* ---------- Typography ---------- */
 .font-display { font-family: var(--font-display); }
-/* Elegante ampersand — de display-font maakt er anders een vreemde van.
-   Klassieke cursieve serif-ampersand (de mooiste vorm van het teken). */
+/* Nette, gewone ampersand — de display-font maakt er anders een vreemde van.
+   Rechtopstaand, in een normaal sans-serif lettertype. */
 .amp {
-  font-family: 'Baskerville', 'Baskerville Old Face', 'Hoefler Text', 'Iowan Old Style', Garamond, 'Palatino Linotype', 'Times New Roman', serif;
-  font-style: italic;
+  font-family: Arial, Helvetica, 'Segoe UI', 'Liberation Sans', sans-serif;
+  font-style: normal;
   font-weight: 500;
-  padding: 0 0.06em;
+  padding: 0 0.02em;
 }
 .h-hero {
   font-family: var(--font-display);

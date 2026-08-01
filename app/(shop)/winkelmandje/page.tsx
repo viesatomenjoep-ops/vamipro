@@ -8,7 +8,7 @@ import { Minus, Plus, X, ArrowLeft, Check } from 'lucide-react';
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
 type ShopCfg = { shippingCents: number; shippingCentsBe: number; freeShipCents: number; discountCode: string; discountPercent: number; oneCentCode: string; discountRemaining: number | null };
-const DEFAULT_CFG: ShopCfg = { shippingCents: 795, shippingCentsBe: 1195, freeShipCents: 7000, discountCode: 'VAMIPRO50', discountPercent: 50, oneCentCode: '', discountRemaining: null };
+const DEFAULT_CFG: ShopCfg = { shippingCents: 795, shippingCentsBe: 1195, freeShipCents: 0, discountCode: 'VAMIPRO50', discountPercent: 50, oneCentCode: '', discountRemaining: null };
 
 export default function CartPage() {
   const { items, setQty, remove, subtotalCents, discountCode, setDiscountCode } = useCart();
@@ -34,7 +34,7 @@ export default function CartPage() {
   // Gelimiteerde actie ("eerste X klanten") is vol → code niet meer aanbieden/toepassen.
   const promoFull = cfg.discountRemaining !== null && cfg.discountRemaining <= 0;
   const discountApplied = !!discountCode && !isOneCent && !promoFull;
-  const freeShip = sub >= cfg.freeShipCents;
+  const freeShip = cfg.freeShipCents > 0 && sub >= cfg.freeShipCents;
   const total = isOneCent ? 1 : sub - (discountApplied ? Math.round(sub * cfg.discountPercent / 100) : 0);
 
   if (!items.length) return (
@@ -107,7 +107,7 @@ export default function CartPage() {
             <div className="flex justify-between text-fg-muted"><span>Verzending (NL)</span><span className="text-fg">{(freeShip || isOneCent) ? 'Gratis' : euro(cfg.shippingCents)}</span></div>
             {!freeShip && !isOneCent && <div className="flex justify-between text-fg-faint text-xs"><span>België</span><span>{euro(cfg.shippingCentsBe)}</span></div>}
           </div>
-          {!freeShip && (
+          {cfg.freeShipCents > 0 && !freeShip && (
             <div className="mt-4 rounded-sm border hairline bg-panel-2 p-3 text-xs text-fg-muted">
               Nog {euro(Math.max(0, cfg.freeShipCents - sub))} tot gratis verzending.
               <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-line-strong">

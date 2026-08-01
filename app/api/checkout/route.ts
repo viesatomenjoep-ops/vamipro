@@ -44,7 +44,8 @@ export async function POST(req: NextRequest) {
     const isOneCent = !!cfg.oneCentCode && codeUpper === cfg.oneCentCode;
 
     const baseShipping = body.shipping.country === 'BE' ? cfg.shippingCentsBe : cfg.shippingCents;
-    let shippingCents = subtotal >= cfg.freeShipCents ? 0 : baseShipping;
+    // Gratis verzending alleen als er een drempel is ingesteld (> 0); anders altijd verzendkosten.
+    let shippingCents = (cfg.freeShipCents > 0 && subtotal >= cfg.freeShipCents) ? 0 : baseShipping;
 
     let discountCents = 0;
     let appliedDiscountCode: string | null = null;

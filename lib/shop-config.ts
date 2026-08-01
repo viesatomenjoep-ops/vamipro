@@ -16,7 +16,7 @@ export type ShopConfig = {
 const DEFAULTS: ShopConfig = {
   shippingCents: 795,
   shippingCentsBe: 1195,
-  freeShipCents: 7000,
+  freeShipCents: 0,   // 0 = geen gratis verzending (altijd verzendkosten)
   discountCode: 'VAMIPRO50',
   discountPercent: 50,
   discountMaxUses: 100,

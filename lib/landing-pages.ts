@@ -17,7 +17,7 @@ export const LANDING_PAGES: LandingPage[] = [
   {
     slug: 'autoshampoo',
     metaTitle: 'Autoshampoo kopen — pH-neutraal & krasvrij | Vami Pro',
-    metaDesc: 'Professionele autoshampoo kopen? pH-neutraal, veilig voor wax en coating, veel schuim en krasvrij wassen. Gratis verzending vanaf € 70 in NL & BE.',
+    metaDesc: 'Professionele autoshampoo kopen? pH-neutraal, veilig voor wax en coating, veel schuim en krasvrij wassen. Snelle levering in NL & BE.',
     eyebrow: 'Autoshampoo',
     h1: 'Autoshampoo kopen: pH-neutraal en krasvrij',
     intro: 'Een goede autoshampoo is de basis van elke veilige wasbeurt. Bij Vami Pro vind je pH-neutrale shampoos met veel schuim die vuil moeiteloos losweken — veilig voor gewaxte en gecoate lak.',
@@ -72,11 +72,11 @@ export const LANDING_PAGES: LandingPage[] = [
   {
     slug: 'detailing-belgie',
     metaTitle: 'Car detailing producten België — snel geleverd | Vami Pro',
-    metaDesc: 'Professionele car-detailingproducten in België: autoshampoo, snow foam, droogdoeken en meer. Betaal met Bancontact, gratis verzending vanaf € 70.',
+    metaDesc: 'Professionele car-detailingproducten in België: autoshampoo, snow foam, droogdoeken en meer. Betaal met Bancontact, snelle levering.',
     eyebrow: 'België',
     h1: 'Car detailing producten in België',
-    intro: 'Vami Pro levert professionele detailingproducten in heel België. Bestel eenvoudig met Bancontact en profiteer van snelle levering en gratis verzending vanaf € 70.',
-    body: 'Alles voor detailing, ook in België\nVan pH-neutrale autoshampoo, snow foam en foam lances tot 1600 GSM droogdoeken, microvezeldoeken, velgenreinigers en interieurreinigers — je vindt bij ons alles voor een showroomresultaat.\n\nBetalen met Bancontact\nJe rekent veilig af met Bancontact via Mollie, in je eigen bankomgeving. Voor Nederlandse klanten is iDEAL beschikbaar.\n\nSnelle levering in heel België\nVoor 16:00 op werkdagen besteld en betaald = dezelfde dag verzonden. Levering doorgaans 2-3 werkdagen. Gratis verzending vanaf € 70, inclusief track & trace.',
+    intro: 'Vami Pro levert professionele detailingproducten in heel België. Bestel eenvoudig met Bancontact en profiteer van snelle levering.',
+    body: 'Alles voor detailing, ook in België\nVan pH-neutrale autoshampoo, snow foam en foam lances tot 1600 GSM droogdoeken, microvezeldoeken, velgenreinigers en interieurreinigers — je vindt bij ons alles voor een showroomresultaat.\n\nBetalen met Bancontact\nJe rekent veilig af met Bancontact via Mollie, in je eigen bankomgeving. Voor Nederlandse klanten is iDEAL beschikbaar.\n\nSnelle levering in heel België\nVoor 16:00 op werkdagen besteld en betaald = dezelfde dag verzonden. Levering doorgaans 2-3 werkdagen, inclusief track & trace.',
     ctaText: 'Bekijk de producten',
     ctaLink: '/producten',
   },

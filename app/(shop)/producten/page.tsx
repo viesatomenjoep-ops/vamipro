@@ -8,7 +8,7 @@ import type { Metadata } from 'next';
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getContent();
   const title = t('meta_producten_title', 'Alle detailingproducten');
-  const description = t('meta_producten_desc', 'Bekijk alle car-detailingproducten van Vami Pro: autoshampoo, snow foam, droogdoeken, velgenreinigers en meer. Gratis verzending vanaf € 70 in NL & BE.');
+  const description = t('meta_producten_desc', 'Bekijk alle car-detailingproducten van Vami Pro: autoshampoo, snow foam, droogdoeken, velgenreinigers en meer. Snelle levering in NL & BE.');
   return {
     title,
     description,

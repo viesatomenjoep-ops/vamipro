@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Verzending & Retourneren',
-  description: 'Gratis verzending vanaf €70 in NL & BE. Voor 16:00 besteld = vandaag verzonden, met track & trace. Bekijk tarieven en levertijden.',
+  description: 'Verzendkosten € 7,95 (NL) en € 11,95 (BE). Voor 16:00 besteld = vandaag verzonden, met track & trace. Bekijk tarieven en levertijden.',
   alternates: { canonical: '/verzending' },
   openGraph: {
     title: 'Verzending & Retourneren',
-    description: 'Gratis verzending vanaf €70 in NL & BE. Voor 16:00 besteld = vandaag verzonden, met track & trace. Bekijk tarieven en levertijden.',
+    description: 'Verzendkosten € 7,95 (NL) en € 11,95 (BE). Voor 16:00 besteld = vandaag verzonden, met track & trace. Bekijk tarieven en levertijden.',
     url: '/verzending',
     type: 'website',
   },
@@ -27,7 +27,7 @@ export default function Page() {
               <strong className="text-fg font-medium">Landen:</strong> Nederland en België.
             </li>
             <li>
-              <strong className="text-fg font-medium">Tarieven:</strong> Berekend in de checkout op basis van gewicht en land. <strong className="text-fg font-medium">Gratis verzending vanaf €70</strong> (NL & BE).
+              <strong className="text-fg font-medium">Tarieven:</strong> € 7,95 in Nederland en € 11,95 in België. Het exacte bedrag zie je in de checkout.
             </li>
             <li>
               <strong className="text-fg font-medium">Levertijd:</strong> Vóór 16:00 op werkdagen besteld en betaald = dezelfde dag verzonden. NL doorgaans 1–2 werkdagen, BE 2–3 werkdagen.

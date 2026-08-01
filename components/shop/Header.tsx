@@ -9,7 +9,7 @@ export default async function Header() {
   const { data: categories } = await supabase.from('categories').select('*').is('parent_id', null).order('sort_order');
 
   return (
-    <header className="sticky top-0 z-50 border-b border-black/10 bg-white/85 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70 dark:border-white/10 dark:bg-black/75 dark:supports-[backdrop-filter]:bg-black/60">
+    <header className="border-b border-black/10 bg-white/85 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70 dark:border-white/10 dark:bg-black/75 dark:supports-[backdrop-filter]:bg-black/60">
       <div className="wrap flex h-24 md:h-28 items-center justify-between">
         <Link href="/" className="flex items-center shrink-0">
           <img

@@ -40,7 +40,8 @@ export default function ShopSettingsForm({ content }: { content: Record<string, 
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Gratis verzending vanaf (€)</label>
-          <input name="free_shipping_eur" defaultValue={content.free_shipping_eur ?? ''} placeholder="70" className="input w-full" />
+          <p className="text-xs text-fg-faint mb-2">Laat leeg of vul <b>0</b> in om gratis verzending uit te schakelen — klanten betalen dan altijd verzendkosten.</p>
+          <input name="free_shipping_eur" defaultValue={content.free_shipping_eur ?? ''} placeholder="0 = uit" className="input w-full" />
         </div>
       </div>
 
@@ -117,7 +118,7 @@ export default function ShopSettingsForm({ content }: { content: Record<string, 
         </button>
         {saved && <span className="text-sm text-accent">Opgeslagen ✓ — de website is direct bijgewerkt.</span>}
       </div>
-      <p className="text-xs text-fg-faint">Laat een veld leeg om de standaardwaarde te gebruiken (verzending NL € 7,95 / BE € 11,95, gratis vanaf € 70, code VAMIPRO50, 50% voor de eerste 100 klanten).</p>
+      <p className="text-xs text-fg-faint">Laat een veld leeg om de standaardwaarde te gebruiken (verzending NL € 7,95 / BE € 11,95, geen gratis verzending, code VAMIPRO50, 50% voor de eerste 100 klanten).</p>
     </form>
   );
 }

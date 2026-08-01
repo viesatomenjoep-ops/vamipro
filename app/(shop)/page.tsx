@@ -25,7 +25,7 @@ import type { Metadata } from 'next';
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getContent();
   const title = t('meta_home_title', 'Vami Pro — Professionele detailingproducten');
-  const description = t('meta_home_desc', 'Showroomresultaat voor elke auto. Professionele car-detailingproducten voor liefhebbers en pro’s. Veilig betalen met iDEAL en Bancontact. Gratis verzending vanaf € 70 in NL & BE.');
+  const description = t('meta_home_desc', 'Showroomresultaat voor elke auto. Professionele car-detailingproducten voor liefhebbers en pro’s. Veilig betalen met iDEAL en Bancontact. Snelle levering in NL en BE.');
   return {
     title: { absolute: title },
     description,
@@ -148,7 +148,7 @@ export default async function HomePage() {
           <div className="wrap flex flex-wrap items-center justify-between gap-x-10 gap-y-4 py-5">
             {[
               { v: parseInt(t('stat_1_value', '1600'), 10) || 1600, suf: t('stat_1_suffix', ' GSM'), label: t('stat_1_label', 'Dikste droogdoek'), cmsKey: 'stat_1_label' },
-              { v: parseInt(t('stat_2_value', '70'), 10) || 70, pre: t('stat_2_prefix', '€ '), suf: t('stat_2_suffix', '+'), label: t('stat_2_label', 'Gratis verzending'), cmsKey: 'stat_2_label' },
+              { v: parseInt(t('stat_2_value', '100'), 10) || 100, pre: t('stat_2_prefix', ''), suf: t('stat_2_suffix', '%'), label: t('stat_2_label', 'Veilig betalen'), cmsKey: 'stat_2_label' },
               { v: parseInt(t('stat_3_value', '14'), 10) || 14, suf: t('stat_3_suffix', ''), label: t('stat_3_label', 'Dagen bedenktijd'), cmsKey: 'stat_3_label' },
               { v: parseInt(t('stat_4_value', '16'), 10) || 16, suf: t('stat_4_suffix', ':00'), label: t('stat_4_label', 'Besteld = vandaag verzonden'), cmsKey: 'stat_4_label' },
             ].map((s, i) => (
@@ -490,7 +490,7 @@ export default async function HomePage() {
           </Reveal>
           <Reveal delay={220}>
             <p className="mx-auto mt-6 max-w-md text-lg text-fg-muted" data-cms-key="final_text">
-              {t('final_text', 'Voor 16:00 besteld, vandaag verzonden. Gratis verzending vanaf € 70 in NL & BE.')}
+              {t('final_text', 'Voor 16:00 besteld, vandaag verzonden. Snelle levering in NL & BE.')}
             </p>
           </Reveal>
           <Reveal delay={340}>
@@ -513,7 +513,7 @@ export default async function HomePage() {
               {amp(t('seo_block_title', 'Professionele autopoetsproducten & car detailing voor NL & BE'))}
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-fg-faint" data-cms-key="seo_block_text">
-              {t('seo_block_text', 'Bij Vami Pro vind je alles voor een showroomresultaat: van pH-neutrale autoshampoo, snow foam en foam lances tot 1600 GSM droogdoeken, microvezeldoeken, velgenreinigers, interieurreinigers en complete detailingpakketten. Onze producten zijn geschikt voor liefhebbers én professionals en veilig voor gecoate en gewaxte lak. Betaal eenvoudig met iDEAL of Bancontact en profiteer van gratis verzending vanaf € 70 in Nederland en België — voor 16:00 besteld is dezelfde dag verzonden.')}
+              {t('seo_block_text', 'Bij Vami Pro vind je alles voor een showroomresultaat: van pH-neutrale autoshampoo, snow foam en foam lances tot 1600 GSM droogdoeken, microvezeldoeken, velgenreinigers, interieurreinigers en complete detailingpakketten. Onze producten zijn geschikt voor liefhebbers én professionals en veilig voor gecoate en gewaxte lak. Betaal eenvoudig met iDEAL of Bancontact — voor 16:00 besteld is dezelfde dag verzonden in Nederland en België.')}
             </p>
           </div>
         </div>
