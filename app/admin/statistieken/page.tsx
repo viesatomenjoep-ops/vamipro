@@ -11,22 +11,25 @@ export default async function StatsPage() {
   let summary: any = null;
   let daily: any[] = [];
   let topPages: any[] = [];
-  let ready = true;
+  let summaryReady = true;
+  let detailReady = true; // visit_daily + visit_top_pages (uit de bijgewerkte migratie)
   try {
     const [s, d, t] = await Promise.all([
       supabase.rpc('visit_stats'),
       supabase.rpc('visit_daily', { days: 30 }),
       supabase.rpc('visit_top_pages', { days: 30, lim: 12 }),
     ]);
-    if (s.error || d.error || t.error) ready = false;
+    if (s.error || !s.data) summaryReady = false;
+    if (d.error || t.error) detailReady = false;
     summary = s.data ?? null;
     daily = d.data ?? [];
     topPages = t.data ?? [];
   } catch {
-    ready = false;
+    summaryReady = false;
+    detailReady = false;
   }
 
-  if (!ready) {
+  if (!summaryReady) {
     return (
       <div>
         <h1 className="text-2xl font-semibold mb-1">Statistieken</h1>
@@ -70,6 +73,12 @@ export default async function StatsPage() {
           <h2 className="font-display font-semibold">Bezoek per dag</h2>
           <span className="text-xs text-fg-faint">laatste 30 dagen · paginaweergaven</span>
         </div>
+        {!detailReady ? (
+          <p className="mt-3 text-sm text-fg-muted">
+            Voer de <b>bijgewerkte</b> <code className="text-fg">supabase/analytics.sql</code> nog één keer uit om de grafiek en top-pagina&apos;s te activeren (voegt <code className="text-fg">visit_daily</code> en <code className="text-fg">visit_top_pages</code> toe).
+          </p>
+        ) : (
+        <>
         <div className="mt-6 flex h-44 items-end gap-1">
           {daily.map((r) => {
             const views = Number(r.views || 0);
@@ -94,6 +103,8 @@ export default async function StatsPage() {
           <span>{daily[Math.floor(daily.length / 2)] ? dayLabel(daily[Math.floor(daily.length / 2)].day) : ''}</span>
           <span>{daily[daily.length - 1] ? dayLabel(daily[daily.length - 1].day) : ''}</span>
         </div>
+        </>
+        )}
       </section>
 
       {/* Best bezochte pagina's */}
@@ -115,7 +126,7 @@ export default async function StatsPage() {
                 <td className="p-4 text-right text-fg-muted">{nf(r.visitors)}</td>
               </tr>
             )) : (
-              <tr><td colSpan={3} className="p-6 text-center text-fg-muted">Nog geen bezoeken geregistreerd.</td></tr>
+              <tr><td colSpan={3} className="p-6 text-center text-fg-muted">{detailReady ? 'Nog geen bezoeken geregistreerd.' : 'Voer de bijgewerkte analytics.sql nog één keer uit om deze lijst te activeren.'}</td></tr>
             )}
           </tbody>
         </table>
