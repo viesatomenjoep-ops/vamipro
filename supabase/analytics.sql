@@ -28,3 +28,36 @@ returns json language sql stable as $$
     'visitors_total', (select count(distinct session)   from page_hits)
   );
 $$;
+
+-- Per dag: paginaweergaven + unieke bezoekers over de laatste N dagen
+-- (inclusief lege dagen, in Nederlandse tijd). Voor de grafiek.
+create or replace function visit_daily(days int default 30)
+returns table(day date, views bigint, visitors bigint)
+language sql stable as $$
+  select d::date as day,
+         count(h.id) as views,
+         count(distinct h.session) as visitors
+  from generate_series(
+         (now() at time zone 'Europe/Amsterdam')::date - (days - 1),
+         (now() at time zone 'Europe/Amsterdam')::date,
+         interval '1 day'
+       ) d
+  left join page_hits h
+    on (h.created_at at time zone 'Europe/Amsterdam')::date = d::date
+  group by d
+  order by d;
+$$;
+
+-- Best bezochte pagina's over de laatste N dagen.
+create or replace function visit_top_pages(days int default 30, lim int default 12)
+returns table(path text, views bigint, visitors bigint)
+language sql stable as $$
+  select path,
+         count(*) as views,
+         count(distinct session) as visitors
+  from page_hits
+  where created_at >= now() - (days || ' days')::interval
+  group by path
+  order by views desc
+  limit lim;
+$$;

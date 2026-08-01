@@ -1,9 +1,10 @@
 import Link from 'next/link';
-import { LayoutDashboard, Package, ShoppingCart, FileText, Settings, Type, Eye, Star } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingCart, FileText, Settings, Type, Eye, Star, BarChart3 } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 const nav = [
   ['/admin', 'Dashboard', LayoutDashboard],
+  ['/admin/statistieken', 'Statistieken', BarChart3],
   ['/admin/bestellingen', 'Bestellingen', ShoppingCart],
   ['/admin/producten', 'Producten', Package],
   ['/admin/categorieen', 'Categorieën', Package],
