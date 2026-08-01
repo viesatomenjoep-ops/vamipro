@@ -30,11 +30,12 @@ export default function CartPage() {
   }, []);
 
   const sub = subtotalCents();
-  const freeShip = sub >= cfg.freeShipCents;
   const isOneCent = !!cfg.oneCentCode && (discountCode ?? '').toUpperCase() === cfg.oneCentCode;
-  const total = isOneCent ? 1 : sub - (discountCode ? Math.round(sub * cfg.discountPercent / 100) : 0);
   // Gelimiteerde actie ("eerste X klanten") is vol → code niet meer aanbieden/toepassen.
   const promoFull = cfg.discountRemaining !== null && cfg.discountRemaining <= 0;
+  const discountApplied = !!discountCode && !isOneCent && !promoFull;
+  const freeShip = sub >= cfg.freeShipCents;
+  const total = isOneCent ? 1 : sub - (discountApplied ? Math.round(sub * cfg.discountPercent / 100) : 0);
 
   if (!items.length) return (
     <div className="wrap py-28 text-center">
@@ -97,7 +98,7 @@ export default function CartPage() {
           <h2 className="font-display text-lg font-semibold">Overzicht</h2>
           <div className="mt-4 space-y-2 text-sm">
             <div className="flex justify-between text-fg-muted"><span>Subtotaal</span><span className="text-fg">{euro(sub)}</span></div>
-            {discountCode && !isOneCent && (
+            {discountApplied && (
               <div className="flex justify-between text-accent font-medium"><span>Korting ({cfg.discountPercent}%)</span><span>-{euro(Math.round(sub * cfg.discountPercent / 100))}</span></div>
             )}
             {isOneCent && (

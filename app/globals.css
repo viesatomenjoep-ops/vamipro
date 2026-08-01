@@ -92,13 +92,13 @@ body {
 
 /* ---------- Typography ---------- */
 .font-display { font-family: var(--font-display); }
-/* Nette, normale ampersand — de display-font maakt er anders een vreemde van. */
+/* Elegante ampersand — de display-font maakt er anders een vreemde van.
+   Klassieke cursieve serif-ampersand (de mooiste vorm van het teken). */
 .amp {
-  /* Zakelijke, rechtopstaande serif-ampersand (professioneel, niet sierlijk). */
-  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, 'Times New Roman', serif;
-  font-weight: 600;
-  font-style: normal;
-  padding: 0 0.04em;
+  font-family: 'Baskerville', 'Baskerville Old Face', 'Hoefler Text', 'Iowan Old Style', Garamond, 'Palatino Linotype', 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 500;
+  padding: 0 0.06em;
 }
 .h-hero {
   font-family: var(--font-display);

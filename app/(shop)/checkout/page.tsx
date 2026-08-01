@@ -108,11 +108,12 @@ export default function CheckoutPage() {
   const sub = subtotalCents();
   const appliedCode = (discountCode ?? '').toUpperCase();
   const isOneCent = !!cfg.oneCentCode && appliedCode === cfg.oneCentCode;
-  const shipping = isOneCent ? 0 : (sub >= cfg.freeShipCents ? 0 : (f.country === 'BE' ? cfg.shippingCentsBe : cfg.shippingCents));
   // Gelimiteerde actie vol → geen korting (net als de server). Voorkomt dat de UI
   // een korting toont die bij het afrekenen niet wordt verrekend.
   const promoFull = cfg.discountRemaining !== null && cfg.discountRemaining <= 0;
-  const disc = isOneCent ? Math.max(0, sub - 1) : ((discountCode && !promoFull) ? Math.round(sub * cfg.discountPercent / 100) : 0);
+  const discountActive = !!discountCode && !isOneCent && !promoFull;
+  const shipping = isOneCent ? 0 : (sub >= cfg.freeShipCents ? 0 : (f.country === 'BE' ? cfg.shippingCentsBe : cfg.shippingCents));
+  const disc = isOneCent ? Math.max(0, sub - 1) : (discountActive ? Math.round(sub * cfg.discountPercent / 100) : 0);
   const total = isOneCent ? 1 : (sub - disc + shipping);
 
   async function pay() {
