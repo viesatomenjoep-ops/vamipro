@@ -7,6 +7,8 @@ export type ShopConfig = {
   discountCode: string;
   discountPercent: number;
   discountMaxUses: number;  // "eerste X klanten" — 0 = onbeperkt
+  promoActive: boolean;     // kortingsactie + actiebalk aan/uit
+  chatbotEnabled: boolean;  // chatbot-widget tonen
   heroImage: string;
   oneCentCode: string;      // testcode: totaal €0,01 + gratis verzending (leeg = uit)
 };
@@ -20,6 +22,8 @@ const DEFAULTS: ShopConfig = {
   discountCode: 'VAMIPRO50',
   discountPercent: 50,
   discountMaxUses: 100,
+  promoActive: true,
+  chatbotEnabled: true,
   heroImage: '',
   oneCentCode: '',
 };
@@ -61,6 +65,9 @@ export async function getShopConfig(): Promise<ShopConfig> {
     discountCode: (discountCodeRaw || DEFAULTS.discountCode).toUpperCase(),
     discountPercent: parsePercent(t('discount_percent', ''), DEFAULTS.discountPercent),
     discountMaxUses: parseMaxUses(t('discount_max_uses', ''), DEFAULTS.discountMaxUses),
+    // Schuifjes: '0' = uit, al het andere (incl. leeg) = aan.
+    promoActive: t('promo_active', '1') !== '0',
+    chatbotEnabled: t('chatbot_enabled', '1') !== '0',
     heroImage: t('hero_image', ''),
     oneCentCode: (t('one_cent_code', '').trim() || '').toUpperCase(),
   };

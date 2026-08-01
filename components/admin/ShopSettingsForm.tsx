@@ -3,11 +3,16 @@
 import { useState } from 'react';
 import { saveContent } from '@/app/admin/actions';
 import CloudinaryUpload from '@/components/admin/CloudinaryUpload';
+import Toggle from '@/components/admin/Toggle';
 
 export default function ShopSettingsForm({ content }: { content: Record<string, string> }) {
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [image, setImage] = useState<string[]>(content.hero_image ? [content.hero_image] : []);
+  // Schuifjes ('0' = uit, anders aan). Checkboxes worden niet meegestuurd als ze
+  // uit staan, dus we beheren de stand in state en zetten 'm expliciet bij opslaan.
+  const [promoActive, setPromoActive] = useState<boolean>(content.promo_active !== '0');
+  const [chatbotEnabled, setChatbotEnabled] = useState<boolean>(content.chatbot_enabled !== '0');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -15,6 +20,8 @@ export default function ShopSettingsForm({ content }: { content: Record<string, 
     setSaved(false);
     const formData = new FormData(e.currentTarget);
     formData.set('hero_image', image[0] || '');
+    formData.set('promo_active', promoActive ? '1' : '0');
+    formData.set('chatbot_enabled', chatbotEnabled ? '1' : '0');
     await saveContent(formData);
     setLoading(false);
     setSaved(true);
@@ -22,6 +29,23 @@ export default function ShopSettingsForm({ content }: { content: Record<string, 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl">
+      <div className="card space-y-5">
+        <h3 className="font-medium">Aan / uit</h3>
+        <Toggle
+          checked={promoActive}
+          onChange={setPromoActive}
+          label="Kortingsactie actief"
+          hint="Zet de kortingscode én de actiebalk bovenaan de site aan of uit. Uit = klanten betalen de volle prijs en de balk verdwijnt."
+        />
+        <div className="border-t hairline" />
+        <Toggle
+          checked={chatbotEnabled}
+          onChange={setChatbotEnabled}
+          label="Chatbot tonen"
+          hint="Toont of verbergt de chat-widget rechtsonder op de website."
+        />
+      </div>
+
       <div className="card space-y-4">
         <h3 className="font-medium">Hero-afbeelding (bovenaan de homepage)</h3>
         <p className="text-xs text-fg-faint">Laat leeg om de standaardfoto te gebruiken. De foto wordt automatisch bijgesneden.</p>

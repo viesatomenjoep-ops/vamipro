@@ -12,9 +12,18 @@ export default function ChatbotWidget() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [enabled, setEnabled] = useState(true); // aan/uit via admin-schuifje
   const pathname = usePathname();
-  
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Chatbot-schuifje ophalen (uit → widget helemaal niet tonen).
+  useEffect(() => {
+    fetch('/api/shop-config')
+      .then((r) => r.json())
+      .then((d) => setEnabled(d.chatbotEnabled ?? true))
+      .catch(() => {});
+  }, []);
 
   // Scroll logic for homepage visibility
   useEffect(() => {
@@ -66,6 +75,8 @@ export default function ChatbotWidget() {
       setIsLoading(false);
     }
   };
+
+  if (!enabled) return null;
 
   return (
     <>

@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/lib/cart-store';
 
-type PromoCfg = { discountCode: string; discountPercent: number; discountRemaining: number | null };
-const DEFAULT_PROMO: PromoCfg = { discountCode: 'VAMIPRO50', discountPercent: 50, discountRemaining: null };
+type PromoCfg = { discountCode: string; discountPercent: number; discountRemaining: number | null; promoActive: boolean };
+const DEFAULT_PROMO: PromoCfg = { discountCode: 'VAMIPRO50', discountPercent: 50, discountRemaining: null, promoActive: true };
 
 // Permanente, slanke actiebalk bovenin de site — altijd zichtbaar op elk
 // apparaat en in elke browser. Klik = code toepassen en naar de producten.
@@ -21,13 +21,14 @@ export default function PromoBar() {
         discountCode: (d.discountCode ?? DEFAULT_PROMO.discountCode).toUpperCase(),
         discountPercent: d.discountPercent ?? DEFAULT_PROMO.discountPercent,
         discountRemaining: d.discountRemaining ?? null,
+        promoActive: d.promoActive ?? true,
       }))
       .catch(() => {});
   }, []);
 
-  // Actie vol (limiet bereikt) → balk verbergen; anders klopt de belofte niet.
+  // Actie uit (schuifje) of vol (limiet bereikt) → balk verbergen.
   const promoFull = promo.discountRemaining !== null && promo.discountRemaining <= 0;
-  if (promoFull) return null;
+  if (!promo.promoActive || promoFull) return null;
 
   const apply = () => {
     setDiscountCode(promo.discountCode);

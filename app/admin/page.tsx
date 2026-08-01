@@ -20,6 +20,12 @@ export default async function AdminDashboard() {
     
   const revenue = (orders ?? []).filter((o: any) => !['pending', 'cancelled'].includes(o.status)).reduce((s: any, o: any) => s + o.total_cents, 0);
 
+  // Bezoekersstatistieken (leeg als de analytics-migratie nog niet is uitgevoerd).
+  let visits: any = null;
+  if (!isMock) {
+    try { const { data } = await supabase.rpc('visit_stats'); visits = data; } catch { /* tabel bestaat nog niet */ }
+  }
+
   return (
     <div className="space-y-10">
       <div>
@@ -34,6 +40,34 @@ export default async function AdminDashboard() {
           </div>
         ))}
       </div>
+
+      {/* Bezoekers */}
+      <section className="card p-5">
+        <div className="flex items-baseline justify-between">
+          <h2 className="font-display font-semibold">Bezoekers</h2>
+          <span className="text-xs text-fg-faint">unieke bezoekers · paginaweergaven</span>
+        </div>
+        {visits ? (
+          <div className="mt-4 grid gap-4 sm:grid-cols-4">
+            {[
+              ['Vandaag', visits.visitors_today, visits.views_today],
+              ['7 dagen', visits.visitors_7d, visits.views_7d],
+              ['30 dagen', visits.visitors_30d, visits.views_30d],
+              ['Totaal', visits.visitors_total, visits.views_total],
+            ].map(([label, v, pv]) => (
+              <div key={label as string} className="rounded-md border hairline bg-panel-2 p-4">
+                <p className="text-xs uppercase tracking-wide text-fg-faint">{label}</p>
+                <p className="mt-1 font-display text-2xl font-semibold">{Number(v ?? 0)}</p>
+                <p className="text-xs text-fg-muted">{Number(pv ?? 0)} weergaven</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-3 text-sm text-fg-muted">
+            Nog geen data. Voer eenmalig <code className="text-fg">supabase/analytics.sql</code> uit in Supabase om de bezoekersteller te activeren.
+          </p>
+        )}
+      </section>
       <section className="card overflow-x-auto">
         <div className="border-b hairline p-5 min-w-[500px]"><h2 className="font-display font-semibold">Laatste bestellingen</h2></div>
         <table className="w-full text-sm min-w-[500px]">

@@ -7,8 +7,8 @@ import { Minus, Plus, X, ArrowLeft, Check } from 'lucide-react';
 
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
 
-type ShopCfg = { shippingCents: number; shippingCentsBe: number; freeShipCents: number; discountCode: string; discountPercent: number; oneCentCode: string; discountRemaining: number | null };
-const DEFAULT_CFG: ShopCfg = { shippingCents: 795, shippingCentsBe: 1195, freeShipCents: 0, discountCode: 'VAMIPRO50', discountPercent: 50, oneCentCode: '', discountRemaining: null };
+type ShopCfg = { shippingCents: number; shippingCentsBe: number; freeShipCents: number; discountCode: string; discountPercent: number; oneCentCode: string; discountRemaining: number | null; promoActive: boolean };
+const DEFAULT_CFG: ShopCfg = { shippingCents: 795, shippingCentsBe: 1195, freeShipCents: 0, discountCode: 'VAMIPRO50', discountPercent: 50, oneCentCode: '', discountRemaining: null, promoActive: true };
 
 export default function CartPage() {
   const { items, setQty, remove, subtotalCents, discountCode, setDiscountCode } = useCart();
@@ -25,6 +25,7 @@ export default function CartPage() {
         discountPercent: d.discountPercent ?? DEFAULT_CFG.discountPercent,
         oneCentCode: (d.oneCentCode ?? DEFAULT_CFG.oneCentCode).toUpperCase(),
         discountRemaining: d.discountRemaining ?? null,
+        promoActive: d.promoActive ?? true,
       }))
       .catch(() => {});
   }, []);
@@ -33,7 +34,7 @@ export default function CartPage() {
   const isOneCent = !!cfg.oneCentCode && (discountCode ?? '').toUpperCase() === cfg.oneCentCode;
   // Gelimiteerde actie ("eerste X klanten") is vol → code niet meer aanbieden/toepassen.
   const promoFull = cfg.discountRemaining !== null && cfg.discountRemaining <= 0;
-  const discountApplied = !!discountCode && !isOneCent && !promoFull;
+  const discountApplied = !!discountCode && !isOneCent && !promoFull && cfg.promoActive;
   const freeShip = cfg.freeShipCents > 0 && sub >= cfg.freeShipCents;
   const total = isOneCent ? 1 : sub - (discountApplied ? Math.round(sub * cfg.discountPercent / 100) : 0);
 
@@ -134,7 +135,7 @@ export default function CartPage() {
               </div>
             ) : (
               <>
-                {!promoFull && (
+                {cfg.promoActive && !promoFull && (
                   <div className="mb-4 rounded-md bg-accent/10 p-3 text-center text-sm border border-accent/20">
                     <p className="text-fg-muted mb-1.5">Profiteer direct van {cfg.discountPercent}% korting!</p>
                     <div className="flex items-center justify-center gap-2">
@@ -152,7 +153,9 @@ export default function CartPage() {
                   if (cfg.oneCentCode && c === cfg.oneCentCode) {
                     setDiscountCode(cfg.oneCentCode);
                   } else if (c === cfg.discountCode) {
-                    if (promoFull) {
+                    if (!cfg.promoActive) {
+                      alert('Deze actie is momenteel niet actief.');
+                    } else if (promoFull) {
                       alert('Deze actie is helaas al vol — de korting kan niet meer worden toegepast.');
                     } else {
                       setDiscountCode(cfg.discountCode);

@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
 
     let discountCents = 0;
     let appliedDiscountCode: string | null = null;
-    if (codeUpper && codeUpper === cfg.discountCode) {
+    if (cfg.promoActive && codeUpper && codeUpper === cfg.discountCode) {
       // "Eerste X klanten"-limiet: als de actie vol is, geen korting toepassen.
       const capReached =
         cfg.discountMaxUses > 0 &&

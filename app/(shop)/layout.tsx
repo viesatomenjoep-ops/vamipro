@@ -3,10 +3,12 @@ import Footer from '@/components/shop/Footer';
 import PromoBar from '@/components/shop/PromoBar';
 import ChatbotWidget from '@/components/shop/ChatbotWidget';
 import ScrollToTop from '@/components/shop/ScrollToTop';
+import VisitTracker from '@/components/shop/VisitTracker';
 
 export default function ShopLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      <VisitTracker />
       <ScrollToTop />
       {/* Actiebalk + header blijven samen bovenin plakken bij het scrollen. */}
       <div className="sticky top-0 z-50">
