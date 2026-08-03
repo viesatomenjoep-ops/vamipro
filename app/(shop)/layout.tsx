@@ -5,6 +5,7 @@ import PromoPopup from '@/components/shop/PromoPopup';
 import ChatbotWidget from '@/components/shop/ChatbotWidget';
 import ScrollToTop from '@/components/shop/ScrollToTop';
 import VisitTracker from '@/components/shop/VisitTracker';
+import MerchantWidget from '@/components/shop/MerchantWidget';
 
 export default function ShopLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -22,6 +23,7 @@ export default function ShopLayout({ children }: { children: React.ReactNode }) 
       </main>
       <Footer />
       <ChatbotWidget />
+      <MerchantWidget />
     </>
   );
 }
