@@ -9,6 +9,7 @@ import ProductDescription from '@/components/shop/ProductDescription';
 import ImageGallery from '@/components/shop/ImageGallery';
 import { ShieldCheck, Truck, RotateCcw } from 'lucide-react';
 import { isMock, getMockProduct, getMockRelated } from '@/lib/mock-data';
+import { SITE_URL } from '@/lib/site-url';
 
 export const revalidate = 60;
 const euro = (c: number) => `\u20ac ${(c / 100).toFixed(2).replace('.', ',')}`;
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   
   if (!p) return { title: 'Product niet gevonden' };
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
+  const siteUrl = SITE_URL;
   const url = `${siteUrl}/producten/${p.slug}`;
   const imageUrl = p.cloudinary_images?.[0] ? cldUrl(p.cloudinary_images[0], { w: 1200, h: 630 }) : `${siteUrl}/images/hero-audi.jpg`;
 
@@ -79,7 +80,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const catSlug = (p.categories as any)?.slug;
   const meta = catSlug ? catBySlug(catSlug) : null;
   const imgs: string[] = p.cloudinary_images?.length ? p.cloudinary_images : [];
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
+  const siteUrl = SITE_URL;
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',

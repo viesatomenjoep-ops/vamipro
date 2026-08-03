@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { createServiceClient } from '@/lib/supabase/server';
 import { cldUrl } from '@/lib/cloudinary';
+import { SITE_URL } from '@/lib/site-url';
 import ProductCard from '@/components/shop/ProductCard';
 import { notFound } from 'next/navigation';
 
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!cat) return { title: 'Categorie niet gevonden' };
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
+  const siteUrl = SITE_URL;
   const url = `${siteUrl}/categorie/${cat.slug}`;
   const desc = cat.description || `Bekijk onze professionele producten in de categorie ${cat.name}.`;
   const image = cat.cloudinary_image ? cldUrl(cat.cloudinary_image, { w: 1200, h: 630 }) : `${siteUrl}/images/hero-audi.jpg`;
@@ -69,7 +70,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   const { data: products } = await supabase.from('products')
     .select('*').in('category_id', categoryIds).eq('is_active', true).order('name');
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vamipro.nl';
+  const siteUrl = SITE_URL;
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

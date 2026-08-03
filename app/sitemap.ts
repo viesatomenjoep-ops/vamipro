@@ -8,7 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = createServiceClient();
 
   const { data: products } = await supabase.from('products').select('slug, updated_at').eq('is_active', true);
-  const { data: categories } = await supabase.from('categories').select('slug');
+  const { data: categories } = await supabase.from('categories').select('slug, created_at');
 
   const productUrls = (products || []).map((product) => ({
     url: `${baseUrl}/producten/${product.slug}`,
@@ -19,7 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const categoryUrls = (categories || []).map((category) => ({
     url: `${baseUrl}/categorie/${category.slug}`,
-    lastModified: new Date(),
+    lastModified: category.created_at ? new Date(category.created_at) : new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.9,
   }));
