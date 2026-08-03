@@ -12,10 +12,12 @@ export default async function Header() {
     <header className="border-b border-black/10 bg-white/85 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70 dark:border-white/10 dark:bg-black/75 dark:supports-[backdrop-filter]:bg-black/60">
       <div className="wrap flex h-24 md:h-28 items-center justify-between">
         <Link href="/" className="flex items-center shrink-0">
+          {/* Lichte modus: logo zwart (scherp + goed contrast op wit).
+              Donkere modus: originele kleuren op de zwarte balk. */}
           <img
             src="/images/logo.png"
             alt="VamiPro — professionele detailingproducten"
-            className="h-[56px] md:h-[72px] w-auto object-contain drop-shadow-sm"
+            className="h-[56px] md:h-[72px] w-auto object-contain brightness-0 dark:brightness-100 dark:drop-shadow-sm"
           />
         </Link>
         <nav className="hidden items-center gap-x-6 xl:gap-x-8 text-[13px] tracking-wide lg:flex">
