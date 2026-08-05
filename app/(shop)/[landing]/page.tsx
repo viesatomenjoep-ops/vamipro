@@ -22,7 +22,10 @@ export async function generateMetadata({ params }: { params: Promise<{ landing: 
   return {
     title: { absolute: title },
     description,
-    alternates: { canonical: `/${p.slug}` },
+    alternates: {
+      canonical: `/${p.slug}`,
+      languages: { 'nl-NL': `/${p.slug}`, 'nl-BE': `/${p.slug}`, 'x-default': `/${p.slug}` },
+    },
     openGraph: { title, description, url: `/${p.slug}`, type: 'website' },
   };
 }

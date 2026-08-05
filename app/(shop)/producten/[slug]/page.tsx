@@ -42,6 +42,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: p.short_description || p.description?.substring(0, 160),
     alternates: {
       canonical: url,
+      languages: { 'nl-NL': url, 'nl-BE': url, 'x-default': url },
     },
     openGraph: {
       title: p.name,

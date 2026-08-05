@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: desc,
     alternates: {
       canonical: url,
+      languages: { 'nl-NL': url, 'nl-BE': url, 'x-default': url },
     },
     openGraph: {
       title: `${cat.name} | VaMiPro`,
